@@ -1,19 +1,18 @@
 package com.wposs.buc.restpapp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class ConfigurarRestauranteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_configurar_restaurante);
     }
 
-    public void configurarRestaurante(View view) {
-        Tools.startView(this, ConfigurarRestauranteActivity.class);
+    public void agregarNuevoProducto(View view) {
+        Tools.startView(this, NuevoProductoActivity.class);
     }
 }

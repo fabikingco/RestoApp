@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btnCrearPedido"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Crear pedido"
+            android:onClick="crearPedido"
+            />
+
+        <Button
+            android:id="@+id/btnFinalizarPedido"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Finalizar pedido"
+            android:onClick="finalizarPedido"
+            />
+
+        <Button
+            android:id="@+id/btnConfigRest"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Configurar restaurante"
+            android:onClick="configurarRestaurante"
+            />
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
