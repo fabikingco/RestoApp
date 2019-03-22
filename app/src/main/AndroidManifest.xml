@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NuevoProductoActivity" />
-        <activity android:name=".ConfigurarRestauranteActivity" />
+        <activity android:name=".Activitys.NuevoProductoActivity" />
+        <activity android:name=".Activitys.ConfigurarRestauranteActivity" />
 
     </application>
 

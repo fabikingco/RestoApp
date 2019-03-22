@@ -5,4 +5,17 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="colorBlack">#000000</color>
+
+    <color name="colorRed">#FF0000</color>
+
+    <!-- Colores Pichincha -->
+    <color name="colorYellowDark">#FFCC00</color>
+    <color name="yellowMedium">#FFDC00</color>
+    <color name="blueDark">#10265C</color>
+    <color name="blueText">#0F265C</color>
+    <color name="colorGreyDark">#616161</color>
+    <color name="greyLighter">#D5D5D5</color>
+    <color name="btnGreyActivo">#6672787A</color>
+    <color name="btnGreyInactivo">#3372787A</color>
+
 </resources>

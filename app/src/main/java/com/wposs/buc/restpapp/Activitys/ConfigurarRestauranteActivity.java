@@ -1,8 +1,11 @@
-package com.wposs.buc.restpapp;
+package com.wposs.buc.restpapp.Activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.Tools;
 
 public class ConfigurarRestauranteActivity extends AppCompatActivity {
 
