@@ -31,4 +31,8 @@ public class MainActivity extends AppCompatActivity {
     public void configurarRestaurante(View view) {
         Tools.startView(this, ConfigurarRestauranteActivity.class);
     }
+
+    public void visualizarProductos(View view) {
+
+    }
 }
