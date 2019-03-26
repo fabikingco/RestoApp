@@ -57,8 +57,6 @@ public class NuevoProductoActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void llenarSpinner() {
@@ -106,17 +104,18 @@ public class NuevoProductoActivity extends AppCompatActivity {
     }
 
     public void crearProducto(View view) {
+        if(!categoria.equals("NO EXISTEN CATEGORIAS")) {
+            producto = etProducto.getText().toString();
+            valor = Integer.parseInt(etValor.getText().toString());
+            descripcion = etDescripcion.getText().toString();
 
-        producto = etProducto.getText().toString();
-        valor = Integer.parseInt(etValor.getText().toString());
-        descripcion = etDescripcion.getText().toString();
-
-        if (bd.crearProducto(producto, valor, categoria, descripcion)){
-            Toast.makeText(this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
-            Tools.startView(this, MainActivity.class);
-            finish();
+            if (bd.crearProducto(producto, valor, categoria, descripcion)) {
+                Toast.makeText(this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
+                Tools.startView(this, MainActivity.class);
+                finish();
+            }
+        } else {
+            Toast.makeText(this, "Debe crear una nueva categoria", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }
