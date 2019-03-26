@@ -6,16 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Activitys.VisualizarProductosActivity">
 
-    <ScrollView
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-    </ScrollView>
+    </ListView>
 
 </RelativeLayout>

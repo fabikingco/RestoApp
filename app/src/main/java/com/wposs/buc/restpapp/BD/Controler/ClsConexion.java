@@ -2,9 +2,14 @@ package com.wposs.buc.restpapp.BD.Controler;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClsConexion extends SQLiteOpenHelper {
 
@@ -21,12 +26,21 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String COLUMN_PROD_CATEGORIA = "prod_categoriao";
     private final String COLUMN_PROD_DESCRIPCION = "prod_descripcion";
 
-    final String CREATE_PRODUCTOS_TABLE_NEW = "create table "+ TABLE_PROD_NEW + "(" +
+    private final String CREATE_PRODUCTOS_TABLE_NEW = "create table "+ TABLE_PROD_NEW + "(" +
             COLUMN_PROD_ID +" integer primary key AUTOINCREMENT, " +
             COLUMN_PROD_TITULO + " text not null, " +
             COLUMN_PROD_VALOR + " integer not null, " +
             COLUMN_PROD_CATEGORIA + " text not null, " +
             COLUMN_PROD_DESCRIPCION + " text);";
+
+    private final String TABLE_CATEGORIAS_NEW = "categorias_new";
+    private final String COLUMN_CATEG_ID= "categ_id";
+    private final String COLUMN_CATEG_NAME = "categ_name";
+
+    private final String CREATE_CATEGORIAS_TABLE_NEW = "create table " + TABLE_CATEGORIAS_NEW + "(" +
+            COLUMN_CATEG_ID + " integer primary key AUTOINCREMENT, " +
+            COLUMN_CATEG_NAME + " text not null);";
+
 
 
     public ClsConexion(Context context) {
@@ -37,6 +51,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PRODUCTOS_TABLE_NEW);
+        db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
 
     }
 
@@ -61,5 +76,49 @@ public class ClsConexion extends SQLiteOpenHelper {
             e.getCause();
         }
         return ret;
+    }
+
+    public ArrayList<HashMap<String, String>> GetProdcutos() {
+        db = this.getWritableDatabase();
+        ArrayList<HashMap<String, String>> userList = new ArrayList<>();
+        String query = "SELECT prod_titulo, prod_descripcion, prod_valor FROM "+ TABLE_PROD_NEW;
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()){
+            HashMap<String,String> user = new HashMap<>();
+            user.put("titulo",cursor.getString(cursor.getColumnIndex(COLUMN_PROD_TITULO)));
+            user.put("descripcion",cursor.getString(cursor.getColumnIndex(COLUMN_PROD_DESCRIPCION)));
+            user.put("valor",cursor.getString(cursor.getColumnIndex(COLUMN_PROD_VALOR)));
+            userList.add(user);
+        }
+        cursor.close();
+        db.close();
+        return  userList;
+    }
+
+    public void nuevaCategoria(String categoria){
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEG_NAME, categoria);
+        try {
+            db.insert(TABLE_CATEGORIAS_NEW, null, values);
+            db.close();
+        }catch (SQLException e){
+            e.getCause();
+        }
+    }
+
+    public List<String> getAllCategorias(){
+        db = this.getWritableDatabase();
+        List<String> categorias = new ArrayList<String>();
+        String query = "SELECT * " + "FROM " + TABLE_CATEGORIAS_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                categorias.add(cursor.getString(cursor.getColumnIndex(COLUMN_CATEG_NAME)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return categorias;
     }
 }

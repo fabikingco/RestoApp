@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,6 +17,9 @@ import android.widget.Toast;
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NuevoProductoActivity extends AppCompatActivity {
 
@@ -30,12 +35,43 @@ public class NuevoProductoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_producto);
+        bd = new ClsConexion(this);
 
         etProducto = findViewById(R.id.etProducto);
         etValor = findViewById(R.id.etValor);
         etDescripcion = findViewById(R.id.etDescripcion);
+        spinnerCategorias = findViewById(R.id.spinnerCategorias);
 
-        bd = new ClsConexion(this);
+        llenarSpinner();
+
+        spinnerCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categoria = (String) parent.getItemAtPosition(position);
+
+                Toast.makeText(NuevoProductoActivity.this, "Categoria seleccionada " + categoria, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
+
+    private void llenarSpinner() {
+        List<String> categorias = new ArrayList<String>();
+        try{
+            categorias = bd.getAllCategorias();
+        }catch (NullPointerException e){
+            e.getCause();
+            categorias.add("NO EXISTEN CATEGORIAS");
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, categorias);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerCategorias.setAdapter(adapter);
     }
 
     public void nuevaCategoria(View view2) {
@@ -55,7 +91,9 @@ public class NuevoProductoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                categoria = etCategoria.getText().toString();
+                String cat = etCategoria.getText().toString();
+                bd.nuevaCategoria(cat);
+                llenarSpinner();
             }
         });
 

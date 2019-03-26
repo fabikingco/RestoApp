@@ -33,6 +33,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void visualizarProductos(View view) {
-
+        Tools.startView(this, VisualizarProductosActivity.class);
     }
 }
