@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
@@ -31,11 +32,11 @@ public class EditarCategoriasActivity extends AppCompatActivity {
     }
 
     private void crearBotones() {
-        
+
 
         ArrayList<String> categorias = bd.getAllCategorias();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categorias);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, categorias);
 
         listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
@@ -43,7 +44,8 @@ public class EditarCategoriasActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                String categoria = adapter.getItem(position);
+                Toast.makeText(EditarCategoriasActivity.this, "Data seleccionada " + categoria, Toast.LENGTH_SHORT).show();
             }
         });
     }
