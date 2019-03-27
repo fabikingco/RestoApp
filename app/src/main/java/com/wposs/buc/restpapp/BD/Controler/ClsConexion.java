@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,9 +108,9 @@ public class ClsConexion extends SQLiteOpenHelper {
         }
     }
 
-    public List<String> getAllCategorias(){
+    public ArrayList<String> getAllCategorias(){
         db = this.getWritableDatabase();
-        List<String> categorias = new ArrayList<String>();
+        ArrayList<String> categorias = new ArrayList<String>();
         String query = "SELECT * " + "FROM " + TABLE_CATEGORIAS_NEW;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {

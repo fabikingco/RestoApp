@@ -21,6 +21,13 @@
             />
 
         <Button
+            android:id="@+id/btnVerProduc"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Visualizar productos"
+            android:onClick="visualizarProductos"/>
+
+        <Button
             android:id="@+id/btnEditarCategorias"
             android:layout_width="300dp"
             android:layout_height="wrap_content"

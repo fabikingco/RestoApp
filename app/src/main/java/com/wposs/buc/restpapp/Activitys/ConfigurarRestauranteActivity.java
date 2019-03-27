@@ -20,6 +20,10 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
     }
 
     public void editarCategorias(View view) {
+        Tools.startView(this, EditarCategoriasActivity.class);
+    }
 
+    public void visualizarProductos(View view) {
+        Tools.startView(this, VisualizarProductosActivity.class);
     }
 }

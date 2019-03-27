@@ -60,7 +60,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
     }
 
     private void llenarSpinner() {
-        List<String> categorias = new ArrayList<String>();
+        ArrayList<String> categorias = new ArrayList<String>();
         try{
             categorias = bd.getAllCategorias();
         }catch (NullPointerException e){

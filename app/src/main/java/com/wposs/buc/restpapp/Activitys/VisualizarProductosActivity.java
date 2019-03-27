@@ -2,6 +2,8 @@ package com.wposs.buc.restpapp.Activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,6 +33,13 @@ public class VisualizarProductosActivity extends AppCompatActivity {
         ListAdapter adapter = new SimpleAdapter(this, userList, R.layout.list_produc,
                 new String[]{"titulo","descripcion","valor"}, new int[]{R.id.tvTitulo, R.id.tvDescripcion, R.id.tvValor});
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
     }
 }
