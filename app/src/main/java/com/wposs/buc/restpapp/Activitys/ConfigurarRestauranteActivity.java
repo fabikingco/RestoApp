@@ -18,4 +18,8 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
     public void agregarNuevoProducto(View view) {
         Tools.startView(this, NuevoProductoActivity.class);
     }
+
+    public void editarCategorias(View view) {
+
+    }
 }

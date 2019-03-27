@@ -19,6 +19,13 @@
             android:text="Agregar nuevo producto"
             android:onClick="agregarNuevoProducto"
             />
+
+        <Button
+            android:id="@+id/btnEditarCategorias"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Editar categorias"
+            android:onClick="editarCategorias"/>
         
         
         
