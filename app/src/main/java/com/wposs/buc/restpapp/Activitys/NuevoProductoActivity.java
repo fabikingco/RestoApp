@@ -90,7 +90,17 @@ public class NuevoProductoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.dismiss();
                 String cat = etCategoria.getText().toString();
-                bd.nuevaCategoria(cat);
+                ArrayList<String> categorias = bd.getAllCategorias();
+                boolean existe = false;
+                for(int i = 0; i < categorias.size(); i++){
+                    if (cat.trim().equalsIgnoreCase(categorias.get(i)))
+                        existe = true;
+                }
+                if (!existe) {
+                    bd.nuevaCategoria(cat);
+                }else{
+                    Toast.makeText(NuevoProductoActivity.this, "Categoria ya existe", Toast.LENGTH_SHORT).show();
+                }
                 llenarSpinner();
             }
         });
