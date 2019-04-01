@@ -8,6 +8,8 @@
 
     <color name="colorRed">#FF0000</color>
 
+    <color name="colorLogo">#2C485C</color>
+
     <!-- Colores Pichincha -->
     <color name="colorYellowDark">#FFCC00</color>
     <color name="yellowMedium">#FFDC00</color>
