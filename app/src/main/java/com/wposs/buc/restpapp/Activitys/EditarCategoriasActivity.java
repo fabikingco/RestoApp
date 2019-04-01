@@ -48,7 +48,7 @@ public class EditarCategoriasActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String categoria = adapter.getItem(position);
+                final String categoria = adapter.getItem(position);
                 Toast.makeText(EditarCategoriasActivity.this, "Data seleccionada " + categoria, Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditarCategoriasActivity.this);
@@ -60,6 +60,14 @@ public class EditarCategoriasActivity extends AppCompatActivity {
 
                 TextView btnCancelar = v.findViewById(R.id.btnCancelar);
                 final EditText etCategoria = v.findViewById(R.id.etCategoria);
+
+                Button btnEliminar = v.findViewById(R.id.btnEliminar);
+                btnEliminar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bd.deleteCategoria(categoria);
+                    }
+                });
 
 
 

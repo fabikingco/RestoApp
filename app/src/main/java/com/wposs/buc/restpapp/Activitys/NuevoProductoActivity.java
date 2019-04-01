@@ -19,7 +19,6 @@ import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NuevoProductoActivity extends AppCompatActivity {
 
@@ -97,7 +96,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
                         existe = true;
                 }
                 if (!existe) {
-                    bd.nuevaCategoria(cat);
+                    bd.crearCategoria(cat);
                 }else{
                     Toast.makeText(NuevoProductoActivity.this, "Categoria ya existe", Toast.LENGTH_SHORT).show();
                 }

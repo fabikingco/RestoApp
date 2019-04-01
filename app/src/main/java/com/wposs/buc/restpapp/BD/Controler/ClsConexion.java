@@ -79,7 +79,22 @@ public class ClsConexion extends SQLiteOpenHelper {
         return ret;
     }
 
-    public ArrayList<HashMap<String, String>> GetProdcutos() {
+    public boolean updateProducto(){
+        boolean ret = false;
+
+
+
+        return ret;
+    }
+
+    public void deleteProducto(String producto) {
+        db = this.getWritableDatabase();
+        db.delete(TABLE_PROD_NEW, COLUMN_PROD_TITULO + "='"
+                + producto + "'", null);
+        db.close();
+    }
+
+    public ArrayList<HashMap<String, String>> getAllProductos() {
         db = this.getWritableDatabase();
         ArrayList<HashMap<String, String>> userList = new ArrayList<>();
         String query = "SELECT prod_titulo, prod_descripcion, prod_valor FROM "+ TABLE_PROD_NEW;
@@ -96,7 +111,7 @@ public class ClsConexion extends SQLiteOpenHelper {
         return  userList;
     }
 
-    public void nuevaCategoria(String categoria){
+    public void crearCategoria(String categoria){
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_CATEG_NAME, categoria);
@@ -106,6 +121,21 @@ public class ClsConexion extends SQLiteOpenHelper {
         }catch (SQLException e){
             e.getCause();
         }
+    }
+
+    public boolean updateCategorias(String categoria){
+        boolean ret = false;
+
+        // Debe actualizar todos los productos
+
+        return ret;
+    }
+
+    public void deleteCategoria(String categoria) {
+        db = this.getWritableDatabase();
+        db.delete(TABLE_CATEGORIAS_NEW, COLUMN_CATEG_NAME + "='"
+                + categoria + "'", null);
+        db.close();
     }
 
     public ArrayList<String> getAllCategorias(){
