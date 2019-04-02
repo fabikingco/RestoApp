@@ -22,7 +22,8 @@ import java.util.ArrayList;
 
 public class NuevoProductoActivity extends AppCompatActivity {
 
-    TextInputEditText etProducto, etValor, etDescripcion;
+    TextInputEditText etProducto, etValor;
+    EditText etDescripcion;
     EditText etCategoria;
     Spinner spinnerCategorias;
     String producto, categoria, descripcion;
@@ -47,7 +48,6 @@ public class NuevoProductoActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoria = (String) parent.getItemAtPosition(position);
-
                 Toast.makeText(NuevoProductoActivity.this, "Categoria seleccionada " + categoria, Toast.LENGTH_SHORT).show();
             }
 

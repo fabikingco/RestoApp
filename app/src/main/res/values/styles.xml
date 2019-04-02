@@ -17,4 +17,11 @@
         <item name="android:textColor">@color/colorLogo</item>
     </style>
 
+    <style name="botonesMenus" >
+        <item name="android:background">@drawable/button_color</item>
+        <item name="android:textColor">@color/colorLogo</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
 </resources>

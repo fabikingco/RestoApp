@@ -17,6 +17,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Agregar nuevo producto"
+            style="@style/botonesMenus"
             android:onClick="agregarNuevoProducto"
             />
 
@@ -25,6 +26,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Visualizar productos"
+            style="@style/botonesMenus"
             android:onClick="visualizarProductos"/>
 
         <Button
@@ -32,6 +34,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Editar categorias"
+            style="@style/botonesMenus"
             android:onClick="editarCategorias"/>
 
         <Button
@@ -39,12 +42,14 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Crear mesas"
+            style="@style/botonesMenus"
             android:onClick="crearMesas"/>
 
         <Button
             android:id="@+id/btnCrearUsuarios"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            style="@style/botonesMenus"
             android:text="Crear usuarios"
             android:onClick="crearUsuarios"/>
         
