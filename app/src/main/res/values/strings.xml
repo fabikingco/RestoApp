@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RestoApp</string>
+    <string name="opcionNoDisponible">Opción no disponible</string>
 </resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:context=".Activitys.ConfigurarMesasActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlSettings1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numero de mesas"
+            android:layout_centerVertical="true"/>
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:text="15"
+            android:maxLength="2"
+            android:inputType="number"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/edittext_pichi"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlSettings2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:layout_below="@+id/rlSettings1"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activar domicilios"
+            android:layout_centerVertical="true"/>
+
+        <Switch
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:checked="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lSettingsButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/botones"
+            android:text="Cancelar"/>
+
+        <Button
+            android:id="@+id/btnAceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            style="@style/botones"
+            android:text="Aceptar"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -33,6 +33,20 @@
             android:layout_height="wrap_content"
             android:text="Editar categorias"
             android:onClick="editarCategorias"/>
+
+        <Button
+            android:id="@+id/btnCrearMesas"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Crear mesas"
+            android:onClick="crearMesas"/>
+
+        <Button
+            android:id="@+id/btnCrearUsuarios"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Crear usuarios"
+            android:onClick="crearUsuarios"/>
         
         
         

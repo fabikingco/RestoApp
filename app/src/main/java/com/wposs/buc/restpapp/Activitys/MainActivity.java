@@ -22,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void crearPedido(View view) {
-        Toast.makeText(this, "Opcion no disponible", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
     }
 
     public void finalizarPedido(View view) {
-        Toast.makeText(this, "Opcion no disponible", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
     }
 
     public void configurarRestaurante(View view) {

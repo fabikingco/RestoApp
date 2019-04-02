@@ -3,6 +3,7 @@ package com.wposs.buc.restpapp.Activitys;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
@@ -25,5 +26,13 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
 
     public void visualizarProductos(View view) {
         Tools.startView(this, VisualizarProductosActivity.class);
+    }
+
+    public void crearMesas(View view) {
+        Tools.startView(this, ConfigurarMesasActivity.class);
+    }
+
+    public void crearUsuarios(View view) {
+        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
     }
 }
