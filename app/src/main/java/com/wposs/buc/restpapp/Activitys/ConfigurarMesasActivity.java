@@ -39,6 +39,7 @@ public class ConfigurarMesasActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("mesas", etMesas.getText().toString());
         editor.putBoolean("domicilios", swDomicilios.isChecked());
+        editor.apply();
 
         finish();
     }

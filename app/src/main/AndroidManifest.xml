@@ -11,9 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".Activitys.ConfigurarMesasActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Activitys.CrearPedidoActivity"></activity>
+        <activity
+            android:name=".Activitys.ConfigurarMesasActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Activitys.EditarCategoriasActivity" />
         <activity android:name=".Activitys.VisualizarProductosActivity" />
         <activity

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void crearPedido(View view) {
-        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
+        Tools.startView(this, CrearPedidoActivity.class);
     }
 
     public void finalizarPedido(View view) {
