@@ -41,7 +41,7 @@
             android:id="@+id/btnCrearMesas"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Crear mesas"
+            android:text="Configuración de mesas"
             style="@style/botonesMenus"
             android:onClick="crearMesas"/>
 
