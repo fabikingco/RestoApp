@@ -78,8 +78,10 @@
             android:id="@+id/etDescripcion"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:background="@drawable/edittext_pichi"
             android:lines="2"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             android:hint="Descripción del producto"/>
 
         <LinearLayout

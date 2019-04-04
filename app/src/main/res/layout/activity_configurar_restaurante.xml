@@ -23,11 +23,11 @@
 
         <Button
             android:id="@+id/btnVerProduc"
+            style="@style/botonesMenus"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Visualizar productos"
-            style="@style/botonesMenus"
-            android:onClick="visualizarProductos"/>
+            android:onClick="visualizarProductos"
+            android:text="Editar productos" />
 
         <Button
             android:id="@+id/btnEditarCategorias"
