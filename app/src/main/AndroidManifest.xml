@@ -4,8 +4,11 @@
     package="com.wposs.buc.restpapp">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
+
     <uses-permission-sdk-23 android:name="android.permission.SEND_SMS" />
+
     <uses-permission android:name="android.permission.READ_SMS" />
+
     <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
 
     <application
@@ -16,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".Activitys.CrearPedidoActivity"></activity>
+        <activity android:name=".Activitys.CrearUsuarioActivity"></activity>
+        <activity android:name=".Activitys.CrearPedidoActivity" />
         <activity
             android:name=".Activitys.ConfigurarMesasActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

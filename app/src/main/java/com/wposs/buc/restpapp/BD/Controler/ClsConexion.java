@@ -34,6 +34,12 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_PROD_CATEGORIA + " text not null, " +
             COLUMN_PROD_DESCRIPCION + " text);";
 
+    /**
+     * TABLE categorias_new
+     * Columns:
+     *  id
+     *  name
+     */
     private final String TABLE_CATEGORIAS_NEW = "categorias_new";
     private final String COLUMN_CATEG_ID= "categ_id";
     private final String COLUMN_CATEG_NAME = "categ_name";
@@ -41,6 +47,23 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String CREATE_CATEGORIAS_TABLE_NEW = "create table " + TABLE_CATEGORIAS_NEW + "(" +
             COLUMN_CATEG_ID + " integer primary key AUTOINCREMENT, " +
             COLUMN_CATEG_NAME + " text not null);";
+
+
+    private final String TABLE_USUARIOS_NEW = "usuarios_new";
+    private final String COLUMN_USER_ID = "user_id";
+    private final String COLUMN_USER_USER = "user_user";
+    private final String COLUMN_USER_PASS = "user_pass";
+    private final String COLUMN_USER_NAME = "user_name";
+    private final String COLUMN_USER_STATUS = "user_status";
+    private final String COLUMN_USER_ROLE = "user_role";
+
+    private final String CREATE_USUARIOS_TABLE_NEW = "create table " + TABLE_USUARIOS_NEW + "(" +
+            COLUMN_USER_ID + " integer primary key not null, " +
+            COLUMN_USER_USER + " text not null, " +
+            COLUMN_USER_PASS + " text not null, " +
+            COLUMN_USER_NAME + " text not null, " +
+            COLUMN_USER_ROLE + " text not null, " +
+            COLUMN_USER_STATUS + " boolean not null);";
 
 
 
@@ -53,6 +76,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PRODUCTOS_TABLE_NEW);
         db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
+        db.execSQL(CREATE_USUARIOS_TABLE_NEW);
 
     }
 
