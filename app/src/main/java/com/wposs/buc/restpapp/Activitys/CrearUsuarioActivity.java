@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
+
+import java.util.ArrayList;
 
 public class CrearUsuarioActivity extends AppCompatActivity {
 
@@ -52,13 +55,20 @@ public class CrearUsuarioActivity extends AppCompatActivity {
                 if (!sDocumento.isEmpty()) {
                     if (verificarRadio()) {
                         int id = Integer.parseInt(sDocumento);
-                        String user = obtenerUsuario(sNombre, sApellido);
-                        String name = sNombre +
-                                sApellido;
-                        String role = obtenerRole();
-                        String status = "new";
-                        Toast.makeText(this, "user: " + user + " name: " + name, Toast.LENGTH_SHORT).show();
-                        //bd.crearUsuario(id, user, sDocumento, name, role, status);
+                        if (verificarIdUser(id)) {
+                            String user = obtenerUsuario(sNombre, sApellido);
+                            if (verificarUsuario(user)) {
+                                String name = sNombre +
+                                        " " +
+                                        sApellido;
+                                String role = obtenerRole();
+                                String status = "new";
+                                if (bd.crearUsuario(id, user, sDocumento, name, role, status)) {
+                                    Toast.makeText(this, "Usuario " + user + " creado con exito", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }
+                        }
                     }
                 } else {
                     Toast.makeText(this, "Campo de documento vacio", Toast.LENGTH_SHORT).show();
@@ -70,6 +80,38 @@ public class CrearUsuarioActivity extends AppCompatActivity {
             Toast.makeText(this, "Campo de nombre vacio", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private boolean verificarUsuario(String user) {
+        boolean ret = true;
+        try {
+            ArrayList<String> usuarios = bd.getAllUsuariosUser();
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).equals(user)) {
+                    ret = false;
+                    Toast.makeText(this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch (Exception e){
+            Log.e("Error ", ""+e);
+        }
+        return ret;
+    }
+
+    private boolean verificarIdUser(int id) {
+        boolean ret = true;
+        try {
+            ArrayList<Integer> usuarios = bd.getAllUsuariosId();
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i) == id ){
+                    ret = false;
+                    Toast.makeText(this, "Este documento ya tiene usuario registrado", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch (Exception e){
+            Log.e("Error ", ""+e);
+        }
+        return ret;
     }
 
     private boolean verificarRadio() {
@@ -99,9 +141,13 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
     private String obtenerUsuario(String sNombre, String sApellido) {
         String ret;
-
         String primeraLetraDelNombre = sNombre.substring(0,1).toLowerCase();
-        String apellido = sApellido.trim().replace(" ", "").toLowerCase();
+        String apellido;
+        if (!sApellido.contains(" ")){
+            apellido = sApellido.trim().toLowerCase();
+        }else {
+            apellido = sApellido.trim().substring(0,sApellido.indexOf(" ")).toLowerCase();
+        }
 
         ret = primeraLetraDelNombre +
                 apellido;

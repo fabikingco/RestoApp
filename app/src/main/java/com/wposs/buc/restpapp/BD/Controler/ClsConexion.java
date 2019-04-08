@@ -180,7 +180,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     public ArrayList<String> getAllCategorias(){
         db = this.getWritableDatabase();
         ArrayList<String> categorias = new ArrayList<String>();
-        String query = "SELECT * " + "FROM " + TABLE_CATEGORIAS_NEW;
+        String query = "SELECT * FROM " + TABLE_CATEGORIAS_NEW;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
@@ -210,5 +210,35 @@ public class ClsConexion extends SQLiteOpenHelper {
             e.getCause();
         }
         return ret;
+    }
+
+    public ArrayList<String> getAllUsuariosUser() {
+        ArrayList<String> users = new ArrayList<String>();
+        db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_USER_USER + " FROM " + TABLE_USUARIOS_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                users.add(cursor.getString(cursor.getColumnIndex(COLUMN_USER_USER)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return users;
+    }
+
+    public ArrayList<Integer> getAllUsuariosId() {
+        ArrayList<Integer> users_id = new ArrayList<Integer>();
+        db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_USER_ID + " FROM " + TABLE_USUARIOS_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                users_id.add(cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return users_id;
     }
 }
