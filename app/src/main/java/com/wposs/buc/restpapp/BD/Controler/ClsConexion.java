@@ -17,7 +17,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "productos_rest.db";
+    private static final String DATABASE_NAME = "resto_app.db";
 
     /**
      * TABLE productos_new
@@ -82,6 +82,16 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_USER_ROLE + " text not null, " +
             COLUMN_USER_STATUS + " text not null);";
 
+    private final int USUARIO_ADMIN_ID = 1234567890;
+    private final String USUARIO_ADMIN_USER = "admin";
+    private final String USUARIO_ADMIN_PASS = "123456";
+    private final String USUARIO_ADMIN_NAME = "Administrador";
+    private final String USUARIO_ADMIN_ROLE = "Admin";
+    private final String USUARIO_ADMIN_STATUS = "activado";
+
+    private final String INSERT_USUARIO_ADMIN = ("insert into " + TABLE_USUARIOS_NEW +" values('"+USUARIO_ADMIN_ID+"'," +
+            "'"+USUARIO_ADMIN_USER+"','"+USUARIO_ADMIN_PASS+"','"+USUARIO_ADMIN_NAME+"','"+USUARIO_ADMIN_ROLE+"','"+USUARIO_ADMIN_STATUS+"');");
+
     public ClsConexion(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -92,11 +102,13 @@ public class ClsConexion extends SQLiteOpenHelper {
         db.execSQL(CREATE_PRODUCTOS_TABLE_NEW);
         db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
         db.execSQL(CREATE_USUARIOS_TABLE_NEW);
+        db.execSQL(INSERT_USUARIO_ADMIN);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
 
     }
 
