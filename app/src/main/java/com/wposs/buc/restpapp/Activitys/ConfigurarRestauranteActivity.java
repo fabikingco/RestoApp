@@ -33,6 +33,6 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
     }
 
     public void crearUsuarios(View view) {
-        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
+        Tools.startView(this, CrearUsuarioActivity.class);
     }
 }

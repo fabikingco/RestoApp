@@ -19,12 +19,20 @@ public class ClsConexion extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "productos_rest.db";
 
-
+    /**
+     * TABLE productos_new
+     * Colums:
+     *  id
+     *  titulo
+     *  valor
+     *  categoria
+     *  descripcion
+     */
     private final String TABLE_PROD_NEW = "productos_new";
     private final String COLUMN_PROD_ID= "prod_id";
     private final String COLUMN_PROD_TITULO = "prod_titulo";
     private final String COLUMN_PROD_VALOR = "prod_valor";
-    private final String COLUMN_PROD_CATEGORIA = "prod_categoriao";
+    private final String COLUMN_PROD_CATEGORIA = "prod_categoria";
     private final String COLUMN_PROD_DESCRIPCION = "prod_descripcion";
 
     private final String CREATE_PRODUCTOS_TABLE_NEW = "create table "+ TABLE_PROD_NEW + "(" +
@@ -48,14 +56,23 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_CATEG_ID + " integer primary key AUTOINCREMENT, " +
             COLUMN_CATEG_NAME + " text not null);";
 
-
+    /**
+     * TABLE usuarios_new
+     * Colums:
+     *  id
+     *  user
+     *  pass
+     *  name
+     *  status
+     *  role
+     */
     private final String TABLE_USUARIOS_NEW = "usuarios_new";
     private final String COLUMN_USER_ID = "user_id";
     private final String COLUMN_USER_USER = "user_user";
     private final String COLUMN_USER_PASS = "user_pass";
     private final String COLUMN_USER_NAME = "user_name";
-    private final String COLUMN_USER_STATUS = "user_status";
     private final String COLUMN_USER_ROLE = "user_role";
+    private final String COLUMN_USER_STATUS = "user_status";
 
     private final String CREATE_USUARIOS_TABLE_NEW = "create table " + TABLE_USUARIOS_NEW + "(" +
             COLUMN_USER_ID + " integer primary key not null, " +
@@ -63,9 +80,7 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_USER_PASS + " text not null, " +
             COLUMN_USER_NAME + " text not null, " +
             COLUMN_USER_ROLE + " text not null, " +
-            COLUMN_USER_STATUS + " boolean not null);";
-
-
+            COLUMN_USER_STATUS + " text not null);";
 
     public ClsConexion(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -175,5 +190,25 @@ public class ClsConexion extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return categorias;
+    }
+
+    public boolean crearUsuario (int id, String user, String pass, String name, String role, String status){
+        boolean ret = false;
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_ID, id);
+        values.put(COLUMN_USER_USER, user);
+        values.put(COLUMN_USER_PASS, pass);
+        values.put(COLUMN_USER_NAME, name);
+        values.put(COLUMN_USER_ROLE, role);
+        values.put(COLUMN_USER_STATUS, status);
+        try {
+            db.insert(TABLE_USUARIOS_NEW,null,values);
+            db.close();
+            ret = true;
+        }catch (SQLException e){
+            e.getCause();
+        }
+        return ret;
     }
 }

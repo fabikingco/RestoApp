@@ -50,6 +50,18 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Bienvenido Fabian Ardila - Operador"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:background="@drawable/textview_infouser"
+        />
+
 
 
 </RelativeLayout>
