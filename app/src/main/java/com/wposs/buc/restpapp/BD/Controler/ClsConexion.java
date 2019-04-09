@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wposs.buc.restpapp.BD.Model.Usuarios;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import java.util.List;
 public class ClsConexion extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
+    public static Usuarios usuario;
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "resto_app.db";
@@ -252,5 +255,31 @@ public class ClsConexion extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return users_id;
+    }
+
+    public Usuarios readUser(Usuarios user) {
+        db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_USUARIOS_NEW,
+                new String[]{COLUMN_USER_ID, COLUMN_USER_USER, COLUMN_USER_PASS,COLUMN_USER_NAME,COLUMN_USER_ROLE,COLUMN_USER_STATUS},
+                COLUMN_USER_USER + "=?",
+                new String[] {user.getUser()},
+                null,null,null
+        );
+
+        if (cursor !=null && cursor.moveToFirst() && cursor.getCount()>0){
+            Usuarios userData = new Usuarios(cursor.getInt(0),cursor.getString(1),cursor.getString(2),
+                    cursor.getString(3),cursor.getString(4),cursor.getString(5));
+            usuario = userData;
+            usuario.setId(cursor.getInt(0));
+            usuario.setUser(cursor.getString(1));
+            usuario.setPass(cursor.getString(2));
+            usuario.setName(cursor.getString(3));
+            usuario.setRole(cursor.getString(4));
+            usuario.setStatus(cursor.getString(5));
+            db.close();
+            return userData;
+        }
+        db.close();
+        return null;
     }
 }

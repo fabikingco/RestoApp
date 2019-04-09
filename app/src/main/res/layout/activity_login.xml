@@ -76,9 +76,8 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="number"
-                android:maxLength="0"
+                android:maxLength="6"
                 android:textColor="@color/colorWhite"
-                android:cursorVisible="false"
                 android:longClickable="false"
                 android:textCursorDrawable="@drawable/cursor_custon" />
             <ImageView
@@ -154,8 +153,8 @@
             style="@style/botones"
             android:text="Ingresar"
             android:textColor="@color/blueText"
-            android:textAllCaps="false"
             android:textSize="20sp"
+            android:onClick="ingresar"
             android:textStyle="bold" />
     </LinearLayout>
 

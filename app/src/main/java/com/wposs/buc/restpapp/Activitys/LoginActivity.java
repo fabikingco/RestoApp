@@ -9,13 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
+import com.wposs.buc.restpapp.BD.Model.Usuarios;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.Tools;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText et_user, et_pw;
-    ImageView punto1, punto2, punto3, punto4, punto5, punto6;
-    private Button btnLogin;
+    private ImageView punto1, punto2, punto3, punto4, punto5, punto6;
+    private String user, pass;
+    private static Usuarios usuario;
+    private ClsConexion bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +28,9 @@ public class LoginActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_login);
         findViewObjetos();
+        bd = new ClsConexion(this);
 
-
+        et_pw = findViewById(R.id.editText_Clave);
 
         et_pw.addTextChangedListener(new TextWatcher() {
             @Override
@@ -39,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int tamanio=s.length();
+                int tamanio = s.length();
                 switch (tamanio) {
                     case 0:
                         et_pw.setCursorVisible(true);
@@ -106,13 +112,23 @@ public class LoginActivity extends AppCompatActivity {
 
     private void findViewObjetos() {
         et_user = findViewById(R.id.editText_usuario);
-        et_pw = findViewById(R.id.editText_Clave);
         punto1 = findViewById(R.id.punto1);
         punto2 = findViewById(R.id.punto2);
         punto3 = findViewById(R.id.punto3);
         punto4 = findViewById(R.id.punto4);
         punto5 = findViewById(R.id.punto5);
         punto6 = findViewById(R.id.punto6);
-        btnLogin = findViewById(R.id.btLogin);
+    }
+
+    public void ingresar(View view) {
+        user = et_user.getText().toString();
+        pass = et_pw.getText().toString();
+        usuario = bd.readUser(new Usuarios(user));
+        if (usuario != null) {
+            if (usuario.getUser().equals(user) && usuario.getPass().equals(pass)) {
+                Tools.startView(this, MainActivity.class);
+                finish();
+            }
+        }
     }
 }
