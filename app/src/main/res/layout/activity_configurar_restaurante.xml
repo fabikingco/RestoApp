@@ -50,8 +50,8 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             style="@style/botonesMenus"
-            android:text="Crear usuarios"
-            android:onClick="crearUsuarios"/>
+            android:text="Configuración de usuarios"
+            android:onClick="configuracionUsuarios"/>
         
         
         

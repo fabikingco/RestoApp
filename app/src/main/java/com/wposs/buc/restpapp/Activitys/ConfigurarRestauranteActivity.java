@@ -32,7 +32,7 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
         Tools.startView(this, ConfigurarMesasActivity.class);
     }
 
-    public void crearUsuarios(View view) {
-        Tools.startView(this, CrearUsuarioActivity.class);
+    public void configuracionUsuarios(View view) {
+
     }
 }
