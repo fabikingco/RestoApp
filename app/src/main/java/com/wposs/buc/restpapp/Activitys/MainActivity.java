@@ -10,15 +10,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
 
+import static com.wposs.buc.restpapp.Activitys.LoginActivity.usuario;
+
 public class MainActivity extends AppCompatActivity {
 
     ClsConexion bd;
+    TextView tvUsuario;
 
     private static final String TAG = "MainActivity";
     private static final int SMS_PERMISSION_CODE = 0;
@@ -28,8 +32,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bd = new ClsConexion(this);
-
+        tvUsuario = findViewById(R.id.tvUsuario);
+        bannerUsuario();
         solicitarPermisos();
+    }
+
+    public void crearPedido(View view) {
+        Tools.startView(this, CrearPedidoActivity.class);
+    }
+
+    public void finalizarPedido(View view) {
+        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
+    }
+
+    public void configurarRestaurante(View view) {
+        if (usuario.getRole().equals("Admin")) {
+            Tools.startView(this, ConfigurarRestauranteActivity.class);
+        } else {
+            Toast.makeText(this, "No tienes permisos para ingresar a este menu", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void bannerUsuario() {
+        String banner = "Hola, " + usuario.getName() + " - " + usuario.getRole();
+        tvUsuario.setText(banner);
     }
 
     private void solicitarPermisos() {
@@ -62,18 +88,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS}, SMS_PERMISSION_CODE);
-    }
-
-    public void crearPedido(View view) {
-        Tools.startView(this, CrearPedidoActivity.class);
-    }
-
-    public void finalizarPedido(View view) {
-        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
-    }
-
-    public void configurarRestaurante(View view) {
-        Tools.startView(this, ConfigurarRestauranteActivity.class);
     }
 
     @Override

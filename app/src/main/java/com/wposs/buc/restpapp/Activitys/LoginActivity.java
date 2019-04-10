@@ -1,5 +1,7 @@
 package com.wposs.buc.restpapp.Activitys;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,16 +21,27 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_user, et_pw;
     private ImageView punto1, punto2, punto3, punto4, punto5, punto6;
     private String user, pass;
-    private static Usuarios usuario;
+
+    public static Usuarios usuario;
     private ClsConexion bd;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
+        sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        boolean loginActivo = sharedPreferences.getBoolean("loginActivo", false);
+        if (loginActivo) {
+            Tools.startView(this, MainActivity.class);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_login);
         findViewObjetos();
         bd = new ClsConexion(this);
+
 
         et_pw = findViewById(R.id.editText_Clave);
 
@@ -126,6 +139,11 @@ public class LoginActivity extends AppCompatActivity {
         usuario = bd.readUser(new Usuarios(user));
         if (usuario != null) {
             if (usuario.getUser().equals(user) && usuario.getPass().equals(pass)) {
+                // Guardar estado del login
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("loginActivo", true);
+                editor.apply();
+
                 Tools.startView(this, MainActivity.class);
                 finish();
             }
