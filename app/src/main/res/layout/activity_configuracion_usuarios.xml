@@ -16,7 +16,7 @@
             android:id="@+id/btnAgragarNuevoProducto"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Agregar nuevo producto"
+            android:text="Agregar nuevo usuario"
             style="@style/botonesMenus"
             android:onClick="crearUsuarios"
             />
@@ -27,7 +27,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:onClick="visualizarUsuarios"
-            android:text="Editar productos" />
+            android:text="Visualizar/Editar usuarios" />
 
 
 

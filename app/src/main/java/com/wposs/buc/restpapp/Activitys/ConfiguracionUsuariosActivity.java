@@ -22,6 +22,7 @@ public class ConfiguracionUsuariosActivity extends AppCompatActivity {
     }
 
     public void visualizarUsuarios(View view) {
+        Tools.startView(this, VisualizarUsuariosActivity.class);
 
     }
 }

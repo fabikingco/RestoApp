@@ -33,6 +33,13 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         boolean loginActivo = sharedPreferences.getBoolean("loginActivo", false);
         if (loginActivo) {
+            usuario = new Usuarios();
+            String user = sharedPreferences.getString("user", "error");
+            String name = sharedPreferences.getString("name", "error");
+            String role = sharedPreferences.getString("role", "error");
+            usuario.setUser(user);
+            usuario.setName(name);
+            usuario.setRole(role);
             Tools.startView(this, MainActivity.class);
             finish();
             return;
@@ -142,6 +149,9 @@ public class LoginActivity extends AppCompatActivity {
                 // Guardar estado del login
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("loginActivo", true);
+                editor.putString("user", usuario.getUser());
+                editor.putString("name", usuario.getName());
+                editor.putString("role", usuario.getRole());
                 editor.apply();
 
                 Tools.startView(this, MainActivity.class);

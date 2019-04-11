@@ -1,7 +1,9 @@
 package com.wposs.buc.restpapp.Activitys;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;

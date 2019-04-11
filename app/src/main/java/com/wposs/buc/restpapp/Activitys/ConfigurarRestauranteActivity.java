@@ -33,6 +33,6 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
     }
 
     public void configuracionUsuarios(View view) {
-
+        Tools.startView(this, ConfiguracionUsuariosActivity.class);
     }
 }

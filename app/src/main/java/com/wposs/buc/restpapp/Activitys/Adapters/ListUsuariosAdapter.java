@@ -8,15 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wposs.buc.restpapp.BD.Model.Usuarios;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;
 
-public class ListItemsAdapter extends ArrayAdapter<ListItems> {
+public class ListUsuariosAdapter extends ArrayAdapter<Usuarios> {
 
-    private static final String LOG_TAG = ListItemsAdapter.class.getSimpleName();
-
-    public ListItemsAdapter(Activity context, ArrayList<ListItems> listItems) {
+    public ListUsuariosAdapter(Activity context, ArrayList<Usuarios> listItems) {
         super(context, 0, listItems);
     }
 
@@ -29,20 +28,21 @@ public class ListItemsAdapter extends ArrayAdapter<ListItems> {
                     R.layout.list_item, parent, false);
         }
 
-        ListItems listItems = getItem(position);
+        Usuarios usuarios = getItem(position);
 
         TextView tv1 = (TextView) listItemView.findViewById(R.id.tv1);
 
-        tv1.setText(listItems.getTextView1());
+        tv1.setText(usuarios.getUser());
 
         TextView tv2 = (TextView) listItemView.findViewById(R.id.tv2);
 
-        tv2.setText(listItems.getTextView2());
+        tv2.setText(usuarios.getRole());
 
         ImageView iconView = (ImageView) listItemView.findViewById(R.id.list_item_icon);
 
-        iconView.setImageResource(listItems.getImageResourceId());
+        iconView.setImageResource(R.mipmap.ic_account);
 
         return listItemView;
     }
+
 }
