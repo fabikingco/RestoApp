@@ -52,12 +52,22 @@ public class ClsConexion extends SQLiteOpenHelper {
      *  name
      */
     private final String TABLE_CATEGORIAS_NEW = "categorias_new";
-    private final String COLUMN_CATEG_ID= "categ_id";
+    private final String COLUMN_CATEG_ID = "categ_id";
     private final String COLUMN_CATEG_NAME = "categ_name";
 
     private final String CREATE_CATEGORIAS_TABLE_NEW = "create table " + TABLE_CATEGORIAS_NEW + "(" +
             COLUMN_CATEG_ID + " integer primary key AUTOINCREMENT, " +
             COLUMN_CATEG_NAME + " text not null);";
+
+    private final String TABLE_MESAS_NEW = "mesas_new";
+    private final String COLUMN_MESAS_ID = "mesas_id";
+    private final String COLUMN_MESAS_NAME = "mesas_name";
+
+    private final String CREATE_MESAS_TABLE_NEW = "create table " + TABLE_MESAS_NEW + "(" +
+            COLUMN_MESAS_ID + " integer primary key not null, " +
+            COLUMN_MESAS_NAME + " text not null);";
+
+    private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1');");
 
     /**
      * TABLE usuarios_new
@@ -104,6 +114,8 @@ public class ClsConexion extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PRODUCTOS_TABLE_NEW);
         db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
+        db.execSQL(CREATE_MESAS_TABLE_NEW);
+        db.execSQL(INSERT_MESAS_DEFAULT);
         db.execSQL(CREATE_USUARIOS_TABLE_NEW);
         db.execSQL(INSERT_USUARIO_ADMIN);
 
@@ -298,5 +310,20 @@ public class ClsConexion extends SQLiteOpenHelper {
         }
         db.close();
         return null;
+    }
+
+    public ArrayList<String> getAllMesas() {
+        ArrayList<String> mesas = new ArrayList<String>();
+        db = this.getWritableDatabase();
+        String query = "SELECT " + COLUMN_MESAS_NAME + " FROM " + TABLE_MESAS_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mesas.add(cursor.getString(cursor.getColumnIndex(COLUMN_MESAS_NAME)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return mesas;
     }
 }
