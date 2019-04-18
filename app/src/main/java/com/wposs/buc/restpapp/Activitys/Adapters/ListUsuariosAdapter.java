@@ -25,7 +25,7 @@ public class ListUsuariosAdapter extends ArrayAdapter<Usuarios> {
         View listItemView = convertView;
         if(listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_item, parent, false);
+                    R.layout.list_usuarios, parent, false);
         }
 
         Usuarios usuarios = getItem(position);

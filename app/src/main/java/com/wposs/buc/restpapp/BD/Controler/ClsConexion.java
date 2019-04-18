@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wposs.buc.restpapp.BD.Model.Mesas;
 import com.wposs.buc.restpapp.BD.Model.Usuarios;
 
 import java.lang.reflect.Array;
@@ -62,12 +63,14 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String TABLE_MESAS_NEW = "mesas_new";
     private final String COLUMN_MESAS_ID = "mesas_id";
     private final String COLUMN_MESAS_NAME = "mesas_name";
+    private final String COLUMN_MESAS_STATUS = "mesas_status";
 
     private final String CREATE_MESAS_TABLE_NEW = "create table " + TABLE_MESAS_NEW + "(" +
             COLUMN_MESAS_ID + " integer primary key not null, " +
-            COLUMN_MESAS_NAME + " text not null);";
+            COLUMN_MESAS_NAME + " text not null, " +
+            COLUMN_MESAS_STATUS + " text not null);";
 
-    private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1');");
+    private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1', 'disponible');");
 
     /**
      * TABLE usuarios_new
@@ -312,7 +315,22 @@ public class ClsConexion extends SQLiteOpenHelper {
         return null;
     }
 
-    public ArrayList<String> getAllMesas() {
+    public ArrayList<Mesas> getAllMesas() {
+        ArrayList<Mesas> mesas = new ArrayList<Mesas>();
+        db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_MESAS_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return mesas;
+    }
+
+    public ArrayList<String> getAllMesasName() {
         ArrayList<String> mesas = new ArrayList<String>();
         db = this.getWritableDatabase();
         String query = "SELECT " + COLUMN_MESAS_NAME + " FROM " + TABLE_MESAS_NEW;

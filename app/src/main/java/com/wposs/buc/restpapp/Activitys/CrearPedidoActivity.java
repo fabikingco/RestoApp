@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.wposs.buc.restpapp.Activitys.Adapters.ListUsuariosAdapter;
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
+import com.wposs.buc.restpapp.BD.Model.Mesas;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crear_pedido);
         bd = new ClsConexion(this);
 
-        ArrayList<String> mesas = bd.getAllMesas();
+        ArrayList<Mesas> mesas = bd.getAllMesas();
 
         sharedPreferences = getSharedPreferences("configuracionRestaurante", Context.MODE_PRIVATE);
         boolean infoDomicilios = sharedPreferences.getBoolean("domicilios", false);
@@ -44,26 +47,16 @@ public class CrearPedidoActivity extends AppCompatActivity {
         crearBotonesDeMesas(mesas, infoDomicilios);
     }
 
-    private void crearBotonesDeMesas(ArrayList<String> mesas, boolean infoDomicilios) {
+    private void crearBotonesDeMesas(ArrayList<Mesas> mesas, boolean infoDomicilios) {
 
         LinearLayout linearLayout = findViewById(R.id.linearBotones);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
         lp.setMargins(0, 10, 0, 0);
 
-        int numMesas = mesas.size();
+        ListUsuariosAdapter adapter = new ListUsuariosAdapter(this, mesas);
 
-        Button[] buttons = new Button[numMesas];
-
-        for (int i = 0; i < numMesas; i++){
-            buttons[i] = new Button(this);
-            buttons[i].setBackgroundResource(R.drawable.button_color);
-            buttons[i].setLayoutParams(lp);
-            buttons[i].setText(mesas.get(i));
-            buttons[i].setTextColor(Color.parseColor("#0F265C"));
-            buttons[i].setTextSize(20);
-            buttons[i].setAllCaps(false);
-            linearLayout.addView(buttons[i]);
-        }
+        ListView listView = findViewById(R.id.listview_flavor);
+        listView.setAdapter(adapter);
 
         if(infoDomicilios){
             Button domicilios = new Button(this);
