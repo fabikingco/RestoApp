@@ -36,7 +36,7 @@ public class ConfigurarMesasActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("configuracionRestaurante", Context.MODE_PRIVATE);
         boolean infoDomicilios = sharedPreferences.getBoolean("domicilios", false);
 
-        ArrayList<String> mesas = bd.getAllMesas();
+        ArrayList<String> mesas = bd.getAllMesasName();
         etMesas.setText(String.valueOf(mesas.size()));
 
         swDomicilios.setChecked(infoDomicilios);

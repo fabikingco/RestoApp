@@ -8,23 +8,10 @@
     android:orientation="vertical"
     tools:context=".Activitys.CrearPedidoActivity">
 
-    <ScrollView
-        android:id="@+id/scroll"
+    <GridView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/linearBotones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-
-
-
-        </LinearLayout>
-    </ScrollView>
+    </GridView>
 
 </LinearLayout>

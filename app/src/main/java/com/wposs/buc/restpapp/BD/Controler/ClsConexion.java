@@ -71,6 +71,7 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_MESAS_STATUS + " text not null);";
 
     private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1', 'disponible');");
+    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', 'ocupada');");
 
     /**
      * TABLE usuarios_new
@@ -119,6 +120,9 @@ public class ClsConexion extends SQLiteOpenHelper {
         db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
         db.execSQL(CREATE_MESAS_TABLE_NEW);
         db.execSQL(INSERT_MESAS_DEFAULT);
+
+        db.execSQL(INSERT_MESAS_DEFAULT_otraPrueba);
+
         db.execSQL(CREATE_USUARIOS_TABLE_NEW);
         db.execSQL(INSERT_USUARIO_ADMIN);
 
@@ -126,7 +130,6 @@ public class ClsConexion extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
 
     }
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ListMesasAdapter extends ArrayAdapter<Mesas> {
 
-    public ListMesasAdapter(@NonNull Activity activity, @NonNull ArrayList<Mesas> objects) {
+    public ListMesasAdapter(Activity activity, ArrayList<Mesas> objects) {
         super(activity, 0, objects);
     }
 
@@ -31,11 +31,14 @@ public class ListMesasAdapter extends ArrayAdapter<Mesas> {
 
         Mesas mesas = getItem(position);
 
-        Button btn = listItemView.findViewById(R.id.btnFinalizarPedido);
+        Button btn = listItemView.findViewById(R.id.btnMesas);
         btn.setText(mesas.getName());
-
-
-
+        switch (mesas.getStatus()){
+            case "disponible":
+                btn.setBackgroundResource(R.drawable.button_verde);
+            case "ocupada":
+                btn.setBackgroundResource(R.drawable.button_rojo);
+        }
 
         return listItemView;
     }

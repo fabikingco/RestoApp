@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.wposs.buc.restpapp.Activitys.Adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.Activitys.Adapters.ListUsuariosAdapter;
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
 import com.wposs.buc.restpapp.BD.Model.Mesas;
@@ -36,7 +37,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_pedido);
+        setContentView(R.layout.visualizar_items);
         bd = new ClsConexion(this);
 
         ArrayList<Mesas> mesas = bd.getAllMesas();
@@ -49,16 +50,16 @@ public class CrearPedidoActivity extends AppCompatActivity {
 
     private void crearBotonesDeMesas(ArrayList<Mesas> mesas, boolean infoDomicilios) {
 
-        LinearLayout linearLayout = findViewById(R.id.linearBotones);
+        /*LinearLayout linearLayout = findViewById(R.id.linearBotones);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
-        lp.setMargins(0, 10, 0, 0);
+        lp.setMargins(0, 10, 0, 0);*/
 
-        ListUsuariosAdapter adapter = new ListUsuariosAdapter(this, mesas);
+        ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
 
         ListView listView = findViewById(R.id.listview_flavor);
         listView.setAdapter(adapter);
 
-        if(infoDomicilios){
+        /*if(infoDomicilios){
             Button domicilios = new Button(this);
             domicilios.setBackgroundResource(R.drawable.button_color);
             domicilios.setLayoutParams(lp);
@@ -67,7 +68,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
             domicilios.setTextSize(20);
             domicilios.setAllCaps(false);
             linearLayout.addView(domicilios);
-        }
+        }*/
 
     }
 }
