@@ -337,6 +337,21 @@ public class ClsConexion extends SQLiteOpenHelper {
         return mesas;
     }
 
+    public ArrayList<Mesas> getAllMesasWhereOcupadas() {
+        ArrayList<Mesas> mesas = new ArrayList<Mesas>();
+        db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_MESAS_NEW + " WHERE " + COLUMN_MESAS_STATUS + " = 'ocupada'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return mesas;
+    }
+
     public ArrayList<String> getAllMesasName() {
         ArrayList<String> mesas = new ArrayList<String>();
         db = this.getWritableDatabase();

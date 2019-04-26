@@ -34,6 +34,9 @@
             android:name=".Activitys.CrearPedidoActivity"
             android:parentActivityName=".Activitys.MainActivity" />
         <activity
+            android:name=".Activitys.FinalizarPedidoActivity"
+            android:parentActivityName=".Activitys.MainActivity" />
+        <activity
             android:name=".Activitys.ConfigurarRestauranteActivity"
             android:parentActivityName=".Activitys.MainActivity" /> <!-- Actividades de Configurar restaurante -->
         <activity

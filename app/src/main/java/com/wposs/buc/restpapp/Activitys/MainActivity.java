@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void finalizarPedido(View view) {
-        Toast.makeText(this, R.string.opcionNoDisponible, Toast.LENGTH_SHORT).show();
+        Tools.startView(this, FinalizarPedidoActivity.class);
     }
 
     public void configurarRestaurante(View view) {

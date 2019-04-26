@@ -22,8 +22,7 @@ import java.util.ArrayList;
 
 public class NuevoProductoActivity extends AppCompatActivity {
 
-    TextInputEditText etProducto, etValor;
-    EditText etDescripcion;
+    EditText etProducto, etValor, etDescripcion;
     EditText etCategoria;
     Spinner spinnerCategorias;
     String producto, categoria, descripcion;
@@ -48,7 +47,6 @@ public class NuevoProductoActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoria = (String) parent.getItemAtPosition(position);
-                Toast.makeText(NuevoProductoActivity.this, "Categoria seleccionada " + categoria, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -64,6 +62,10 @@ public class NuevoProductoActivity extends AppCompatActivity {
             categorias = bd.getAllCategorias();
         }catch (NullPointerException e){
             e.getCause();
+            categorias.add("NO EXISTEN CATEGORIAS");
+        }
+
+        if (categorias.size() == 0){
             categorias.add("NO EXISTEN CATEGORIAS");
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, categorias);
@@ -114,9 +116,27 @@ public class NuevoProductoActivity extends AppCompatActivity {
 
     public void crearProducto(View view) {
         if(!categoria.equals("NO EXISTEN CATEGORIAS")) {
+
             producto = etProducto.getText().toString();
+            if (producto.isEmpty()) {
+                Toast.makeText(this, "Nombre del pruducto esta vacio", Toast.LENGTH_SHORT).show();
+                etProducto.setBackgroundResource(R.drawable.edittext_pichi_error);
+                return;
+            }
+
+            if (etValor.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Valor del producto esta vacio", Toast.LENGTH_SHORT).show();
+                etValor.setBackgroundResource(R.drawable.edittext_pichi_error);
+                return;
+            }
             valor = Integer.parseInt(etValor.getText().toString());
+
             descripcion = etDescripcion.getText().toString();
+            if (descripcion.isEmpty()) {
+                Toast.makeText(this, "Descripcion del pruducto esta vacio", Toast.LENGTH_SHORT).show();
+                etDescripcion.setBackgroundResource(R.drawable.edittext_pichi_error);
+                return;
+            }
 
             if (bd.crearProducto(producto, valor, categoria, descripcion)) {
                 Toast.makeText(this, "Producto creado con exito", Toast.LENGTH_SHORT).show();

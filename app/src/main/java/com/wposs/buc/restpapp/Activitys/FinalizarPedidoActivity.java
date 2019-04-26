@@ -1,8 +1,10 @@
 package com.wposs.buc.restpapp.Activitys;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,18 +17,7 @@ import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;
 
-
-/**
- * 1. Consultar numero de mesas y domicilios activos y seleccionar mesa o domicilio.
- * 2. Visualizar categorias
- * 3. Visualizar productos de la categoria agregada
- * 4. Al seleccionar productos poder agregar cantidad de productos o algun comentario.
- * 5. Generar un boton o un baner inferior con la cantidad de productos y el monto hasta el momento.
- *      Al hacer click se despliega una vista. Esa vista mostrara los productos agregados y el monto total.
- *      Tendra un boton para enviar pedido o para cancelarlo.  *
- */
-public class CrearPedidoActivity extends AppCompatActivity {
-
+public class FinalizarPedidoActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     ClsConexion bd;
 
@@ -36,7 +27,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
         setContentView(R.layout.visualizar_items);
         bd = new ClsConexion(this);
 
-        ArrayList<Mesas> mesas = bd.getAllMesas();
+        ArrayList<Mesas> mesas = bd.getAllMesasWhereOcupadas();
 
         crearBotonesDeMesas(mesas);
     }
@@ -52,7 +43,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Mesas mMesas = mesas.get(position);
-                Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(FinalizarPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
             }
         });
     }
