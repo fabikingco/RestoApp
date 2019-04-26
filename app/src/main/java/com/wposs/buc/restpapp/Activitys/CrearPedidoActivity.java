@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -42,33 +44,22 @@ public class CrearPedidoActivity extends AppCompatActivity {
 
         ArrayList<Mesas> mesas = bd.getAllMesas();
 
-        sharedPreferences = getSharedPreferences("configuracionRestaurante", Context.MODE_PRIVATE);
-        boolean infoDomicilios = sharedPreferences.getBoolean("domicilios", false);
-
-        crearBotonesDeMesas(mesas, infoDomicilios);
+        crearBotonesDeMesas(mesas);
     }
 
-    private void crearBotonesDeMesas(ArrayList<Mesas> mesas, boolean infoDomicilios) {
-
-        /*LinearLayout linearLayout = findViewById(R.id.linearBotones);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
-        lp.setMargins(0, 10, 0, 0);*/
+    private void crearBotonesDeMesas(final ArrayList<Mesas> mesas) {
 
         ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
 
         ListView listView = findViewById(R.id.listview_flavor);
         listView.setAdapter(adapter);
 
-        /*if(infoDomicilios){
-            Button domicilios = new Button(this);
-            domicilios.setBackgroundResource(R.drawable.button_color);
-            domicilios.setLayoutParams(lp);
-            domicilios.setText("Domicilios");
-            domicilios.setTextColor(Color.parseColor("#0F265C"));
-            domicilios.setTextSize(20);
-            domicilios.setAllCaps(false);
-            linearLayout.addView(domicilios);
-        }*/
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Mesas mMesas = mesas.get(position);
+                Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

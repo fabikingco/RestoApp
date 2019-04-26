@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wposs.buc.restpapp.BD.Model.Mesas;
 import com.wposs.buc.restpapp.R;
@@ -31,13 +33,24 @@ public class ListMesasAdapter extends ArrayAdapter<Mesas> {
 
         Mesas mesas = getItem(position);
 
-        Button btn = listItemView.findViewById(R.id.btnMesas);
-        btn.setText(mesas.getName());
+        TextView tvTitle = listItemView.findViewById(R.id.tvTitle);
+        TextView tvStatus = listItemView.findViewById(R.id.tvStatus);
+        ImageView imgStatus = listItemView.findViewById(R.id.imgStatus);
+
+        tvTitle.setText(mesas.getName());
+
+        tvStatus.setText(mesas.getStatus());
+
         switch (mesas.getStatus()){
             case "disponible":
-                btn.setBackgroundResource(R.drawable.button_verde);
+                imgStatus.setImageResource(R.drawable.ic_check_circle_black_24dp);
+                break;
             case "ocupada":
-                btn.setBackgroundResource(R.drawable.button_rojo);
+                imgStatus.setImageResource(R.drawable.ic_info_black_24dp);
+                break;
+            case "cerrada":
+                imgStatus.setImageResource(R.drawable.ic_block_black_24dp);
+                break;
         }
 
         return listItemView;

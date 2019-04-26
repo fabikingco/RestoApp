@@ -1,15 +1,19 @@
 package com.wposs.buc.restpapp.BD.Model;
 
+import com.wposs.buc.restpapp.R;
+
 public class Mesas {
 
     private int id;
     private String name;
     private String status;
+    private int imagen;
 
-    public Mesas(int id, String name, String status) {
+    public Mesas(int id, String name, String imagen, String status) {
         this.id = id;
         this.name = name;
         this.status = status;
+        this.imagen = Integer.parseInt(imagen);
     }
 
     public int getId() {
@@ -34,5 +38,13 @@ public class Mesas {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = Integer.parseInt(imagen);
     }
 }

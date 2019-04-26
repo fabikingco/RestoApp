@@ -7,5 +7,4 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:divider="@android:color/transparent"
     android:layout_gravity="center" />
