@@ -7,13 +7,11 @@ public class Mesas {
     private int id;
     private String name;
     private String status;
-    private int imagen;
 
-    public Mesas(int id, String name, String imagen, String status) {
+    public Mesas(int id, String name, String status) {
         this.id = id;
         this.name = name;
         this.status = status;
-        this.imagen = Integer.parseInt(imagen);
     }
 
     public int getId() {
@@ -40,11 +38,4 @@ public class Mesas {
         this.status = status;
     }
 
-    public int getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = Integer.parseInt(imagen);
-    }
 }

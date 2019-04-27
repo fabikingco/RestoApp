@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.CrearProductoPedidoActivity">
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:layout_gravity="center"
+        android:layout_above="@+id/tvUsuario"/>
+
+    <LinearLayout
+        android:id="@+id/tvUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/textview_infouser">
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="0"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginStart="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/colorWhite"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/colorWhite"
+            android:text="Visualizar canasta"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/colorWhite"
+            android:text="$30.000"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

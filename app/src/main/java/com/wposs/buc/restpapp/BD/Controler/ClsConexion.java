@@ -69,12 +69,11 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String CREATE_MESAS_TABLE_NEW = "create table " + TABLE_MESAS_NEW + "(" +
             COLUMN_MESAS_ID + " integer primary key not null, " +
             COLUMN_MESAS_NAME + " text not null, " +
-            COLUMN_MESAS_IMG + " text not null, " +
             COLUMN_MESAS_STATUS + " text not null);";
 
-    private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1', '-700052', 'disponible');");
-    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', '-700052', 'ocupada');");
-    private final String INSERT_MESAS_DEFAULT_cerrada = ("insert into " + TABLE_MESAS_NEW + " values('3','Mesa 3', '-700052', 'cerrada');");
+    private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1', 'disponible');");
+    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', 'ocupada');");
+    private final String INSERT_MESAS_DEFAULT_cerrada = ("insert into " + TABLE_MESAS_NEW + " values('3','Mesa 3', 'cerrada');");
 
     /**
      * TABLE usuarios_new
@@ -329,7 +328,7 @@ public class ClsConexion extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3)));
+                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -344,7 +343,7 @@ public class ClsConexion extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3)));
+                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2)));
             } while (cursor.moveToNext());
         }
         cursor.close();

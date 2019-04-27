@@ -12,6 +12,7 @@ import com.wposs.buc.restpapp.Activitys.Adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
 import com.wposs.buc.restpapp.BD.Model.Mesas;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.Tools;
 
 import java.util.ArrayList;
 
@@ -53,6 +54,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Mesas mMesas = mesas.get(position);
                 Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
+                Tools.startView(CrearPedidoActivity.this, CrearProductoPedidoActivity.class);
             }
         });
     }
