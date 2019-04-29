@@ -58,12 +58,13 @@ public class CrearUsuarioActivity extends AppCompatActivity {
                         if (verificarIdUser(id)) {
                             String user = obtenerUsuario(sNombre, sApellido);
                             if (verificarUsuario(user)) {
+                                String pass = crearPassword(sDocumento);
                                 String name = sNombre +
                                         " " +
                                         sApellido;
                                 String role = obtenerRole();
                                 String status = "new";
-                                if (bd.crearUsuario(id, user, sDocumento, name, role, status)) {
+                                if (bd.crearUsuario(id, user, pass, name, role, status)) {
                                     Toast.makeText(this, "Usuario " + user + " creado con exito", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
@@ -80,6 +81,11 @@ public class CrearUsuarioActivity extends AppCompatActivity {
             Toast.makeText(this, "Campo de nombre vacio", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private String crearPassword(String sDocumento) {
+        int len = sDocumento.length();
+        return sDocumento.substring(len-6, len);
     }
 
     private boolean verificarUsuario(String user) {
