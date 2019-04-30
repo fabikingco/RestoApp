@@ -19,9 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".Activitys.CrearProductoPedidoActivity"></activity>
+        <activity android:name=".activitys.CrearProductoPedidoActivity"/>
         <activity
-            android:name=".Activitys.LoginActivity"
+            android:name=".activitys.LoginActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,40 +29,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitys.MainActivity" />
+        <activity android:name=".activitys.MainActivity" />
         <activity
-            android:name=".Activitys.CrearPedidoActivity"
-            android:parentActivityName=".Activitys.MainActivity" />
+            android:name=".activitys.CrearPedidoActivity"
+            android:parentActivityName=".activitys.MainActivity" />
         <activity
-            android:name=".Activitys.FinalizarPedidoActivity"
-            android:parentActivityName=".Activitys.MainActivity" />
+            android:name=".activitys.FinalizarPedidoActivity"
+            android:parentActivityName=".activitys.MainActivity" />
         <activity
-            android:name=".Activitys.ConfigurarRestauranteActivity"
-            android:parentActivityName=".Activitys.MainActivity" /> <!-- Actividades de Configurar restaurante -->
+            android:name=".activitys.ConfigurarRestauranteActivity"
+            android:parentActivityName=".activitys.MainActivity" /> <!-- Actividades de Configurar restaurante -->
         <activity
-            android:name=".Activitys.ConfigurarMesasActivity"
+            android:name=".activitys.ConfigurarMesasActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".Activitys.ConfigurarRestauranteActivity"
+            android:parentActivityName=".activitys.ConfigurarRestauranteActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Activitys.EditarCategoriasActivity"
-            android:parentActivityName=".Activitys.ConfigurarRestauranteActivity" />
+            android:name=".activitys.EditarCategoriasActivity"
+            android:parentActivityName=".activitys.ConfigurarRestauranteActivity" />
         <activity
-            android:name=".Activitys.VisualizarProductosActivity"
-            android:parentActivityName=".Activitys.ConfigurarRestauranteActivity" />
+            android:name=".activitys.VisualizarProductosActivity"
+            android:parentActivityName=".activitys.ConfigurarRestauranteActivity" />
         <activity
-            android:name=".Activitys.NuevoProductoActivity"
-            android:parentActivityName=".Activitys.ConfigurarRestauranteActivity" />
+            android:name=".activitys.NuevoProductoActivity"
+            android:parentActivityName=".activitys.ConfigurarRestauranteActivity" />
         <activity
-            android:name=".Activitys.ConfiguracionUsuariosActivity"
-            android:parentActivityName=".Activitys.ConfigurarRestauranteActivity" />
+            android:name=".activitys.ConfiguracionUsuariosActivity"
+            android:parentActivityName=".activitys.ConfigurarRestauranteActivity" />
         <activity
-            android:name=".Activitys.CrearUsuarioActivity"
-            android:parentActivityName=".Activitys.ConfigurarRestauranteActivity"
+            android:name=".activitys.CrearUsuarioActivity"
+            android:parentActivityName=".activitys.ConfigurarRestauranteActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".Activitys.VisualizarUsuariosActivity"
-            android:parentActivityName=".Activitys.ConfiguracionUsuariosActivity" />
+            android:name=".activitys.VisualizarUsuariosActivity"
+            android:parentActivityName=".activitys.ConfiguracionUsuariosActivity" />
     </application>
 
 </manifest>

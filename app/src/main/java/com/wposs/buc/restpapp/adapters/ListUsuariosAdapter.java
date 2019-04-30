@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.Activitys.Adapters;
+package com.wposs.buc.restpapp.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wposs.buc.restpapp.BD.Model.Usuarios;
+import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;

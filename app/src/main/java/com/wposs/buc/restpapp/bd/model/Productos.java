@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.BD.Model;
+package com.wposs.buc.restpapp.bd.model;
 
 public class Productos {
 

@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.Activitys;
+package com.wposs.buc.restpapp.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
+import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;

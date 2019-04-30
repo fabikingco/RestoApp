@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.BD.Controler;
+package com.wposs.buc.restpapp.bd.controler;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,13 +7,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.wposs.buc.restpapp.BD.Model.Mesas;
-import com.wposs.buc.restpapp.BD.Model.Usuarios;
+import com.wposs.buc.restpapp.bd.model.Mesas;
+import com.wposs.buc.restpapp.bd.model.Usuarios;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ClsConexion extends SQLiteOpenHelper {
 
@@ -72,8 +70,8 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_MESAS_STATUS + " text not null);";
 
     private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1', 'disponible');");
-    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', 'ocupada');");
-    private final String INSERT_MESAS_DEFAULT_cerrada = ("insert into " + TABLE_MESAS_NEW + " values('3','Mesa 3', 'cerrada');");
+    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', 'disponible');");
+    private final String INSERT_MESAS_DEFAULT_cerrada = ("insert into " + TABLE_MESAS_NEW + " values('3','Mesa 3', 'disponible');");
 
     /**
      * TABLE usuarios_new

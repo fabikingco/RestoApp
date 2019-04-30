@@ -1,6 +1,4 @@
-package com.wposs.buc.restpapp.BD.Model;
-
-import com.wposs.buc.restpapp.R;
+package com.wposs.buc.restpapp.bd.model;
 
 public class Mesas {
 

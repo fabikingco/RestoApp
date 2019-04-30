@@ -1,13 +1,13 @@
-package com.wposs.buc.restpapp.Activitys;
+package com.wposs.buc.restpapp.activitys;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import com.wposs.buc.restpapp.Activitys.Adapters.ListUsuariosAdapter;
-import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
-import com.wposs.buc.restpapp.BD.Model.Usuarios;
+import com.wposs.buc.restpapp.adapters.ListUsuariosAdapter;
+import com.wposs.buc.restpapp.bd.controler.ClsConexion;
+import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;
