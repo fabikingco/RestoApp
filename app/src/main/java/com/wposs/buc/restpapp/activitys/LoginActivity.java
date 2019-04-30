@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.Activitys;
+package com.wposs.buc.restpapp.activitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,12 +7,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
-import com.wposs.buc.restpapp.BD.Model.Usuarios;
+import com.wposs.buc.restpapp.bd.controler.ClsConexion;
+import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
 

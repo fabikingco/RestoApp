@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.Activitys;
+package com.wposs.buc.restpapp.activitys;
 
 import android.Manifest;
 import android.content.Context;
@@ -17,11 +17,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
+import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
 
-import static com.wposs.buc.restpapp.Activitys.LoginActivity.usuario;
+import static com.wposs.buc.restpapp.activitys.LoginActivity.usuario;
 
 public class MainActivity extends AppCompatActivity {
 

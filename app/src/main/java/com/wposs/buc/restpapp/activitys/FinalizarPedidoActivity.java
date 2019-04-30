@@ -1,18 +1,16 @@
-package com.wposs.buc.restpapp.Activitys;
+package com.wposs.buc.restpapp.activitys;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.wposs.buc.restpapp.Activitys.Adapters.ListMesasAdapter;
-import com.wposs.buc.restpapp.BD.Controler.ClsConexion;
-import com.wposs.buc.restpapp.BD.Model.Mesas;
+import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
+import com.wposs.buc.restpapp.bd.controler.ClsConexion;
+import com.wposs.buc.restpapp.bd.model.Mesas;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;
