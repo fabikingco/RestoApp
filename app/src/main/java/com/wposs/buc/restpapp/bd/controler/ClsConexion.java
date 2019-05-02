@@ -70,8 +70,8 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_MESAS_STATUS + " text not null);";
 
     private final String INSERT_MESAS_DEFAULT = ("insert into " + TABLE_MESAS_NEW + " values('1','Mesa 1', 'disponible');");
-    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', 'disponible');");
-    private final String INSERT_MESAS_DEFAULT_cerrada = ("insert into " + TABLE_MESAS_NEW + " values('3','Mesa 3', 'disponible');");
+    private final String INSERT_MESAS_DEFAULT_otraPrueba = ("insert into " + TABLE_MESAS_NEW + " values('2','Mesa 2', 'cerrada');");
+    private final String INSERT_MESAS_DEFAULT_cerrada = ("insert into " + TABLE_MESAS_NEW + " values('3','Mesa 3', 'cerrada');");
 
     /**
      * TABLE usuarios_new

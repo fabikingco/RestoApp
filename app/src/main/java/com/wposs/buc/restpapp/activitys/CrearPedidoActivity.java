@@ -1,6 +1,8 @@
 package com.wposs.buc.restpapp.activitys;
 
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +32,8 @@ public class CrearPedidoActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     ClsConexion bd;
+    SwipeRefreshLayout refreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,9 @@ public class CrearPedidoActivity extends AppCompatActivity {
         setContentView(R.layout.visualizar_items);
         bd = new ClsConexion(this);
 
-        ArrayList<Mesas> mesas = bd.getAllMesas();
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
 
-        crearBotonesDeMesas(mesas);
-    }
-
-    private void crearBotonesDeMesas(final ArrayList<Mesas> mesas) {
+        final ArrayList<Mesas> mesas = bd.getAllMesas();
 
         ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
 
@@ -53,9 +54,21 @@ public class CrearPedidoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Mesas mMesas = mesas.get(position);
-                if (!mMesas.getStatus().equals("cerrada")){
+                //Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
+                if (mMesas.getStatus().equals("cerrada")){
+                    Snackbar.make(view, "Hola", Snackbar.LENGTH_LONG).show();
+                } else {
                     Tools.startView(CrearPedidoActivity.this, CrearProductoPedidoActivity.class);
                 }
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(CrearPedidoActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

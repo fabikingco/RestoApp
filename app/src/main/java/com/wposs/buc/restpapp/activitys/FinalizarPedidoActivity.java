@@ -2,6 +2,7 @@ package com.wposs.buc.restpapp.activitys;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +17,10 @@ import com.wposs.buc.restpapp.R;
 import java.util.ArrayList;
 
 public class FinalizarPedidoActivity extends AppCompatActivity {
+
     SharedPreferences sharedPreferences;
     ClsConexion bd;
+    SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,17 @@ public class FinalizarPedidoActivity extends AppCompatActivity {
         ArrayList<Mesas> mesas = bd.getAllMesasWhereOcupadas();
 
         crearBotonesDeMesas(mesas);
+
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(FinalizarPedidoActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void crearBotonesDeMesas(final ArrayList<Mesas> mesas) {
