@@ -34,8 +34,8 @@
             android:textColor="#343434"
             android:textSize="12dp" />
     </LinearLayout>
-
     <Button
+        android:id="@+id/btnAgregar"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Agregar"

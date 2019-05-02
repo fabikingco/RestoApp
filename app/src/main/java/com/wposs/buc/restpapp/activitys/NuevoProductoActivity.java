@@ -146,4 +146,8 @@ public class NuevoProductoActivity extends AppCompatActivity {
             Toast.makeText(this, "Debe crear una nueva categoria", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void agregarFotoProducto(View view) {
+        Toast.makeText(this, "Aun no es posible agregar foto de producto", Toast.LENGTH_SHORT).show();
+    }
 }
