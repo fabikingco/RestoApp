@@ -17,8 +17,30 @@
             android:id="@+id/imgPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src=""
+            android:src="@mipmap/ic_burger"
             />
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo producto"
+            android:textColor="@color/blueDark"
+            android:textSize="17dp"
+            />
+        <TextView
+            android:id="@+id/tvValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18.000"
+            android:textColor="#343434"
+            android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tvDescripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Esto prueba"
+            android:textColor="#343434"
+            android:textSize="12dp" />
     </LinearLayout>
 
 
