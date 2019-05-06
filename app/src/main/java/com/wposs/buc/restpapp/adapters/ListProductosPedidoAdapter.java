@@ -1,42 +1,67 @@
 package com.wposs.buc.restpapp.adapters;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.bd.model.Productos;
 import java.util.ArrayList;
 
-public class ListProductosPedidoAdapter extends ArrayAdapter<Productos> {
+public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProductosPedidoAdapter.PedidoViewHolder> {
 
-    public ListProductosPedidoAdapter(Activity activity, ArrayList<Productos> objects) {
-        super(activity, 0, objects);
+    ArrayList<Productos> productos;
+
+
+    public ListProductosPedidoAdapter(ArrayList<Productos> objects) {
+        this.productos = objects;
+    }
+
+
+    @NonNull
+    @Override
+    public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_productos, viewGroup, false);
+        return new PedidoViewHolder(v);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public void onBindViewHolder(@NonNull PedidoViewHolder pedidoViewHolder, int i) {
+        Productos producto = this.productos.get(i);
+        pedidoViewHolder.tvTitulo.setText(producto.getNombre());
+        pedidoViewHolder.tvValor.setText(String.valueOf(producto.getValor()));
+        pedidoViewHolder.tvDescripcion.setText(producto.getDescripcion());
 
-        View listItemView = convertView;
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_agregar_productos, parent, false);
+    }
+
+    @Override
+    public int getItemCount() {
+        return productos.size();
+    }
+
+    public static class PedidoViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView imgPhoto;
+        TextView tvTitulo, tvValor, tvDescripcion;
+
+        public PedidoViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            imgPhoto = itemView.findViewById(R.id.imgPhoto);
+            tvTitulo = itemView.findViewById(R.id.tvTitulo);
+            tvValor = itemView.findViewById(R.id.tvValor);
+            tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
+
+
         }
 
-        Productos productos = getItem(position);
 
-        TextView tvTitulo = listItemView.findViewById(R.id.tvTitulo);
-        TextView tvDescripcion = listItemView.findViewById(R.id.tvDescripcion);
-        TextView tvValor = listItemView.findViewById(R.id.tvValor);
-
-        tvTitulo.setText(productos.getNombre());
-        tvDescripcion.setText(productos.getDescripcion());
-        tvValor.setText(productos.getValor());
-
-        return listItemView;
     }
 
 }

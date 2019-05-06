@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.wposs.buc.restpapp.bd.model.Mesas;
+import com.wposs.buc.restpapp.bd.model.Productos;
 import com.wposs.buc.restpapp.bd.model.Usuarios;
 
 import java.util.ArrayList;
@@ -167,11 +168,27 @@ public class ClsConexion extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList<Productos> getAllProductosP() {
+        db = this.getWritableDatabase();
+        ArrayList<Productos> productos = new ArrayList<>();
+        String query = "SELECT * FROM "+ TABLE_PROD_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                productos.add(new Productos(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)
+                        ,cursor.getString(3), cursor.getString(4)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return  productos;
+    }
+
     public ArrayList<HashMap<String, String>> getAllProductos() {
         db = this.getWritableDatabase();
         ArrayList<HashMap<String, String>> userList = new ArrayList<>();
         String query = "SELECT prod_titulo, prod_descripcion, prod_valor FROM "+ TABLE_PROD_NEW;
-        Cursor cursor = db.rawQuery(query,null);
+        Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()){
             HashMap<String,String> user = new HashMap<>();
             user.put("titulo",cursor.getString(cursor.getColumnIndex(COLUMN_PROD_TITULO)));
