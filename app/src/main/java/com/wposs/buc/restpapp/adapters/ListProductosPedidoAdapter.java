@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.activitys.CrearProductoPedidoActivity;
 import com.wposs.buc.restpapp.bd.model.Productos;
 import java.util.ArrayList;
 
@@ -32,11 +34,19 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PedidoViewHolder pedidoViewHolder, int i) {
+    public void onBindViewHolder(@NonNull PedidoViewHolder pedidoViewHolder, final int i) {
         Productos producto = this.productos.get(i);
         pedidoViewHolder.tvTitulo.setText(producto.getNombre());
         pedidoViewHolder.tvValor.setText(String.valueOf(producto.getValor()));
         pedidoViewHolder.tvDescripcion.setText(producto.getDescripcion());
+
+        pedidoViewHolder.btnAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CrearProductoPedidoActivity cp = new CrearProductoPedidoActivity();
+                cp.sumarAgregarProducto(productos, i);
+            }
+        });
 
     }
 
@@ -49,6 +59,7 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
 
         ImageView imgPhoto;
         TextView tvTitulo, tvValor, tvDescripcion;
+        Button btnAgregar;
 
         public PedidoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +68,7 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
             tvValor = itemView.findViewById(R.id.tvValor);
             tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
+            btnAgregar = itemView.findViewById(R.id.btnAgregar);
 
 
         }

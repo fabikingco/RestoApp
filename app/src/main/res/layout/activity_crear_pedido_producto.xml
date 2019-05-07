@@ -15,16 +15,17 @@
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ListView
-                android:id="@+id/listView"
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvItemsProductos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="16dp"
-                android:layout_gravity="center"
-                android:layout_above="@+id/tvUsuario"/>
+                android:layout_gravity="center">
+            </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
 
@@ -40,6 +41,7 @@
             android:background="@drawable/textview_infouser">
 
             <TextView
+                android:id="@+id/tvNumero"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:text="0"
@@ -60,13 +62,14 @@
                 />
 
             <TextView
+                android:id="@+id/tvTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="18sp"
                 android:layout_marginStart="30dp"
                 android:textColor="@color/colorWhite"
-                android:text="$30.000"
+                android:text="$0"
                 />
 
         </LinearLayout>

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
@@ -21,13 +22,20 @@ import java.util.Map;
 public class CrearProductoPedidoActivity extends AppCompatActivity {
 
     ClsConexion db;
-    ListView listView;
     RecyclerView recyclerView;
+    int numeros = 0;
+    TextView tvNumeros, tvTotal;
+    int total;
+
+    public CrearProductoPedidoActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.visualizar_items_rv);
+        setContentView(R.layout.activity_crear_pedido_producto);
+
+
 
         db = new ClsConexion(this);
         final ArrayList<Productos> productos = db.getAllProductosP();
@@ -45,8 +53,17 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
         ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos);
         recyclerView.setAdapter(lpAdapter);
 
+    }
 
+    public void sumarAgregarProducto(ArrayList<Productos> productos, int posision) {
+        Productos productos1 = productos.get(posision);
+        numeros ++;
+        tvNumeros = findViewById(R.id.tvNumero);
+        tvTotal = findViewById(R.id.tvTotal);
 
+        tvNumeros.setText(String.valueOf(numeros));
+        total += productos1.getValor();
 
+        tvTotal.setText("$" + total);
     }
 }

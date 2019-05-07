@@ -45,6 +45,9 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_PROD_CATEGORIA + " text not null, " +
             COLUMN_PROD_DESCRIPCION + " text);";
 
+    private final String INSERT_PRODUCTO_PRUEBA_1 = ("insert into " + TABLE_PROD_NEW + " values('1','Hamburguesa especial', '15000', 'Hamburguesas', 'Carne 150gr, pollo desmechado y papas');");
+    private final String INSERT_PRODUCTO_PRUEBA_2 = ("insert into " + TABLE_PROD_NEW + " values('2','Pizza napolitana', '4500', 'Pizzas', 'Queso mozaralla con rodajas de salchicha');");
+
     /**
      * TABLE categorias_new
      * Columns:
@@ -58,6 +61,9 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String CREATE_CATEGORIAS_TABLE_NEW = "create table " + TABLE_CATEGORIAS_NEW + "(" +
             COLUMN_CATEG_ID + " integer primary key AUTOINCREMENT, " +
             COLUMN_CATEG_NAME + " text not null);";
+
+    private final String INSERT_CATEGORIA_PRUEBA_1 = ("insert into " + TABLE_CATEGORIAS_NEW + " values('1','Pizzas');");
+    private final String INSERT_CATEGORIA_PRUEBA_2 = ("insert into " + TABLE_CATEGORIAS_NEW + " values('2','Hamburguesas');");
 
     private final String TABLE_MESAS_NEW = "mesas_new";
     private final String COLUMN_MESAS_ID = "mesas_id";
@@ -118,10 +124,15 @@ public class ClsConexion extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PRODUCTOS_TABLE_NEW);
+        db.execSQL(INSERT_PRODUCTO_PRUEBA_1);
+        db.execSQL(INSERT_PRODUCTO_PRUEBA_2);
+
         db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
+        db.execSQL(INSERT_CATEGORIA_PRUEBA_1);
+        db.execSQL(INSERT_CATEGORIA_PRUEBA_2);
+
         db.execSQL(CREATE_MESAS_TABLE_NEW);
         db.execSQL(INSERT_MESAS_DEFAULT);
-
         db.execSQL(INSERT_MESAS_DEFAULT_otraPrueba);
         db.execSQL(INSERT_MESAS_DEFAULT_cerrada);
 

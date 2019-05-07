@@ -41,9 +41,29 @@ public class CrearPedidoActivity extends AppCompatActivity {
         setContentView(R.layout.visualizar_items);
         bd = new ClsConexion(this);
 
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout = findViewById(R.id.refreshLayout);
 
         final ArrayList<Mesas> mesas = bd.getAllMesas();
+
+        crearBotonesDeMesas(mesas);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(CrearPedidoActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void crearBotonesDeMesas(final ArrayList<Mesas> mesas) {
+
+        if (mesas.size() == 0){
+            Toast.makeText(this, "No existen mesas para finalizar", Toast.LENGTH_SHORT).show();
+            Tools.startView(this, MainActivity.class);
+            return;
+        }
 
         ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
 
@@ -60,15 +80,6 @@ public class CrearPedidoActivity extends AppCompatActivity {
                 } else {
                     Tools.startView(CrearPedidoActivity.this, CrearProductoPedidoActivity.class);
                 }
-            }
-        });
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshLayout.setRefreshing(false);
-                Toast.makeText(CrearPedidoActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
-
             }
         });
     }

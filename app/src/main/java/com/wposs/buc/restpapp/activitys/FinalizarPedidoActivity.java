@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.bd.model.Mesas;
@@ -45,6 +46,12 @@ public class FinalizarPedidoActivity extends AppCompatActivity {
     }
 
     private void crearBotonesDeMesas(final ArrayList<Mesas> mesas) {
+
+        if (mesas.size() == 0){
+            Toast.makeText(this, "No existen mesas para finalizar", Toast.LENGTH_SHORT).show();
+            Tools.startView(this, MainActivity.class);
+            return;
+        }
 
         ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
 
