@@ -27,54 +27,55 @@
                 android:layout_gravity="center">
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
-
-
-
-        <LinearLayout
-            android:id="@+id/tvUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:background="@drawable/textview_infouser">
-
-            <TextView
-                android:id="@+id/tvNumero"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:text="0"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:layout_marginStart="30dp"
-                android:background="@color/colorPrimaryDark"
-                android:textColor="@color/colorWhite"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:layout_marginStart="30dp"
-                android:textColor="@color/colorWhite"
-                android:text="Visualizar canasta"
-                />
-
-            <TextView
-                android:id="@+id/tvTotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:layout_marginStart="30dp"
-                android:textColor="@color/colorWhite"
-                android:text="$0"
-                />
-
-        </LinearLayout>
-
     </RelativeLayout>
 
+    <include layout="@layout/bottom_sheet" />
+
 </android.support.design.widget.CoordinatorLayout>
+
+<!--
+<LinearLayout
+android:id="@+id/tvUsuario"
+android:layout_width="match_parent"
+android:layout_height="50dp"
+android:layout_alignParentBottom="true"
+android:layout_gravity="bottom"
+android:gravity="center_vertical"
+android:orientation="horizontal"
+android:background="@drawable/textview_infouser">
+
+<TextView
+    android:id="@+id/tvNumero"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:text="0"
+    android:gravity="center"
+    android:textSize="18sp"
+    android:layout_marginStart="30dp"
+    android:background="@color/colorPrimaryDark"
+    android:textColor="@color/colorWhite"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textSize="18sp"
+    android:layout_marginStart="30dp"
+    android:textColor="@color/colorWhite"
+    android:text="Visualizar canasta"
+    />
+
+<TextView
+    android:id="@+id/tvTotal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textSize="18sp"
+    android:layout_marginStart="30dp"
+    android:textColor="@color/colorWhite"
+    android:text="$0"
+    />
+
+</LinearLayout>
+-->
 

@@ -56,7 +56,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
     }
 
     public void sumarAgregarProducto(ArrayList<Productos> productos, int posision) {
-        Productos productos1 = productos.get(posision);
+        /*Productos productos1 = productos.get(posision);
         numeros ++;
         tvNumeros = findViewById(R.id.tvNumero);
         tvTotal = findViewById(R.id.tvTotal);
@@ -64,6 +64,6 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
         tvNumeros.setText(String.valueOf(numeros));
         total += productos1.getValor();
 
-        tvTotal.setText("$" + total);
+        tvTotal.setText("$" + total);*/
     }
 }
