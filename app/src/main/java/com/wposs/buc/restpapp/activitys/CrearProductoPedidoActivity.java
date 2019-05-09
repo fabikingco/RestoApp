@@ -1,14 +1,20 @@
 package com.wposs.buc.restpapp.activitys;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
@@ -27,6 +33,9 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
     TextView tvNumeros, tvTotal;
     int total;
 
+    BottomSheetBehavior sheetBehavior;
+    LinearLayout layoutBottomSheet;
+
     public CrearProductoPedidoActivity() {
     }
 
@@ -35,6 +44,48 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pedido_producto);
 
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        layoutBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        Toast.makeText(CrearProductoPedidoActivity.this, "Abierta", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        Toast.makeText(CrearProductoPedidoActivity.this, "Cerrada", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
 
 
         db = new ClsConexion(this);
