@@ -20,6 +20,23 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
 
     ArrayList<Productos> productos;
 
+    /**
+     * Interfaz de comunicación
+     */
+    public interface OnItemClickListener {
+        void onItemClick(RecyclerView.ViewHolder item, int position, int id);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public OnItemClickListener getOnItemClickListener() {
+        return listener;
+    }
+
 
     public ListProductosPedidoAdapter(ArrayList<Productos> objects) {
         this.productos = objects;
@@ -30,7 +47,7 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
     @Override
     public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_productos, viewGroup, false);
-        return new PedidoViewHolder(v);
+        return new PedidoViewHolder(v, this);
     }
 
     @Override
@@ -39,15 +56,6 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
         pedidoViewHolder.tvTitulo.setText(producto.getNombre());
         pedidoViewHolder.tvValor.setText(String.valueOf(producto.getValor()));
         pedidoViewHolder.tvDescripcion.setText(producto.getDescripcion());
-
-        pedidoViewHolder.btnAgregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CrearProductoPedidoActivity cp = new CrearProductoPedidoActivity();
-                cp.sumarAgregarProducto(productos, i);
-            }
-        });
-
     }
 
     @Override
@@ -55,22 +63,37 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
         return productos.size();
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder {
+    public static class PedidoViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
         ImageView imgPhoto;
         TextView tvTitulo, tvValor, tvDescripcion;
         Button btnAgregar;
 
-        public PedidoViewHolder(@NonNull View itemView) {
+        ListProductosPedidoAdapter adapter = null;
+
+        public PedidoViewHolder(@NonNull View itemView, ListProductosPedidoAdapter adapter) {
             super(itemView);
+
+            itemView.setOnClickListener(this);
+
+            this.adapter = adapter;
 
             imgPhoto = itemView.findViewById(R.id.imgPhoto);
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
             tvValor = itemView.findViewById(R.id.tvValor);
             tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
             btnAgregar = itemView.findViewById(R.id.btnAgregar);
+            btnAgregar.setOnClickListener(this);
 
+        }
 
+        @Override
+        public void onClick(View v) {
+            final OnItemClickListener listener = adapter.getOnItemClickListener();
+            int id = v.getId();
+            if (listener != null) {
+                listener.onItemClick(this, getAdapterPosition(), id);
+            }
         }
 
 

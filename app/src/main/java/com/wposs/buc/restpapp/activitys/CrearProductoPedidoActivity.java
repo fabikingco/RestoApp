@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,19 +26,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CrearProductoPedidoActivity extends AppCompatActivity {
+public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener{
 
     ClsConexion db;
     RecyclerView recyclerView;
-    int numeros = 0;
-    TextView tvNumeros, tvTotal;
-    int total;
-
     BottomSheetBehavior sheetBehavior;
     LinearLayout layoutBottomSheet;
+    ArrayList<Productos> productos = null;
+    TextView tvNumeros , tvTotal;
+    int numeros = 0;
+    int total = 0;
 
-    public CrearProductoPedidoActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +44,11 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crear_pedido_producto);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
-
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-
+        tvNumeros = findViewById(R.id.tvNumeros);
+        tvNumeros.setText("" + numeros);
+        tvTotal = findViewById(R.id.tvTotal);
+        tvTotal.setText("$" + total);
         layoutBottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,8 +59,6 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
                 }
             }
         });
-
-
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -80,16 +79,13 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
                         break;
                 }
             }
-
             @Override
-            public void onSlide(@NonNull View view, float v) {
-
-            }
+            public void onSlide(@NonNull View view, float v) { }
         });
 
 
         db = new ClsConexion(this);
-        final ArrayList<Productos> productos = db.getAllProductosP();
+        productos = db.getAllProductosP();
 
         recyclerView = findViewById(R.id.rvItemsProductos);
 
@@ -103,6 +99,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
 
         ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos);
         recyclerView.setAdapter(lpAdapter);
+        lpAdapter.setOnItemClickListener(this);
 
     }
 
@@ -116,5 +113,18 @@ public class CrearProductoPedidoActivity extends AppCompatActivity {
         total += productos1.getValor();
 
         tvTotal.setText("$" + total);*/
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder item, int position, int id) {
+        Productos productos = this.productos.get(position);
+        if(id == R.id.btnAgregar){
+            Toast.makeText(this, "Agregando producto: " + productos.getNombre(), Toast.LENGTH_SHORT).show();
+            numeros ++;
+            tvNumeros.setText("" + numeros);
+            total += productos.getValor();
+            tvTotal.setText("$" + total);
+        }
+
     }
 }
