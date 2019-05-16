@@ -5,27 +5,24 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.bd.model.Productos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener{
 
     ClsConexion db;
@@ -36,6 +33,8 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     TextView tvNumeros , tvTotal;
     int numeros = 0;
     int total = 0;
+
+    FirebaseFirestore firestore;
 
 
     @Override
@@ -83,9 +82,10 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             public void onSlide(@NonNull View view, float v) { }
         });
 
+        firestore = FirebaseFirestore.getInstance();
 
         db = new ClsConexion(this);
-        productos = db.getAllProductosP();
+        productos = new ArrayList<>();
 
         recyclerView = findViewById(R.id.rvItemsProductos);
 
@@ -93,26 +93,40 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         llm.setOrientation(LinearLayoutManager.VERTICAL);*/
 
         GridLayoutManager glm = new GridLayoutManager(this, 2);
-
-
         recyclerView.setLayoutManager(glm);
 
-        ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos);
+        firestore.collection("Productos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(DocumentSnapshot doc:task.getResult()){
+                            Productos prod = new Productos(doc.getString("id"),
+                                    doc.getString("titulo"),
+                                    doc.getString("valor"),
+                                    doc.getString("categoria"),
+                                    doc.getString("descripcion"));
+                            productos.add(prod);
+                            ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos);
+                            recyclerView.setAdapter(lpAdapter);
+                            lpAdapter.setOnItemClickListener(CrearProductoPedidoActivity.this);
+                        }
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CrearProductoPedidoActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+        /*ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos);
         recyclerView.setAdapter(lpAdapter);
-        lpAdapter.setOnItemClickListener(this);
+        lpAdapter.setOnItemClickListener(this);*/
 
-    }
-
-    public void sumarAgregarProducto(ArrayList<Productos> productos, int posision) {
-        /*Productos productos1 = productos.get(posision);
-        numeros ++;
-        tvNumeros = findViewById(R.id.tvNumero);
-        tvTotal = findViewById(R.id.tvTotal);
-
-        tvNumeros.setText(String.valueOf(numeros));
-        total += productos1.getValor();
-
-        tvTotal.setText("$" + total);*/
     }
 
     @Override

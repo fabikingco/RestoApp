@@ -39,7 +39,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String COLUMN_PROD_DESCRIPCION = "prod_descripcion";
 
     private final String CREATE_PRODUCTOS_TABLE_NEW = "create table "+ TABLE_PROD_NEW + "(" +
-            COLUMN_PROD_ID +" integer primary key AUTOINCREMENT, " +
+            COLUMN_PROD_ID +" text primary key AUTOINCREMENT, " +
             COLUMN_PROD_TITULO + " text not null, " +
             COLUMN_PROD_VALOR + " integer not null, " +
             COLUMN_PROD_CATEGORIA + " text not null, " +
@@ -179,21 +179,21 @@ public class ClsConexion extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<Productos> getAllProductosP() {
+    /*public ArrayList<Productos> getAllProductosP() {
         db = this.getWritableDatabase();
         ArrayList<Productos> productos = new ArrayList<>();
         String query = "SELECT * FROM "+ TABLE_PROD_NEW;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                productos.add(new Productos(cursor.getInt(0),cursor.getString(1),cursor.getInt(2)
+                productos.add(new Productos(cursor.getString(0),cursor.getString(1),cursor.getInt(2)
                         ,cursor.getString(3), cursor.getString(4)));
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
         return  productos;
-    }
+    }*/
 
     public ArrayList<HashMap<String, String>> getAllProductos() {
         db = this.getWritableDatabase();

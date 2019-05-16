@@ -2,7 +2,7 @@ package com.wposs.buc.restpapp.bd.model;
 
 public class Productos {
 
-    private int id;
+    private String id;
     private String nombre;
     private int valor;
     private String categoria;
@@ -11,19 +11,21 @@ public class Productos {
     public Productos() {
     }
 
-    public Productos(int id, String nombre, int valor, String categoria, String descripcion) {
+
+
+    public Productos(String id, String nombre, String valor, String categoria, String descripcion) {
         this.id = id;
         this.nombre = nombre;
-        this.valor = valor;
+        this.valor = Integer.parseInt(valor);
         this.categoria = categoria;
         this.descripcion = descripcion;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
