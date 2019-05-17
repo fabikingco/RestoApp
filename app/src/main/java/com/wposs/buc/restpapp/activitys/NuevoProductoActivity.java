@@ -1,5 +1,6 @@
 package com.wposs.buc.restpapp.activitys;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +14,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
+import com.wposs.buc.restpapp.bd.model.Categorias;
+import com.wposs.buc.restpapp.bd.model.Productos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class NuevoProductoActivity extends AppCompatActivity {
 
@@ -25,15 +39,18 @@ public class NuevoProductoActivity extends AppCompatActivity {
     EditText etCategoria;
     Spinner spinnerCategorias;
     String producto, categoria, descripcion;
-    int valor;
+    String valor;
 
     ClsConexion bd;
+
+    FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_producto);
         bd = new ClsConexion(this);
+        firestore = FirebaseFirestore.getInstance();
 
         etProducto = findViewById(R.id.etProducto);
         etValor = findViewById(R.id.etValor);
@@ -128,7 +145,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
                 etValor.setBackgroundResource(R.drawable.edittext_pichi_error);
                 return;
             }
-            valor = Integer.parseInt(etValor.getText().toString());
+            valor = etValor.getText().toString();
 
             descripcion = etDescripcion.getText().toString();
             if (descripcion.isEmpty()) {
@@ -137,11 +154,32 @@ public class NuevoProductoActivity extends AppCompatActivity {
                 return;
             }
 
-            if (bd.crearProducto(producto, valor, categoria, descripcion)) {
+            String id = UUID.randomUUID().toString();
+            Map<String,Object> todo = new HashMap<>();
+            todo.put("id", id);
+            todo.put("categoria", categoria);
+            todo.put("descripcion", descripcion);
+            todo.put("titulo", producto);
+            todo.put("valor", valor);
+            firestore.collection("Productos").document(id)
+                    .set(todo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    //Refresh data
+                    Toast.makeText(NuevoProductoActivity.this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
+                    Tools.startView(NuevoProductoActivity.this, MainActivity.class);
+                    finish();
+
+                }
+            });
+
+
+
+            /*if (bd.crearProducto(producto, valor, categoria, descripcion)) {
                 Toast.makeText(this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
                 Tools.startView(this, MainActivity.class);
                 finish();
-            }
+            }*/
         } else {
             Toast.makeText(this, "Debe crear una nueva categoria", Toast.LENGTH_SHORT).show();
         }
