@@ -4,13 +4,9 @@
     package="com.wposs.buc.restpapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.SEND_SMS" />
-
     <uses-permission-sdk-23 android:name="android.permission.SEND_SMS" />
-
     <uses-permission android:name="android.permission.READ_SMS" />
-
     <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
 
     <application
@@ -21,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activitys.CrearProductoPedidoActivity"/>
         <activity
             android:name=".activitys.LoginActivity"
             android:theme="@style/SplashTheme">
@@ -31,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activitys.CrearProductoPedidoActivity"/>
         <activity android:name=".activitys.MainActivity" />
         <activity
             android:name=".activitys.CrearPedidoActivity"
@@ -40,7 +36,7 @@
             android:parentActivityName=".activitys.MainActivity" />
         <activity
             android:name=".activitys.ConfigurarRestauranteActivity"
-            android:parentActivityName=".activitys.MainActivity" /> <!-- Actividades de Configurar restaurante -->
+            android:parentActivityName=".activitys.MainActivity" />
         <activity
             android:name=".activitys.ConfigurarMesasActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

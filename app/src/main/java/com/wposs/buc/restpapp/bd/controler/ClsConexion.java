@@ -39,7 +39,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String COLUMN_PROD_DESCRIPCION = "prod_descripcion";
 
     private final String CREATE_PRODUCTOS_TABLE_NEW = "create table "+ TABLE_PROD_NEW + "(" +
-            COLUMN_PROD_ID +" text primary key AUTOINCREMENT, " +
+            COLUMN_PROD_ID +" integer primary key AUTOINCREMENT, " +
             COLUMN_PROD_TITULO + " text not null, " +
             COLUMN_PROD_VALOR + " integer not null, " +
             COLUMN_PROD_CATEGORIA + " text not null, " +

@@ -1,21 +1,23 @@
 package com.wposs.buc.restpapp.activitys;
 
-import android.app.AlertDialog;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +35,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     ClsConexion db;
     RecyclerView recyclerView;
     BottomSheetBehavior sheetBehavior;
-    LinearLayout layoutBottomSheet;
+    LinearLayoutCompat layoutBottomSheet;
     ArrayList<Productos> productos = null;
     TextView tvNumeros , tvTotal;
     int numeros = 0;
@@ -52,7 +54,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
 
         refreshLayout = findViewById(R.id.refreshLayout);
 
-        dialog = new SpotsDialog(this);
+        //dialog = new AlertDialog(this);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
