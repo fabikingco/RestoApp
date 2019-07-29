@@ -43,7 +43,7 @@
             android:background="@drawable/edittext_pichi"
             android:ems="10"
             android:gravity="center"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:maxLength="10"
             android:textCursorDrawable="@drawable/cursor_custon" />
 
@@ -63,80 +63,18 @@
             android:textColor="@color/blueText"
             android:textSize="18sp" />
 
-        <RelativeLayout
+        <EditText
+            android:id="@+id/editText_Clave"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/editText_Clave"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/edittext_pichi"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="6"
-                android:textColor="@color/colorWhite"
-                android:longClickable="false"
-                android:textCursorDrawable="@drawable/cursor_custon" />
-            <ImageView
-                android:id="@+id/punto1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="17dp"
-                app:srcCompat="@drawable/circle_shape"
-                android:visibility="invisible"
-                android:padding="7dp"
-                />
-            <ImageView
-                android:id="@+id/punto2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/circle_shape"
-                android:padding="7dp"
-                android:layout_marginTop="5dp"
-                android:visibility="invisible"
-                android:layout_toEndOf="@+id/punto1"/>
-            <ImageView
-                android:id="@+id/punto3"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/circle_shape"
-                android:padding="7dp"
-                android:layout_marginTop="5dp"
-                android:visibility="invisible"
-                android:layout_toEndOf="@+id/punto2" />
-            <ImageView
-                android:id="@+id/punto4"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/circle_shape"
-                android:padding="7dp"
-                android:layout_marginTop="5dp"
-                android:visibility="invisible"
-                android:layout_toEndOf="@+id/punto3"/>
-            <ImageView
-                android:id="@+id/punto5"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/circle_shape"
-                android:padding="7dp"
-                android:layout_marginTop="5dp"
-                android:visibility="invisible"
-                android:layout_toEndOf="@+id/punto4"/>
-            <ImageView
-                android:id="@+id/punto6"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/circle_shape"
-                android:padding="7dp"
-                android:layout_marginTop="5dp"
-                android:visibility="invisible"
-                android:layout_toEndOf="@+id/punto5"/>
-
-        </RelativeLayout>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_pichi"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:maxLength="6"
+            android:longClickable="false"
+            android:textCursorDrawable="@drawable/cursor_custon" />
 
         <TextView
             android:id="@+id/txtErrorClave"
