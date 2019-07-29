@@ -1,18 +1,15 @@
 package com.wposs.buc.restpapp.adapters;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wposs.buc.restpapp.R;
-import com.wposs.buc.restpapp.activitys.CrearProductoPedidoActivity;
 import com.wposs.buc.restpapp.bd.model.Productos;
 import java.util.ArrayList;
 

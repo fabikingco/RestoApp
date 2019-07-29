@@ -2,7 +2,7 @@ package com.wposs.buc.restpapp.activitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
@@ -25,10 +26,14 @@ public class LoginActivity extends AppCompatActivity {
     private ClsConexion bd;
     private SharedPreferences sharedPreferences;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
+
+        
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         boolean loginActivo = sharedPreferences.getBoolean("loginActivo", false);
         if (loginActivo) {
