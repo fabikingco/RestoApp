@@ -1,16 +1,24 @@
 package com.wposs.buc.restpapp.activitys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
@@ -32,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme);
 
+        mAuth = FirebaseAuth.getInstance();
         bd = new ClsConexion(this);
 
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -61,7 +70,20 @@ public class LoginActivity extends AppCompatActivity {
     public void ingresar(View view) {
         user = et_user.getText().toString();
         pass = et_pw.getText().toString();
-        if (validateForm()) {
+        if (validateForm(user, pass)) {
+
+            mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(LoginActivity.this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Inicio de sesion fallido", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
             usuario = bd.readUser(new Usuarios(user));
             if (usuario != null) {
                 if (usuario.getUser().equals(user) && usuario.getPass().equals(pass)) {
@@ -84,10 +106,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateForm() {
+    private boolean validateForm(String email, String password) {
         boolean valid = true;
 
-        String email = et_user.getText().toString();
         if (TextUtils.isEmpty(email)) {
             et_user.setError("Required.");
             valid = false;
@@ -95,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
             et_user.setError(null);
         }
 
-        String password = et_pw.getText().toString();
         if (TextUtils.isEmpty(password)) {
             et_pw.setError("Required.");
             valid = false;
@@ -106,4 +126,39 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateStateUser(currentUser);
+    }
+
+    private void updateStateUser(FirebaseUser currentUser) {
+        if (currentUser != null){
+            Log.d("Login Status", "Logueado, " + currentUser.getDisplayName());
+            Intent intent = new Intent();
+            intent.putExtra("currentUser", currentUser.getUid());
+            intent.setClass(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Log.d("Login Stauts", "No es logueado");
+        }
+    }
+
+    private void createUser( final String email, final String password){
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
+                } else {
+                    Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
+                }
+            }
+        });
+    }
+
+    private void cerrarSesion(){
+        mAuth.signOut();
+    }
 }
