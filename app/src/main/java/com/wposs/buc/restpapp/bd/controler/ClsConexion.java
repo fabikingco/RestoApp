@@ -354,7 +354,7 @@ public class ClsConexion extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2)));
+                mesas.add(new Mesas(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -369,7 +369,7 @@ public class ClsConexion extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                mesas.add(new Mesas(cursor.getInt(0),cursor.getString(1),cursor.getString(2)));
+                mesas.add(new Mesas(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
             } while (cursor.moveToNext());
         }
         cursor.close();

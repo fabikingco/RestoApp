@@ -2,21 +2,21 @@ package com.wposs.buc.restpapp.bd.model;
 
 public class Mesas {
 
-    private int id;
+    private String id;
     private String name;
     private String status;
 
-    public Mesas(int id, String name, String status) {
+    public Mesas(String id, String name, String status) {
         this.id = id;
         this.name = name;
         this.status = status;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

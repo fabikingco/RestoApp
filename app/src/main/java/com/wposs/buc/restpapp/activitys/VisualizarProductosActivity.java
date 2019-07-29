@@ -1,7 +1,10 @@
 package com.wposs.buc.restpapp.activitys;
 
+import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -9,8 +12,17 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.wposs.buc.restpapp.adapters.ListProductosAdapter;
+import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.bd.model.Productos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,48 +30,65 @@ import java.util.Map;
 
 public class VisualizarProductosActivity extends AppCompatActivity {
 
+    FirebaseFirestore firestore;
+    SwipeRefreshLayout refreshLayout;
+    ArrayList<Productos> productos = null;
     ListView listView;
-    ClsConexion db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visualizar_productos);
+        setContentView(R.layout.visualizar_items);
 
-        db = new ClsConexion(this);
+        firestore = FirebaseFirestore.getInstance();
+        refreshLayout = findViewById(R.id.refreshLayout);
+        listView = findViewById(R.id.listview_flavor);
 
-        final ArrayList<HashMap<String, String>> userList = db.getAllProductos();
+        productos = new ArrayList<>();
 
-        listView = findViewById(R.id.listView);
+        firestore.collection("Productos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(DocumentSnapshot doc:task.getResult()){
+                            Productos prod = new Productos(doc.getString("id"),
+                                    doc.getString("titulo"),
+                                    doc.getString("valor"),
+                                    doc.getString("categoria"),
+                                    doc.getString("descripcion"));
+                            productos.add(prod);
 
-        final ListAdapter adapter = new SimpleAdapter(this, userList, R.layout.list_produc,
-                new String[]{"titulo","descripcion","valor"}, new int[]{R.id.tvTitulo, R.id.tvDescripcion, R.id.tvValor});
-        listView.setAdapter(adapter);
+                        }
 
-        int tamañao = userList.size();
-
-        final String[] titulos = new String[tamañao];
-
-        for(HashMap<String, String> map: userList) {
-            for(Map.Entry<String, String> mapEntry: map.entrySet()) {
-                String key = mapEntry.getKey();
-                String value = mapEntry.getValue();
-                if (key.equals("titulo")){
-                    for (int i = 0; i < tamañao; i ++){
-                        titulos[i] = value;
                     }
-                }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VisualizarProductosActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(VisualizarProductosActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
+
             }
-        }
+        });
+    }
 
-
+    private void cargarCapos(){
+        ListProductosAdapter adapter = new ListProductosAdapter(VisualizarProductosActivity.this, productos);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String producto = titulos[position];
-                Toast.makeText(VisualizarProductosActivity.this, "Data seleccionada " + producto, Toast.LENGTH_SHORT).show();
+                Productos mProductos = productos.get(position);
+                Toast.makeText(VisualizarProductosActivity.this, "" + mProductos.getNombre(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

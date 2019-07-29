@@ -1,7 +1,9 @@
 package com.wposs.buc.restpapp.activitys;
 
+import android.app.AlertDialog;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +25,9 @@ import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.bd.model.Productos;
 
 import java.util.ArrayList;
+
+import dmax.dialog.SpotsDialog;
+
 public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener{
 
     ClsConexion db;
@@ -35,12 +40,19 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     int total = 0;
 
     FirebaseFirestore firestore;
+    SwipeRefreshLayout refreshLayout;
+
+    AlertDialog dialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pedido_producto);
+
+        refreshLayout = findViewById(R.id.refreshLayout);
+
+        dialog = new SpotsDialog(this);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -120,6 +132,15 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
                         Toast.makeText(CrearProductoPedidoActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(CrearProductoPedidoActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
 
