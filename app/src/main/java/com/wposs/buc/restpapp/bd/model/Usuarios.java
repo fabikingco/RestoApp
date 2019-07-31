@@ -2,15 +2,14 @@ package com.wposs.buc.restpapp.bd.model;
 
 public class Usuarios {
 
-    private int id;
     private String user;
     private String pass;
     private String name;
     private String role;
     private String status;
+    private String photo;  //Falta por implementar
 
-    public Usuarios(int id, String user, String pass, String name, String role, String status) {
-        this.id = id;
+    public Usuarios(String user, String pass, String name, String role, String status) {
         this.user = user;
         this.pass = pass;
         this.name = name;
@@ -25,13 +24,6 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUser() {
         return user;

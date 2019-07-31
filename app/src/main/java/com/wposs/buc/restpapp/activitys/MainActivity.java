@@ -85,11 +85,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void configurarRestaurante(View view) {
-        if (usuario.getRole().equals("Admin")) {
-            Tools.startView(this, ConfigurarRestauranteActivity.class);
-        } else {
-            Toast.makeText(this, "No tienes permisos para ingresar a este menu", Toast.LENGTH_SHORT).show();
-        }
+        Tools.startView(this, ConfigurarRestauranteActivity.class);
+//        if (usuario.getRole().equals("Admin")) {
+//            Tools.startView(this, ConfigurarRestauranteActivity.class);
+//        } else {
+//            Toast.makeText(this, "No tienes permisos para ingresar a este menu", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private void bannerUsuario() {

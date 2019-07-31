@@ -19,6 +19,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
@@ -34,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
 
         mAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
         /*bd = new ClsConexion(this);
 
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -77,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(LoginActivity.this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show();
+
                         Tools.startView(LoginActivity.this, MainActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Inicio de sesion fallido", Toast.LENGTH_SHORT).show();
@@ -135,8 +144,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateStateUser(FirebaseUser currentUser) {
-        if (currentUser != null){
-            Log.d("Login Status", "Logueado, " + currentUser.getDisplayName());
+        if (currentUser != null) {
+            Log.d("Login Status", "Logueado, " + currentUser.getEmail());
             Intent intent = new Intent();
             intent.putExtra("currentUser", currentUser.getUid());
             intent.setClass(this, MainActivity.class);

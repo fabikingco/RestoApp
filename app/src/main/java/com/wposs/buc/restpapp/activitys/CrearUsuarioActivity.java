@@ -1,6 +1,7 @@
 package com.wposs.buc.restpapp.activitys;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +12,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.bd.model.Usuarios;
 
 import java.util.ArrayList;
 
@@ -22,10 +30,17 @@ public class CrearUsuarioActivity extends AppCompatActivity {
     RadioButton rbAdmin, rbCaja, rbMesero;
     ClsConexion bd;
 
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario);
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+
         Toolbar myToolbar = findViewById(R.id.toolbar);
         myToolbar.setTitle("Crear usuarios");
         setSupportActionBar(myToolbar);
@@ -64,10 +79,11 @@ public class CrearUsuarioActivity extends AppCompatActivity {
                                         sApellido;
                                 String role = obtenerRole();
                                 String status = "new";
-                                if (bd.crearUsuario(id, user, pass, name, role, status)) {
-                                    Toast.makeText(this, "Usuario " + user + " creado con exito", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+//                                if (bd.crearUsuario(id, user, pass, name, role, status)) {
+//                                    Toast.makeText(this, "Usuario " + user + " creado con exito", Toast.LENGTH_SHORT).show();
+//                                    finish();
+//                                }
+                                createUser(user, pass, name, role, status);
                             }
                         }
                     }
@@ -90,17 +106,20 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
     private boolean verificarUsuario(String user) {
         boolean ret = true;
-        try {
-            ArrayList<String> usuarios = bd.getAllUsuariosUser();
-            for (int i = 0; i < usuarios.size(); i++) {
-                if (usuarios.get(i).equals(user)) {
-                    ret = false;
-                    Toast.makeText(this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }catch (Exception e){
-            Log.e("Error ", ""+e);
-        }
+        /**
+         * Aqui agregar verificacion de usuarios para no crear usuarios repetidos.
+         */
+//        try {
+//            ArrayList<String> usuarios = bd.getAllUsuariosUser();
+//            for (int i = 0; i < usuarios.size(); i++) {
+//                if (usuarios.get(i).equals(user)) {
+//                    ret = false;
+//                    Toast.makeText(this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }catch (Exception e){
+//            Log.e("Error ", ""+e);
+//        }
         return ret;
     }
 
@@ -156,12 +175,35 @@ public class CrearUsuarioActivity extends AppCompatActivity {
         }
 
         ret = primeraLetraDelNombre +
-                apellido;
+                apellido + "@restoapp.com.co";
 
         return ret;
     }
 
     public void agregarFotoUsuario(View view) {
         Toast.makeText(this, "Aun no es posible agregar foto de usuario", Toast.LENGTH_SHORT).show();
+    }
+
+    private void createUser(final String email, final String password, final String name, final String role, final String status){
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    CollectionReference newUser = mFirestore.collection("usuarios");
+                    Usuarios usuarios = new Usuarios();
+                    usuarios.setUser(email);
+                    usuarios.setPass(password);
+                    usuarios.setName(name);
+                    usuarios.setRole(role);
+                    usuarios.setStatus(status);
+                    newUser.add(usuarios);
+                    Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
+                    Toast.makeText(CrearUsuarioActivity.this, "Nuevo usuario creado con exito. " + email + " y contraseña" + password, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
+                }
+            }
+        });
     }
 }

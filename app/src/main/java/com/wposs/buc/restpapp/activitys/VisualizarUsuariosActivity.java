@@ -26,7 +26,7 @@ public class VisualizarUsuariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.visualizar_items);
 
-        db = new ClsConexion(this);
+        /*db = new ClsConexion(this);
 
         final ArrayList<Usuarios> usuarios =  db.getAllUsuarios();
 
@@ -54,7 +54,7 @@ public class VisualizarUsuariosActivity extends AppCompatActivity {
                 Toast.makeText(VisualizarUsuariosActivity.this, "Lista actualizada", Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
 
     }

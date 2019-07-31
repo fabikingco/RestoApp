@@ -276,7 +276,7 @@ public class ClsConexion extends SQLiteOpenHelper {
 
     public ArrayList<Usuarios> getAllUsuarios() {
         ArrayList<Usuarios> users = new ArrayList<Usuarios>();
-        db = this.getWritableDatabase();
+        /*db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_USUARIOS_NEW;
         //String query = "SELECT " + COLUMN_USER_USER + " FROM " + TABLE_USUARIOS_NEW;
         Cursor cursor = db.rawQuery(query, null);
@@ -287,7 +287,7 @@ public class ClsConexion extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        db.close();
+        db.close();*/
         return users;
     }
 
@@ -322,7 +322,7 @@ public class ClsConexion extends SQLiteOpenHelper {
     }
 
     public Usuarios readUser(Usuarios user) {
-        db = this.getWritableDatabase();
+       /* db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_USUARIOS_NEW,
                 new String[]{COLUMN_USER_ID, COLUMN_USER_USER, COLUMN_USER_PASS,COLUMN_USER_NAME,COLUMN_USER_ROLE,COLUMN_USER_STATUS},
                 COLUMN_USER_USER + "=?",
@@ -343,7 +343,7 @@ public class ClsConexion extends SQLiteOpenHelper {
             db.close();
             return userData;
         }
-        db.close();
+        db.close();*/
         return null;
     }
 
