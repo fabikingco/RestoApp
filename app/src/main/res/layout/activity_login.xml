@@ -44,7 +44,7 @@
             android:ems="10"
             android:gravity="center"
             android:inputType="textEmailAddress"
-            android:maxLength="10"
+            android:maxLength="30"
             android:textCursorDrawable="@drawable/cursor_custon" />
 
         <TextView

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
@@ -32,15 +33,19 @@ public class MainActivity extends AppCompatActivity {
     private static final int SMS_PERMISSION_CODE = 0;
 
     private SharedPreferences sharedPreferences;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         bd = new ClsConexion(this);
         tvUsuario = findViewById(R.id.tvUsuario);
-        bannerUsuario();
+        //bannerUsuario();
         solicitarPermisos();
     }
 
@@ -54,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.item_CerrarSesion){
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            /*SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("loginActivo", false);
             editor.putString("user", "error");
             editor.putString("name", "error");
             editor.putString("role", "error");
-            editor.apply();
+            editor.apply();*/
+
+            cerrarSesion();
 
             Tools.startView(this, LoginActivity.class);
             finish();
@@ -146,5 +153,9 @@ public class MainActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    private void cerrarSesion(){
+        mAuth.signOut();
     }
 }

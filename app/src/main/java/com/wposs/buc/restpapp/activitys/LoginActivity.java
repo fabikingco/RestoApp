@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
 
         mAuth = FirebaseAuth.getInstance();
-        bd = new ClsConexion(this);
+        /*bd = new ClsConexion(this);
 
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         boolean loginActivo = sharedPreferences.getBoolean("loginActivo", false);
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
             return;
         }
-
+*/
         setContentView(R.layout.activity_login);
         findViewObjetos();
         et_pw = findViewById(R.id.editText_Clave);
@@ -70,13 +70,14 @@ public class LoginActivity extends AppCompatActivity {
     public void ingresar(View view) {
         user = et_user.getText().toString();
         pass = et_pw.getText().toString();
-        if (validateForm(user, pass)) {
 
+        if (validateForm(user, pass)) {
             mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(LoginActivity.this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show();
+                        Tools.startView(LoginActivity.this, MainActivity.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Inicio de sesion fallido", Toast.LENGTH_SHORT).show();
                     }
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             });
 
 
-            usuario = bd.readUser(new Usuarios(user));
+            /*usuario = bd.readUser(new Usuarios(user));
             if (usuario != null) {
                 if (usuario.getUser().equals(user) && usuario.getPass().equals(pass)) {
                     // Guardar estado del login
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } else {
                 Toast.makeText(this, "Usuario no existe ", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         }
     }
 
