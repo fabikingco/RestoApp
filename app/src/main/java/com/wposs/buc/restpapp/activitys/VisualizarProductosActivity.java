@@ -32,7 +32,7 @@ public class VisualizarProductosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.visualizar_items);
+        setContentView(R.layout.recycler_general);
 
         firestore = FirebaseFirestore.getInstance();
         refreshLayout = findViewById(R.id.refreshLayout);
@@ -52,8 +52,8 @@ public class VisualizarProductosActivity extends AppCompatActivity {
                                     doc.getString("categoria"),
                                     doc.getString("descripcion"));
                             productos.add(prod);
-
                         }
+                        cargarCampos();
 
                     }
                 })
@@ -74,7 +74,7 @@ public class VisualizarProductosActivity extends AppCompatActivity {
         });
     }
 
-    private void cargarCapos(){
+    private void cargarCampos(){
         ListProductosAdapter adapter = new ListProductosAdapter(VisualizarProductosActivity.this, productos);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

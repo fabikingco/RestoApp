@@ -42,23 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
-        /*bd = new ClsConexion(this);
 
-        sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-        boolean loginActivo = sharedPreferences.getBoolean("loginActivo", false);
-        if (loginActivo) {
-            usuario = new Usuarios();
-            String user = sharedPreferences.getString("user", "error");
-            String name = sharedPreferences.getString("name", "error");
-            String role = sharedPreferences.getString("role", "error");
-            usuario.setUser(user);
-            usuario.setName(name);
-            usuario.setRole(role);
-            Tools.startView(this, MainActivity.class);
-            finish();
-            return;
-        }
-*/
         setContentView(R.layout.activity_login);
         findViewObjetos();
         et_pw = findViewById(R.id.editText_Clave);
@@ -78,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(LoginActivity.this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show();
+                        //Obtener datos del usuario
+
 
                         Tools.startView(LoginActivity.this, MainActivity.class);
                     } else {
@@ -159,9 +145,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void cerrarSesion(){
-        mAuth.signOut();
     }
 }

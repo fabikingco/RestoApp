@@ -111,7 +111,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for(DocumentSnapshot doc:task.getResult()){
+                        for(DocumentSnapshot doc : task.getResult()){
                             Productos prod = new Productos(doc.getString("id"),
                                     doc.getString("titulo"),
                                     doc.getString("valor"),
@@ -159,6 +159,5 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             total += productos.getValor();
             tvTotal.setText("$" + total);
         }
-
     }
 }
