@@ -1,8 +1,10 @@
 package com.wposs.buc.restpapp.activitys;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,11 +15,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
+import com.wposs.buc.restpapp.model.Categorias;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,29 +38,58 @@ public class NuevoProductoActivity extends AppCompatActivity {
     Spinner spinnerCategorias;
     String producto, categoria, descripcion;
     String valor;
-
-    ClsConexion bd;
+    ArrayList<String> cateList;
 
     FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nuevo_producto);
-        bd = new ClsConexion(this);
         firestore = FirebaseFirestore.getInstance();
+        cateList = llenarSpinner();
+    }
+
+    private ArrayList<String> llenarSpinner() {
+
+        final ArrayList<String> cateList = new ArrayList<String>();
+
+        firestore.collection("Categorias")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                cateList.add(document.getString("name"));
+                                Log.d("Obtener Categorias", document.getId() + " => " + document.getData());
+                            }
+                            cargarWidgets();
+                        } else {
+                            Log.d("Obtener Categorias", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        return cateList;
+    }
+
+    private void cargarWidgets() {
+        setContentView(R.layout.activity_nuevo_producto);
 
         etProducto = findViewById(R.id.etProducto);
         etValor = findViewById(R.id.etValor);
         etDescripcion = findViewById(R.id.etDescripcion);
         spinnerCategorias = findViewById(R.id.spinnerCategorias);
 
-        llenarSpinner();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, cateList);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerCategorias.setAdapter(adapter);
 
         spinnerCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoria = (String) parent.getItemAtPosition(position);
+                Toast.makeText(NuevoProductoActivity.this, "Selecciono -> " + categoria, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -63,26 +99,9 @@ public class NuevoProductoActivity extends AppCompatActivity {
         });
     }
 
-    private void llenarSpinner() {
-        ArrayList<String> categorias = new ArrayList<String>();
-        try{
-            categorias = bd.getAllCategorias();
-        }catch (NullPointerException e){
-            e.getCause();
-            categorias.add("NO EXISTEN CATEGORIAS");
-        }
-
-        if (categorias.size() == 0){
-            categorias.add("NO EXISTEN CATEGORIAS");
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, categorias);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinnerCategorias.setAdapter(adapter);
-    }
-
     public void nuevaCategoria(View view2) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NuevoProductoActivity.this);
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(NuevoProductoActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_1_edit_text, null);
 
@@ -118,7 +137,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.dismiss();
             }
-        });
+        });*/
     }
 
     public void crearProducto(View view) {
@@ -160,17 +179,9 @@ public class NuevoProductoActivity extends AppCompatActivity {
                     Toast.makeText(NuevoProductoActivity.this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
                     Tools.startView(NuevoProductoActivity.this, MainActivity.class);
                     finish();
-
                 }
             });
 
-
-
-            /*if (bd.crearProducto(producto, valor, categoria, descripcion)) {
-                Toast.makeText(this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
-                Tools.startView(this, MainActivity.class);
-                finish();
-            }*/
         } else {
             Toast.makeText(this, "Debe crear una nueva categoria", Toast.LENGTH_SHORT).show();
         }
