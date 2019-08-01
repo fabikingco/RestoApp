@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wposs.buc.restpapp.bd.model.Mesas;
+import com.wposs.buc.restpapp.model.Mesas;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;

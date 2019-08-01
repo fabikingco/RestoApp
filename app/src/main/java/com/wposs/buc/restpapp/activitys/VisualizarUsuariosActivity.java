@@ -4,17 +4,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.wposs.buc.restpapp.adapters.ListUsuariosAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
-import com.wposs.buc.restpapp.bd.model.Usuarios;
+import com.wposs.buc.restpapp.model.Usuarios;
 import com.wposs.buc.restpapp.R;
-
-import java.util.ArrayList;
 
 public class VisualizarUsuariosActivity extends AppCompatActivity {
 

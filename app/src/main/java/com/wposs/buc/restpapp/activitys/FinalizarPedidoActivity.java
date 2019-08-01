@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
-import com.wposs.buc.restpapp.bd.model.Mesas;
+import com.wposs.buc.restpapp.model.Mesas;
 import com.wposs.buc.restpapp.R;
 
 import java.util.ArrayList;

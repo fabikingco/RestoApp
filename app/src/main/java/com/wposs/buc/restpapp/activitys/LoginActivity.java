@@ -1,6 +1,5 @@
 package com.wposs.buc.restpapp.activitys;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -15,20 +14,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
-import com.wposs.buc.restpapp.bd.model.Usuarios;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
+import com.wposs.buc.restpapp.model.Usuarios;
 
 public class LoginActivity extends AppCompatActivity {
 

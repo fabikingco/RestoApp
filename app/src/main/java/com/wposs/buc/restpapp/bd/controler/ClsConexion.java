@@ -7,9 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.wposs.buc.restpapp.bd.model.Mesas;
-import com.wposs.buc.restpapp.bd.model.Productos;
-import com.wposs.buc.restpapp.bd.model.Usuarios;
+import com.wposs.buc.restpapp.model.Mesas;
+import com.wposs.buc.restpapp.model.Productos;
+import com.wposs.buc.restpapp.model.Usuarios;
 
 import java.util.ArrayList;
 import java.util.HashMap;

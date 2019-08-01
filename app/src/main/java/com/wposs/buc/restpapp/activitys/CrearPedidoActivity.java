@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
-import com.wposs.buc.restpapp.bd.model.Mesas;
+import com.wposs.buc.restpapp.model.Mesas;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
 

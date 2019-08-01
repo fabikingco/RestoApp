@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wposs.buc.restpapp.R;
-import com.wposs.buc.restpapp.bd.model.Productos;
+import com.wposs.buc.restpapp.model.Productos;
 import java.util.ArrayList;
 
 public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProductosPedidoAdapter.PedidoViewHolder> {

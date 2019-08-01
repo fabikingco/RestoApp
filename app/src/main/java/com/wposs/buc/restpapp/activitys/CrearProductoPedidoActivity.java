@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,11 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
-import com.wposs.buc.restpapp.bd.model.Productos;
+import com.wposs.buc.restpapp.model.Productos;
 
 import java.util.ArrayList;
-
-import dmax.dialog.SpotsDialog;
 
 public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener{
 

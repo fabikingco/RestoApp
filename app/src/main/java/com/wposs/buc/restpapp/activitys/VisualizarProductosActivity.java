@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.adapters.ListProductosAdapter;
 import com.wposs.buc.restpapp.R;
-import com.wposs.buc.restpapp.bd.model.Productos;
+import com.wposs.buc.restpapp.model.Productos;
 
 import java.util.ArrayList;
 
