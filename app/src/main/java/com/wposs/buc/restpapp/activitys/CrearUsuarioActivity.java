@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +21,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
-import com.wposs.buc.restpapp.bd.model.Usuarios;
+import com.wposs.buc.restpapp.model.Usuarios;
 
 import java.util.ArrayList;
 
@@ -189,14 +190,24 @@ public class CrearUsuarioActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    CollectionReference newUser = mFirestore.collection("usuarios");
+
                     Usuarios usuarios = new Usuarios();
                     usuarios.setUser(email);
                     usuarios.setPass(password);
                     usuarios.setName(name);
                     usuarios.setRole(role);
                     usuarios.setStatus(status);
-                    newUser.add(usuarios);
+                    mFirestore.collection("usuarios").document(email)
+                            .set(usuarios).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Log.d("Creacion de Cuenta", "Documento del usuario creado correctamente");
+                            } else {
+                                Log.e("Creacion de Cuenta", "Fallo creacion del documento del usuario ");
+                            }
+                        }
+                    });
                     Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
                     Toast.makeText(CrearUsuarioActivity.this, "Nuevo usuario creado con exito. " + email + " y contraseña" + password, Toast.LENGTH_SHORT).show();
                     finish();
