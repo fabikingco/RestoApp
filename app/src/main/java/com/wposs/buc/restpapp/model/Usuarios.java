@@ -1,4 +1,4 @@
-package com.wposs.buc.restpapp.bd.model;
+package com.wposs.buc.restpapp.model;
 
 public class Usuarios {
 
