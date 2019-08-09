@@ -4,8 +4,19 @@ package com.wposs.buc.restpapp.activitys;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,20 +30,37 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.model.Usuarios;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-public class CrearUsuarioActivity extends AppCompatActivity {
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class CrearUsuarioActivity extends AppCompatActivity implements
+        EasyPermissions.PermissionCallbacks{
 
     EditText etDocumento, etNombre, etApellido;
     RadioButton rbAdmin, rbCaja, rbMesero;
     ClsConexion bd;
 
+    private Uri mFileUri;
+    private static final int TC_PICK_IMAGE = 101;
+    private static final int RC_CAMERA_PERMISSIONS = 102;
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
+    private FirebaseStorage mStorage;
+
+    private static final String[] cameraPerms = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +69,7 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
 
         Toolbar myToolbar = findViewById(R.id.toolbar);
         myToolbar.setTitle("Crear usuarios");
@@ -80,10 +109,6 @@ public class CrearUsuarioActivity extends AppCompatActivity {
                                         sApellido;
                                 String role = obtenerRole();
                                 String status = "new";
-//                                if (bd.crearUsuario(id, user, pass, name, role, status)) {
-//                                    Toast.makeText(this, "Usuario " + user + " creado con exito", Toast.LENGTH_SHORT).show();
-//                                    finish();
-//                                }
                                 createUser(user, pass, name, role, status);
                             }
                         }
@@ -183,6 +208,7 @@ public class CrearUsuarioActivity extends AppCompatActivity {
 
     public void agregarFotoUsuario(View view) {
         Toast.makeText(this, "Aun no es posible agregar foto de usuario", Toast.LENGTH_SHORT).show();
+        showImagePicker();
     }
 
     private void createUser(final String email, final String password, final String name, final String role, final String status){
@@ -216,5 +242,83 @@ public class CrearUsuarioActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    @AfterPermissionGranted(RC_CAMERA_PERMISSIONS)
+    private void showImagePicker() {
+        // Check for camera permissions
+        if (!EasyPermissions.hasPermissions(this, cameraPerms)) {
+            EasyPermissions.requestPermissions(this,
+                    "This sample will upload a picture from your Camera",
+                    RC_CAMERA_PERMISSIONS, cameraPerms);
+            return;
+        }
+
+        // Choose file storage location
+        File file = new File(getExternalCacheDir(), UUID.randomUUID().toString());
+        mFileUri = Uri.fromFile(file);
+
+        // Camera
+        final List<Intent> cameraIntents = new ArrayList<Intent>();
+        final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        final PackageManager packageManager = getPackageManager();
+        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam){
+            final String packageName = res.activityInfo.packageName;
+            final Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
+            intent.setPackage(packageName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
+            cameraIntents.add(intent);
+        }
+
+        // Image Picker
+        Intent pickerIntent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        Intent chooserIntent = Intent.createChooser(pickerIntent,
+                getString(R.string.picture_chooser_title));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new
+                Parcelable[cameraIntents.size()]));
+        startActivityForResult(chooserIntent, TC_PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == TC_PICK_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                final boolean isCamera;
+                if (data.getData() == null) {
+                    isCamera = true;
+                } else {
+                    isCamera = MediaStore.ACTION_IMAGE_CAPTURE.equals(data.getAction());
+                }
+                if (!isCamera) {
+                    mFileUri = data.getData();
+                }
+                Log.d("DATA IMG", "Received file uri: " + mFileUri.getPath());
+
+//                mTaskFragment.resizeBitmap(mFileUri, THUMBNAIL_MAX_DIMENSION);
+//                mTaskFragment.resizeBitmap(mFileUri, FULL_SIZE_MAX_DIMENSION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {}
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
     }
 }

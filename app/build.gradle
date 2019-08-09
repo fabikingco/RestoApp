@@ -36,7 +36,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:18.1.0'
     implementation 'com.google.firebase:firebase-storage:18.1.1'
 
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
+    //Spots Dialog
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
 
 }
