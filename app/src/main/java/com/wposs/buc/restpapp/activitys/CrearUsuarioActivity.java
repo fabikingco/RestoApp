@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.model.Usuarios;
@@ -52,11 +54,13 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
 
     private Uri mFileUri;
     private static final int TC_PICK_IMAGE = 101;
+    private static final int RC_PHOTO_PICKER =  2;
     private static final int RC_CAMERA_PERMISSIONS = 102;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private FirebaseStorage mStorage;
+    private StorageReference mProfileStorageReference;
 
     private static final String[] cameraPerms = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -70,6 +74,8 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
+
+        mProfileStorageReference = mStorage.getReference().child("profile");
 
         Toolbar myToolbar = findViewById(R.id.toolbar);
         myToolbar.setTitle("Crear usuarios");
@@ -300,6 +306,19 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
                     mFileUri = data.getData();
                 }
                 Log.d("DATA IMG", "Received file uri: " + mFileUri.getPath());
+                StorageReference photoRef =
+                        mProfileStorageReference.child(mFileUri.getLastPathSegment());
+
+                photoRef.putFile(mFileUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> photoUpload = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                        Log.d("DATA IMG", "Url de imagen: " + photoUpload.toString());
+                        Toast.makeText(CrearUsuarioActivity.this, "Foto subida correctamente" + photoUpload.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
 
 //                mTaskFragment.resizeBitmap(mFileUri, THUMBNAIL_MAX_DIMENSION);
 //                mTaskFragment.resizeBitmap(mFileUri, FULL_SIZE_MAX_DIMENSION);

@@ -50,7 +50,8 @@ public class VisualizarUsuariosActivity extends AppCompatActivity {
                                         document.getString("pass"),
                                         document.getString("name"),
                                         document.getString("role"),
-                                        document.getString("status")));
+                                        document.getString("status"),
+                                        document.getString("photoUrl")));
 
                             }
                             cargarLista(usuarios);
