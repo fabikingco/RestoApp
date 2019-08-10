@@ -28,11 +28,13 @@
             android:onClick="agregarFotoProducto">
 
             <ImageView
+                android:id="@+id/imgProducto"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_centerInParent="true"
                 android:src="@mipmap/ic_burger"/>
             <ImageView
+                android:id="@+id/imgCamara"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/ic_camera_circle"

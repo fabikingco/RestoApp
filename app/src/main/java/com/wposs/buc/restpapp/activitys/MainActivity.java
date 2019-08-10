@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void solicitarPermisos() {
-       if (!isSmsPermissionGranted()) {
+       /*if (!isSmsPermissionGranted()) {
            showRequestPermissionsInfoAlertDialog();
-       }
+       }*/
     }
 
     private void showRequestPermissionsInfoAlertDialog() {
