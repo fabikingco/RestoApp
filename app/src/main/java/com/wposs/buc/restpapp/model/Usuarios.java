@@ -7,15 +7,17 @@ public class Usuarios {
     private String name;
     private String role;
     private String status;
-    private String photoUrl;  //Falta por implementar
+    private String photoUrl;
+    private String id;
 
-    public Usuarios(String user, String pass, String name, String role, String status, String photoUrl) {
+    public Usuarios(String user, String pass, String name, String role, String status, String photoUrl, String id) {
         this.user = user;
         this.pass = pass;
         this.name = name;
         this.role = role;
         this.status = status;
         this.photoUrl = photoUrl;
+        this.id = id;
     }
 
     public Usuarios(String user) {
@@ -72,5 +74,13 @@ public class Usuarios {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

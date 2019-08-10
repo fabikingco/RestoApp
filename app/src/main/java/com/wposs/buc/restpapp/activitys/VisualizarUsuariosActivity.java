@@ -51,17 +51,13 @@ public class VisualizarUsuariosActivity extends AppCompatActivity {
                                         document.getString("name"),
                                         document.getString("role"),
                                         document.getString("status"),
-                                        document.getString("photoUrl")));
-
+                                        document.getString("photoUrl"),
+                                        document.getString("id")));
                             }
                             cargarLista(usuarios);
                         }
                     }
                 });
-
-
-
-
     }
 
     private void cargarLista(final ArrayList<Usuarios> usuarios) {

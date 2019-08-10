@@ -7,6 +7,7 @@ public class Productos {
     private int valor;
     private String categoria;
     private String descripcion;
+    private String photoUrl;
 
     public Productos() {
     }

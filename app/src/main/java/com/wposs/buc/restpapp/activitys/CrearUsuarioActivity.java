@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Parcelable;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +48,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class CrearUsuarioActivity extends AppCompatActivity implements
-        EasyPermissions.PermissionCallbacks{
+        EasyPermissions.PermissionCallbacks {
 
     EditText etDocumento, etNombre, etApellido;
     RadioButton rbAdmin, rbCaja, rbMesero;
@@ -54,7 +56,7 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
 
     private Uri mFileUri;
     private static final int TC_PICK_IMAGE = 101;
-    private static final int RC_PHOTO_PICKER =  2;
+    private static final int RC_PHOTO_PICKER = 2;
     private static final int RC_CAMERA_PERMISSIONS = 102;
 
     private FirebaseAuth mAuth;
@@ -105,19 +107,17 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
             if (!sApellido.isEmpty()) {
                 if (!sDocumento.isEmpty()) {
                     if (verificarRadio()) {
-                        int id = Integer.parseInt(sDocumento);
-                        if (verificarIdUser(id)) {
-                            String user = obtenerUsuario(sNombre, sApellido);
-                            if (verificarUsuario(user)) {
-                                String pass = crearPassword(sDocumento);
-                                String name = sNombre +
-                                        " " +
-                                        sApellido;
-                                String role = obtenerRole();
-                                String status = "new";
-                                createUser(user, pass, name, role, status);
-                            }
+                        String user = obtenerUsuario(sNombre, sApellido);
+                        if (verificarUsuario(user)) {
+                            String pass = crearPassword(sDocumento);
+                            String name = sNombre +
+                                    " " +
+                                    sApellido;
+                            String role = obtenerRole();
+                            String status = "new";
+                            createUser(user, pass, name, role, status, sDocumento);
                         }
+
                     }
                 } else {
                     Toast.makeText(this, "Campo de documento vacio", Toast.LENGTH_SHORT).show();
@@ -133,7 +133,7 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
 
     private String crearPassword(String sDocumento) {
         int len = sDocumento.length();
-        return sDocumento.substring(len-6, len);
+        return sDocumento.substring(len - 6, len);
     }
 
     private boolean verificarUsuario(String user) {
@@ -157,17 +157,17 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
 
     private boolean verificarIdUser(int id) {
         boolean ret = true;
-        try {
+        /*try {
             ArrayList<Integer> usuarios = bd.getAllUsuariosId();
             for (int i = 0; i < usuarios.size(); i++) {
-                if (usuarios.get(i) == id ){
+                if (usuarios.get(i) == id) {
                     ret = false;
                     Toast.makeText(this, "Este documento ya tiene usuario registrado", Toast.LENGTH_SHORT).show();
                 }
             }
-        }catch (Exception e){
-            Log.e("Error ", ""+e);
-        }
+        } catch (Exception e) {
+            Log.e("Error ", "" + e);
+        }*/
         return ret;
     }
 
@@ -198,12 +198,12 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
 
     private String obtenerUsuario(String sNombre, String sApellido) {
         String ret;
-        String primeraLetraDelNombre = sNombre.substring(0,1).toLowerCase();
+        String primeraLetraDelNombre = sNombre.substring(0, 1).toLowerCase();
         String apellido;
-        if (!sApellido.contains(" ")){
+        if (!sApellido.contains(" ")) {
             apellido = sApellido.trim().toLowerCase();
-        }else {
-            apellido = sApellido.trim().substring(0,sApellido.indexOf(" ")).toLowerCase();
+        } else {
+            apellido = sApellido.trim().substring(0, sApellido.indexOf(" ")).toLowerCase();
         }
 
         ret = primeraLetraDelNombre +
@@ -217,35 +217,60 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
         showImagePicker();
     }
 
-    private void createUser(final String email, final String password, final String name, final String role, final String status){
+    private void createUser(final String email, final String password, final String name, final String role,
+                            final String status, final String id) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                final StorageReference photoRef =
+                        mProfileStorageReference.child(id + ".jpg");
 
-                    Usuarios usuarios = new Usuarios();
-                    usuarios.setUser(email);
-                    usuarios.setPass(password);
-                    usuarios.setName(name);
-                    usuarios.setRole(role);
-                    usuarios.setStatus(status);
-                    mFirestore.collection("usuarios").document(email)
-                            .set(usuarios).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Log.d("Creacion de Cuenta", "Documento del usuario creado correctamente");
+                UploadTask uploadTask = photoRef.putFile(mFileUri);
+
+                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if(!task.isSuccessful()){
+                            throw task.getException();
+                        }
+                        return photoRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()){
+                            Uri downloadUrl = task.getResult();
+                            Log.i("The URL : ", downloadUrl.toString());
+                            if (task.isSuccessful()) {
+                                Usuarios usuarios = new Usuarios();
+                                usuarios.setUser(email);
+                                usuarios.setPass(password);
+                                usuarios.setName(name);
+                                usuarios.setRole(role);
+                                usuarios.setStatus(status);
+                                usuarios.setPhotoUrl(downloadUrl.toString());
+                                usuarios.setId(id);
+                                mFirestore.collection("usuarios").document(email)
+                                        .set(usuarios).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Log.d("Creacion de Cuenta", "Documento del usuario creado correctamente");
+                                        } else {
+                                            Log.e("Creacion de Cuenta", "Fallo creacion del documento del usuario ");
+                                        }
+                                    }
+                                });
+                                Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
+                                Toast.makeText(CrearUsuarioActivity.this, "Nuevo usuario creado con exito. " + email + " y contraseña" + password, Toast.LENGTH_SHORT).show();
+                                finish();
                             } else {
-                                Log.e("Creacion de Cuenta", "Fallo creacion del documento del usuario ");
+                                Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
                             }
                         }
-                    });
-                    Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
-                    Toast.makeText(CrearUsuarioActivity.this, "Nuevo usuario creado con exito. " + email + " y contraseña" + password, Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
-                }
+                    }
+                });
+
             }
         });
     }
@@ -270,7 +295,7 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
         final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam){
+        for (ResolveInfo res : listCam) {
             final String packageName = res.activityInfo.packageName;
             final Intent intent = new Intent(captureIntent);
             intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
@@ -306,18 +331,17 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
                     mFileUri = data.getData();
                 }
                 Log.d("DATA IMG", "Received file uri: " + mFileUri.getPath());
-                StorageReference photoRef =
-                        mProfileStorageReference.child(mFileUri.getLastPathSegment());
 
-                photoRef.putFile(mFileUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+
+                /*photoRef.putFile(mFileUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> photoUpload = taskSnapshot.getMetadata().getReference().getDownloadUrl();
                         Log.d("DATA IMG", "Url de imagen: " + photoUpload.toString());
                         Toast.makeText(CrearUsuarioActivity.this, "Foto subida correctamente" + photoUpload.toString(), Toast.LENGTH_SHORT).show();
                     }
-                });
-
+                });*/
 
 
 //                mTaskFragment.resizeBitmap(mFileUri, THUMBNAIL_MAX_DIMENSION);
@@ -335,7 +359,8 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {}
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
