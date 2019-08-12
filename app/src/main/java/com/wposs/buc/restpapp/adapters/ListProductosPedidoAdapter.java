@@ -1,7 +1,10 @@
 package com.wposs.buc.restpapp.adapters;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.activitys.tools.GlideApp;
 import com.wposs.buc.restpapp.model.Productos;
 import java.util.ArrayList;
 
 public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProductosPedidoAdapter.PedidoViewHolder> {
 
     ArrayList<Productos> productos;
+    Context context;
 
     /**
      * Interfaz de comunicación
@@ -35,8 +40,9 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
     }
 
 
-    public ListProductosPedidoAdapter(ArrayList<Productos> objects) {
+    public ListProductosPedidoAdapter(ArrayList<Productos> objects, Context context) {
         this.productos = objects;
+        this.context = context;
     }
 
 
@@ -53,6 +59,9 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
         pedidoViewHolder.tvTitulo.setText(producto.getNombre());
         pedidoViewHolder.tvValor.setText(String.valueOf(producto.getValor()));
         pedidoViewHolder.tvDescripcion.setText(producto.getDescripcion());
+        GlideApp.with(context).load(producto.getPhotoUrl())
+                .into(pedidoViewHolder.imgPhoto);
+        pedidoViewHolder.imgPhoto.setColorFilter(ContextCompat.getColor(context, android.R.color.transparent));
     }
 
     @Override

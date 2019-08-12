@@ -21,6 +21,7 @@ import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.model.Productos;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class VisualizarProductosActivity extends AppCompatActivity {
 
@@ -50,7 +51,8 @@ public class VisualizarProductosActivity extends AppCompatActivity {
                                     doc.getString("titulo"),
                                     doc.getString("valor"),
                                     doc.getString("categoria"),
-                                    doc.getString("descripcion"));
+                                    doc.getString("descripcion"),
+                                    doc.getString("url"));
                             productos.add(prod);
                         }
                         cargarCampos();

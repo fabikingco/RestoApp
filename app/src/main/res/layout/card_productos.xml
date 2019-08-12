@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="220dp"
     android:layout_margin="5dp"
-    card_view:cardCornerRadius="4dp"
-    >
+    card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:id="@+id/relative"
@@ -16,10 +15,12 @@
         android:background="@drawable/button_verde"
         android:orientation="vertical">
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imgPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            card_view:civ_border="false"
+            card_view:civ_circle_color="@color/blueDark"
             android:src="@mipmap/ic_burger"
             />
         <TextView

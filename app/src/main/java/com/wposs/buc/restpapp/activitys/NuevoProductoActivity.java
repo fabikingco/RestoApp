@@ -15,23 +15,24 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -41,6 +42,7 @@ import com.wposs.buc.restpapp.activitys.tools.GlideApp;
 import com.wposs.buc.restpapp.activitys.tools.ImagePickerActivity;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
+import com.wposs.buc.restpapp.model.Usuarios;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,12 +65,18 @@ public class NuevoProductoActivity extends AppCompatActivity {
     String valor;
     ArrayList<String> cateList;
 
-    FirebaseFirestore firestore;
+    private FirebaseFirestore firestore;
+    private FirebaseStorage mStorage;
+    private StorageReference mProfileStorageReference;
+
+    private Uri uriPhotoCapture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firestore = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        mProfileStorageReference = mStorage.getReference().child("products");
         cateList = llenarSpinner();
     }
 
@@ -188,21 +196,48 @@ public class NuevoProductoActivity extends AppCompatActivity {
                 return;
             }
 
-            String id = UUID.randomUUID().toString();
-            Map<String,Object> todo = new HashMap<>();
-            todo.put("id", id);
-            todo.put("categoria", categoria);
-            todo.put("descripcion", descripcion);
-            todo.put("titulo", producto);
-            todo.put("valor", valor);
-            firestore.collection("Productos").document(id)
-                    .set(todo).addOnSuccessListener(new OnSuccessListener<Void>() {
+            final StorageReference photoRef =
+                    mProfileStorageReference.child(producto + ".jpg");
+
+            UploadTask uploadTask = photoRef.putFile(uriPhotoCapture);
+
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onSuccess(Void aVoid) {
-                    //Refresh data
-                    Toast.makeText(NuevoProductoActivity.this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
-                    Tools.startView(NuevoProductoActivity.this, MainActivity.class);
-                    finish();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return photoRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUrl = task.getResult();
+                        Log.i("The URL : ", downloadUrl.toString());
+                        if (task.isSuccessful()) {
+                            String id = UUID.randomUUID().toString();
+                            Map<String,Object> todo = new HashMap<>();
+                            todo.put("id", id);
+                            todo.put("categoria", categoria);
+                            todo.put("descripcion", descripcion);
+                            todo.put("titulo", producto);
+                            todo.put("valor", valor);
+                            todo.put("url", downloadUrl.toString());
+                            firestore.collection("Productos").document(id)
+                                    .set(todo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Refresh data
+                                    Toast.makeText(NuevoProductoActivity.this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
+                                    Tools.startView(NuevoProductoActivity.this, MainActivity.class);
+                                    finish();
+                                }
+                            });
+                        } else {
+                            Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
+                        }
+                    }
                 }
             });
 
@@ -279,13 +314,13 @@ public class NuevoProductoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getParcelableExtra("path");
+                uriPhotoCapture = data.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriPhotoCapture);
 
                     // loading profile image from local cache
-                    loadProfile(uri.toString());
+                    loadProfile(uriPhotoCapture.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

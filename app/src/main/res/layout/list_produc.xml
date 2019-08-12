@@ -1,33 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:padding="5dip" >
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
+    android:padding="16dp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/list_item_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:civ_shadow="false"
+        app:civ_border_color="@color/blueDark"
+        android:src="@mipmap/ic_burger" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="Hamburguesa Especial"
-        android:textSize="17dp" />
-    <TextView
-        android:id="@+id/tvDescripcion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitulo"
-        android:layout_marginTop="7dp"
-        android:text="Esto prueba"
-        android:textColor="#343434"
-        android:textSize="14dp" />
-    <TextView
-        android:id="@+id/tvValor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvDescripcion"
-        android:layout_alignBottom="@+id/tvDescripcion"
-        android:layout_alignParentRight="true"
-        android:text="18.000"
-        android:textColor="#343434"
-        android:textSize="14dp" />
-</RelativeLayout>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hamburguesa Especial"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDescripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitulo"
+            android:layout_marginTop="7dp"
+            android:text="Esto prueba"
+            android:textColor="#343434"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvDescripcion"
+            android:layout_alignBottom="@+id/tvDescripcion"
+            android:layout_alignParentRight="true"
+            android:text="18.000"
+            android:textColor="#343434"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</LinearLayout>

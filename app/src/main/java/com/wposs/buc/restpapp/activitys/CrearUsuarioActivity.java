@@ -222,55 +222,57 @@ public class CrearUsuarioActivity extends AppCompatActivity implements
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                final StorageReference photoRef =
-                        mProfileStorageReference.child(id + ".jpg");
+                if (task.isSuccessful()) {
+                    final StorageReference photoRef =
+                            mProfileStorageReference.child(id + ".jpg");
 
-                UploadTask uploadTask = photoRef.putFile(mFileUri);
+                    UploadTask uploadTask = photoRef.putFile(mFileUri);
 
-                uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if(!task.isSuccessful()){
-                            throw task.getException();
+                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            return photoRef.getDownloadUrl();
                         }
-                        return photoRef.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()){
-                            Uri downloadUrl = task.getResult();
-                            Log.i("The URL : ", downloadUrl.toString());
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
                             if (task.isSuccessful()) {
-                                Usuarios usuarios = new Usuarios();
-                                usuarios.setUser(email);
-                                usuarios.setPass(password);
-                                usuarios.setName(name);
-                                usuarios.setRole(role);
-                                usuarios.setStatus(status);
-                                usuarios.setPhotoUrl(downloadUrl.toString());
-                                usuarios.setId(id);
-                                mFirestore.collection("usuarios").document(email)
-                                        .set(usuarios).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-                                            Log.d("Creacion de Cuenta", "Documento del usuario creado correctamente");
-                                        } else {
-                                            Log.e("Creacion de Cuenta", "Fallo creacion del documento del usuario ");
+                                Uri downloadUrl = task.getResult();
+                                Log.i("The URL : ", downloadUrl.toString());
+                                if (task.isSuccessful()) {
+                                    Usuarios usuarios = new Usuarios();
+                                    usuarios.setUser(email);
+                                    usuarios.setPass(password);
+                                    usuarios.setName(name);
+                                    usuarios.setRole(role);
+                                    usuarios.setStatus(status);
+                                    usuarios.setPhotoUrl(downloadUrl.toString());
+                                    usuarios.setId(id);
+                                    mFirestore.collection("usuarios").document(email)
+                                            .set(usuarios).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("Creacion de Cuenta", "Documento del usuario creado correctamente");
+                                            } else {
+                                                Log.e("Creacion de Cuenta", "Fallo creacion del documento del usuario ");
+                                            }
                                         }
-                                    }
-                                });
-                                Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
-                                Toast.makeText(CrearUsuarioActivity.this, "Nuevo usuario creado con exito. " + email + " y contraseña" + password, Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
+                                    });
+                                    Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
+                                    Toast.makeText(CrearUsuarioActivity.this, "Nuevo usuario creado con exito. " + email + " y contraseña" + password, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
+                }
             }
         });
     }

@@ -12,14 +12,13 @@ public class Productos {
     public Productos() {
     }
 
-
-
-    public Productos(String id, String nombre, String valor, String categoria, String descripcion) {
+    public Productos(String id, String nombre, String valor, String categoria, String descripcion, String photoUrl) {
         this.id = id;
         this.nombre = nombre;
         this.valor = Integer.parseInt(valor);
         this.categoria = categoria;
         this.descripcion = descripcion;
+        this.photoUrl = photoUrl;
     }
 
     public String getId() {
@@ -60,5 +59,13 @@ public class Productos {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }
