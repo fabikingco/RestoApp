@@ -1,6 +1,7 @@
 package com.wposs.buc.restpapp.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.wposs.buc.restpapp.activitys.tools.GlideApp;
 import com.wposs.buc.restpapp.model.Usuarios;
 import com.wposs.buc.restpapp.R;
 
@@ -15,8 +19,11 @@ import java.util.ArrayList;
 
 public class ListUsuariosAdapter extends ArrayAdapter<Usuarios> {
 
-    public ListUsuariosAdapter(Activity context, ArrayList<Usuarios> listItems) {
+    Context context;
+
+    public ListUsuariosAdapter(Context context, ArrayList<Usuarios> listItems) {
         super(context, 0, listItems);
+        this.context = context;
     }
 
     @Override
@@ -40,7 +47,9 @@ public class ListUsuariosAdapter extends ArrayAdapter<Usuarios> {
 
         ImageView iconView = (ImageView) listItemView.findViewById(R.id.list_item_icon);
 
-        iconView.setImageResource(R.mipmap.ic_account);
+        GlideApp.with(context).load(usuarios.getPhotoUrl())
+                .into(iconView);
+        iconView.setColorFilter(ContextCompat.getColor(context, android.R.color.transparent));
 
         return listItemView;
     }

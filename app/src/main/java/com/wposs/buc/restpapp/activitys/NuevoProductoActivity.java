@@ -81,7 +81,6 @@ public class NuevoProductoActivity extends AppCompatActivity {
     }
 
     private ArrayList<String> llenarSpinner() {
-
         final ArrayList<String> cateList = new ArrayList<String>();
 
         firestore.collection("Categorias")

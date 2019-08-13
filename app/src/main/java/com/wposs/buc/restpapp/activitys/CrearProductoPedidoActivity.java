@@ -119,7 +119,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
                                     doc.getString("descripcion"),
                                     doc.getString("url"));
                             productos.add(prod);
-                            ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos, getApplicationContext()ñ);
+                            ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos, getApplicationContext());
                             recyclerView.setAdapter(lpAdapter);
                             lpAdapter.setOnItemClickListener(CrearProductoPedidoActivity.this);
                         }
