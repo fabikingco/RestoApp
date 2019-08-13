@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void finalizarPedido(View view) {
-        Tools.startView(this, FinalizarPedidoActivity.class);
+        Tools.startView(this, MainActivity2.class);
     }
 
     public void configurarRestaurante(View view) {
