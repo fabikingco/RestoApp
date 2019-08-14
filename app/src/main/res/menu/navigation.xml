@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/navigation_shop"
-        android:icon="@mipmap/ic_restoapp_circle"
+        android:icon="@drawable/restoapplogo"
         android:title="Manu1" />
 
     <item
         android:id="@+id/navigation_gifts"
-        android:icon="@mipmap/ic_restoapp_circle"
+        android:icon="@drawable/restoapplogo"
         android:title="Menu2" />
 
     <item
         android:id="@+id/navigation_cart"
-        android:icon="@mipmap/ic_restoapp_circle"
+        android:icon="@drawable/restoapplogo"
         android:title="Menu3" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@mipmap/ic_restoapp_circle"
+        android:icon="@drawable/restoapplogo"
         android:title="Menu4" />
 
 </menu>
