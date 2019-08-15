@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnAgragarNuevoProducto"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Agregar nuevo producto"
+            style="@style/botonesMenus"
+
+            />
+
+        <Button
+            android:id="@+id/btnVerProduc"
+            style="@style/botonesMenus"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Editar productos" />
+
+        <Button
+            android:id="@+id/btnEditarCategorias"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Editar categorias"
+            style="@style/botonesMenus" />
+
+        <Button
+            android:id="@+id/btnCrearMesas"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Configuración de mesas"
+            style="@style/botonesMenus"
+            />
+
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

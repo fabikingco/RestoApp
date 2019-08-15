@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_margin"
             android:layout_weight="2"
-            android:text="Order Details"
+            android:text="Resumen del pedido"
             android:textColor="@color/colorWhite"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -51,20 +51,11 @@
             android:text="$435.00"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorBlack"
-        android:text="Chicken Fried Rice 1x1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        android:text="Paneer Tikka 1x2" />
-
-
+        android:text="Agregar productos" />
 
     <Button
         android:layout_width="match_parent"

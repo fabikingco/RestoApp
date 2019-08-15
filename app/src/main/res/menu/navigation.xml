@@ -2,23 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_shop"
-        android:icon="@drawable/restoapplogo"
-        android:title="Manu1" />
+        android:id="@+id/setting_app"
+        android:icon="@drawable/setting_phone"
+        android:title="Configuración" />
 
     <item
-        android:id="@+id/navigation_gifts"
-        android:icon="@drawable/restoapplogo"
-        android:title="Menu2" />
+        android:id="@+id/pedidos"
+        android:icon="@mipmap/ic_restoapp_circle"
+        android:title="RestoApp" />
 
     <item
-        android:id="@+id/navigation_cart"
-        android:icon="@drawable/restoapplogo"
-        android:title="Menu3" />
-
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/restoapplogo"
-        android:title="Menu4" />
+        android:id="@+id/setting_account"
+        android:icon="@drawable/cuentas"
+        android:title="Cuenta" />
 
 </menu>

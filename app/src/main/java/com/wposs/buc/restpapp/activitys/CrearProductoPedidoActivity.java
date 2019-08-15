@@ -142,12 +142,6 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             }
         });
 
-
-
-        /*ListProductosPedidoAdapter lpAdapter = new ListProductosPedidoAdapter(productos);
-        recyclerView.setAdapter(lpAdapter);
-        lpAdapter.setOnItemClickListener(this);*/
-
     }
 
     @Override
