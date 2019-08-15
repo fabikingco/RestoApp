@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Obtener datos del usuario
 
 
-                        Tools.startView(LoginActivity.this, MainActivity.class);
+                        Tools.startView(LoginActivity.this, MainActivity2.class);
                     } else {
                         Toast.makeText(LoginActivity.this, "Inicio de sesion fallido", Toast.LENGTH_SHORT).show();
                     }
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("Login Status", "Logueado, " + currentUser.getEmail());
             Intent intent = new Intent();
             intent.putExtra("currentUser", currentUser.getUid());
-            intent.setClass(this, MainActivity.class);
+            intent.setClass(this, MainActivity2.class);
             startActivity(intent);
         } else {
             Log.d("Login Stauts", "No es logueado");
