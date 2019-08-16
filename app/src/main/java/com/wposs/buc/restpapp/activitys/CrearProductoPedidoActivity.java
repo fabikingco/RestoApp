@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,24 +35,28 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     BottomSheetBehavior sheetBehavior;
     LinearLayoutCompat layoutBottomSheet;
     ArrayList<Productos> productos = null;
-    TextView tvNumeros , tvTotal;
+    TextView tvNumeros , tvTotal, tvProductosAgregados;
     int numeros = 0;
     int total = 0;
+    StringBuilder mProductosAgregados;
+    ArrayList<String> productoAgregado;
 
     FirebaseFirestore firestore;
     SwipeRefreshLayout refreshLayout;
-
-    AlertDialog dialog;
+    Button btnCrearPedido;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pedido_producto);
-
         refreshLayout = findViewById(R.id.refreshLayout);
 
-        //dialog = new AlertDialog(this);
+        productoAgregado = new ArrayList<>();
+
+        tvProductosAgregados = findViewById(R.id.tvProductosAgregados);
+        btnCrearPedido = findViewById(R.id.btnCrearPedido);
+        btnCrearPedido.setOnClickListener(onClickCrearPedido);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -144,15 +149,32 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
 
     }
 
+    private Button.OnClickListener onClickCrearPedido
+            = new Button.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(CrearProductoPedidoActivity.this, "BTN Crear pedido", Toast.LENGTH_SHORT).show();
+        }
+    };
+
     @Override
     public void onItemClick(RecyclerView.ViewHolder item, int position, int id) {
         Productos productos = this.productos.get(position);
+        mProductosAgregados = new StringBuilder();
         if(id == R.id.btnAgregar){
             Toast.makeText(this, "Agregando producto: " + productos.getNombre(), Toast.LENGTH_SHORT).show();
             numeros ++;
             tvNumeros.setText("" + numeros);
             total += productos.getValor();
             tvTotal.setText("$" + total);
+            productoAgregado.add(productos.getNombre());
+            for (String x : productoAgregado){
+                mProductosAgregados.append("1. " + x);
+                mProductosAgregados.append("\n");
+            }
+            tvProductosAgregados.setText(mProductosAgregados.toString());
         }
     }
+
+
 }

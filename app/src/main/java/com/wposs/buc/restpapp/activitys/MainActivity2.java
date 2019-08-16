@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.activitys.helper.BottomNavigationBehavior;
 import com.wposs.buc.restpapp.fragment.AccountFragment;
-import com.wposs.buc.restpapp.fragment.ProfileFragment;
+import com.wposs.buc.restpapp.fragment.MesasFragment;
 import com.wposs.buc.restpapp.fragment.SettingsFragment;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -38,7 +38,7 @@ public class MainActivity2 extends AppCompatActivity {
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         toolbar.setTitle("");
-        loadFragment(new ProfileFragment());
+        loadFragment(new MesasFragment());
         bottomNavigationView.setSelectedItemId(R.id.pedidos);
     }
 
@@ -55,7 +55,7 @@ public class MainActivity2 extends AppCompatActivity {
                     return true;
                 case R.id.pedidos:
                     toolbar.setTitle("RestoApp");
-                    fragment = new ProfileFragment();
+                    fragment = new MesasFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.setting_account:

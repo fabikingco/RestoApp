@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,17 +24,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
-import com.wposs.buc.restpapp.activitys.CrearPedidoActivity;
 import com.wposs.buc.restpapp.activitys.CrearProductoPedidoActivity;
 import com.wposs.buc.restpapp.activitys.MainActivity;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
+import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.model.Mesas;
 
 import java.util.ArrayList;
 
 
-public class ProfileFragment extends Fragment {
+public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemClickListenerMesas{
 
     ClsConexion bd;
     SwipeRefreshLayout refreshLayout;
@@ -40,12 +42,14 @@ public class ProfileFragment extends Fragment {
     FirebaseFirestore firestore;
     ArrayList<Mesas> mesas;
 
-    public ProfileFragment() {
+    RecyclerView recyclerView;
+
+    public MesasFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static MesasFragment newInstance(String param1, String param2) {
+        MesasFragment fragment = new MesasFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -61,6 +65,10 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         refreshLayout = view.findViewById(R.id.refreshLayout);
+
+        recyclerView = view.findViewById(R.id.rvMesas);
+        GridLayoutManager glm = new GridLayoutManager(getContext(), 2);
+        recyclerView.setLayoutManager(glm);
 
 
         firestore = FirebaseFirestore.getInstance();
@@ -117,12 +125,12 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        ListMesasAdapter adapter = new ListMesasAdapter(getActivity(), mesas);
+        ListMesasAdapter adapter = new ListMesasAdapter(mesas, getContext());
+        recyclerView.setAdapter(adapter);
 
-        ListView listView = view.findViewById(R.id.listview_flavor);
-        listView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lpAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Mesas mMesas = mesas.get(position);
@@ -133,6 +141,18 @@ public class ProfileFragment extends Fragment {
                     Tools.startView(getActivity(), CrearProductoPedidoActivity.class);
                 }
             }
-        });
+        });*/
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder item, int position, int id) {
+        Mesas mMesas = mesas.get(position);
+        //Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
+        if (mMesas.getStatus().equals("cerrada")){
+            Toast.makeText(getActivity(), "Mesa no disponible", Toast.LENGTH_SHORT).show();
+        } else {
+            Tools.startView(getActivity(), CrearProductoPedidoActivity.class);
+        }
+
     }
 }

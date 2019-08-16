@@ -52,18 +52,20 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
+        android:id="@+id/tvProductosAgregados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:text="Agregar productos" />
 
     <Button
+        android:id="@+id/btnCrearPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
         android:background="#000"
         android:foreground="?attr/selectableItemBackground"
-        android:text="PROCEED PAYMENT"
+        android:text="CREAR PEDIDO"
         android:textColor="#fff" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

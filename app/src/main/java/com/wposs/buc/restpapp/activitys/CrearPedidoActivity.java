@@ -97,7 +97,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
 
     private void crearBotonesDeMesas(final ArrayList<Mesas> mesas) {
 
-        if (mesas.size() == 0){
+        /*if (mesas.size() == 0){
             Toast.makeText(this, "No existen mesas para finalizar", Toast.LENGTH_SHORT).show();
             Tools.startView(this, MainActivity.class);
             return;
@@ -119,6 +119,6 @@ public class CrearPedidoActivity extends AppCompatActivity {
                     Tools.startView(CrearPedidoActivity.this, CrearProductoPedidoActivity.class);
                 }
             }
-        });
+        });*/
     }
 }

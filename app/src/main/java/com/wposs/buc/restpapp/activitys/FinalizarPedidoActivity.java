@@ -53,7 +53,7 @@ public class FinalizarPedidoActivity extends AppCompatActivity {
             return;
         }
 
-        ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
+        /*ListMesasAdapter adapter = new ListMesasAdapter(this, mesas);
 
         ListView listView = findViewById(R.id.listview_flavor);
         listView.setAdapter(adapter);
@@ -64,6 +64,6 @@ public class FinalizarPedidoActivity extends AppCompatActivity {
                 Mesas mMesas = mesas.get(position);
                 Toast.makeText(FinalizarPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 }
