@@ -5,82 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp"
     tools:context=".activitys.ConfigurarMesasActivity">
 
-    <RelativeLayout
-        android:id="@+id/rlSettings1"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="10dp"
-        >
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Numero de mesas"
-            android:layout_centerVertical="true"/>
-        <EditText
-            android:id="@+id/etMesas"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:text="15"
-            android:maxLength="2"
-            android:inputType="number"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/edittext_pichi"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlSettings2"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="10dp"
-        android:layout_below="@+id/rlSettings1"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activar domicilios"
-            android:layout_centerVertical="true"/>
-
-        <Switch
-            android:id="@+id/swDomicilios"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:checked="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMesas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:paddingBottom="56dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
-        android:id="@+id/lSettingsButtons"
+        android:id="@+id/linearLayaout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
+        android:layout_height="55dp"
         android:gravity="center"
+        android:layout_alignBottom="@+id/refreshLayout"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite"
         >
-
         <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/botones"
-            android:onClick="cancelar"
-            android:text="Cancelar"/>
-
+            android:id="@+id/btnOpciones"
+            android:layout_width="100dp"
+            android:layout_height="53dp"
+            android:text="Otras opciones"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_color"
+            android:onClick="otrasOpciones"
+            />
         <Button
-            android:id="@+id/btnAceptar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            style="@style/botones"
-            android:onClick="guardarConfiguracion"
-            android:text="Aceptar"/>
+            android:id="@+id/btnEliminar"
+            android:layout_width="100dp"
+            android:layout_height="53dp"
+            android:text="Eliminar"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_rojo"
+            android:onClick="eliminarMesas"
+            />
+        <Button
+            android:id="@+id/btnAgregar"
+            android:layout_width="100dp"
+            android:layout_height="53dp"
+            android:text="Agregar"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_color"
+            android:onClick="agregarMesa"
+            />
 
     </LinearLayout>
 

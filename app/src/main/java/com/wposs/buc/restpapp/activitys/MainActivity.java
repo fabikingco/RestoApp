@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
             cerrarSesion();
 
-            Tools.startView(this, LoginActivity.class);
+            Tools.startView(this, LoginActivity.class, false);
             finish();
             return true;
         }
@@ -77,15 +77,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void crearPedido(View view) {
-        Tools.startView(this, CrearPedidoActivity.class);
+        Tools.startView(this, CrearPedidoActivity.class, false);
     }
 
     public void finalizarPedido(View view) {
-        Tools.startView(this, MainActivity2.class);
+        Tools.startView(this, MainActivity2.class, false);
     }
 
     public void configurarRestaurante(View view) {
-        Tools.startView(this, ConfigurarRestauranteActivity.class);
+        Tools.startView(this, ConfigurarRestauranteActivity.class, false);
 //        if (usuario.getRole().equals("Admin")) {
 //            Tools.startView(this, ConfigurarRestauranteActivity.class);
 //        } else {

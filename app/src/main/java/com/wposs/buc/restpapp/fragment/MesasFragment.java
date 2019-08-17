@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -27,7 +24,6 @@ import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.activitys.CrearProductoPedidoActivity;
 import com.wposs.buc.restpapp.activitys.MainActivity;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
-import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.model.Mesas;
 
@@ -36,13 +32,10 @@ import java.util.ArrayList;
 
 public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemClickListenerMesas{
 
-    ClsConexion bd;
-    SwipeRefreshLayout refreshLayout;
-
-    FirebaseFirestore firestore;
-    ArrayList<Mesas> mesas;
-
-    RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
+    private FirebaseFirestore firestore;
+    private ArrayList<Mesas> mesas;
+    private RecyclerView recyclerView;
 
     public MesasFragment() {
         // Required empty public constructor
@@ -63,7 +56,7 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_mesas, container, false);
         refreshLayout = view.findViewById(R.id.refreshLayout);
 
         recyclerView = view.findViewById(R.id.rvMesas);
@@ -148,11 +141,23 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
     public void onItemClick(RecyclerView.ViewHolder item, int position, int id) {
         Mesas mMesas = mesas.get(position);
         //Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
-        if (mMesas.getStatus().equals("cerrada")){
+        switch (mMesas.getStatus()){
+            case "cerrada":
+                Toast.makeText(getActivity(), "La mesa esta cerrada", Toast.LENGTH_SHORT).show();
+                break;
+            case "disponible":
+                Toast.makeText(getActivity(), "La mesa esta disponible ", Toast.LENGTH_SHORT).show();
+                Tools.startView(getActivity(), CrearProductoPedidoActivity.class, false);
+                break;
+            case "ocupada":
+                Toast.makeText(getActivity(), "La mesa esta ocupada ", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        /*if (mMesas.getStatus().equals("cerrada")){
             Toast.makeText(getActivity(), "Mesa no disponible", Toast.LENGTH_SHORT).show();
         } else {
             Tools.startView(getActivity(), CrearProductoPedidoActivity.class);
-        }
+        }*/
 
     }
 }

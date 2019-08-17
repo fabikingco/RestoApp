@@ -18,11 +18,11 @@ public class ConfiguracionUsuariosActivity extends AppCompatActivity {
     }
 
     public void crearUsuarios(View view) {
-        Tools.startView(this, CrearUsuarioActivity.class);
+        Tools.startView(this, CrearUsuarioActivity.class, false);
     }
 
     public void visualizarUsuarios(View view) {
-        Tools.startView(this, VisualizarUsuariosActivity.class);
+        Tools.startView(this, VisualizarUsuariosActivity.class, false);
 
     }
 }

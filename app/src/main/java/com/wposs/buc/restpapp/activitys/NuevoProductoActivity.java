@@ -229,7 +229,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     //Refresh data
                                     Toast.makeText(NuevoProductoActivity.this, "Producto creado con exito", Toast.LENGTH_SHORT).show();
-                                    Tools.startView(NuevoProductoActivity.this, MainActivity.class);
+                                    Tools.startView(NuevoProductoActivity.this, MainActivity.class, false);
                                     finish();
                                 }
                             });

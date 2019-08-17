@@ -38,25 +38,25 @@ public class SettingsFragment extends Fragment {
         btnCrearMesas = view.findViewById(R.id.btnCrearMesas);
 
         btnAgragarNuevoProducto.setOnClickListener(view1 -> {
-            Tools.startView(getActivity(), NuevoProductoActivity.class);
+            Tools.startView(getActivity(), NuevoProductoActivity.class, false);
         });
         btnVerProduc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tools.startView(getActivity(), EditarCategoriasActivity.class);
+                Tools.startView(getActivity(), EditarCategoriasActivity.class, false);
             }
         });
         btnEditarCategorias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tools.startView(getActivity(), VisualizarProductosActivity.class);
+                Tools.startView(getActivity(), VisualizarProductosActivity.class, false);
             }
         });
 
         btnCrearMesas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tools.startView(getActivity(), ConfigurarMesasActivity.class);
+                Tools.startView(getActivity(), ConfigurarMesasActivity.class, false);
             }
         });
 

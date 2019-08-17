@@ -16,22 +16,22 @@ public class ConfigurarRestauranteActivity extends AppCompatActivity {
     }
 
     public void agregarNuevoProducto(View view) {
-        Tools.startView(this, NuevoProductoActivity.class);
+        Tools.startView(this, NuevoProductoActivity.class, false);
     }
 
     public void editarCategorias(View view) {
-        Tools.startView(this, EditarCategoriasActivity.class);
+        Tools.startView(this, EditarCategoriasActivity.class, false);
     }
 
     public void visualizarProductos(View view) {
-        Tools.startView(this, VisualizarProductosActivity.class);
+        Tools.startView(this, VisualizarProductosActivity.class, false);
     }
 
     public void crearMesas(View view) {
-        Tools.startView(this, ConfigurarMesasActivity.class);
+        Tools.startView(this, ConfigurarMesasActivity.class, false);
     }
 
     public void configuracionUsuarios(View view) {
-        Tools.startView(this, ConfiguracionUsuariosActivity.class);
+        Tools.startView(this, ConfiguracionUsuariosActivity.class, false);
     }
 }

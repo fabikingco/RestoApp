@@ -49,7 +49,7 @@ public class FinalizarPedidoActivity extends AppCompatActivity {
 
         if (mesas.size() == 0){
             Toast.makeText(this, "No existen mesas para finalizar", Toast.LENGTH_SHORT).show();
-            Tools.startView(this, MainActivity.class);
+            Tools.startView(this, MainActivity.class, false);
             return;
         }
 

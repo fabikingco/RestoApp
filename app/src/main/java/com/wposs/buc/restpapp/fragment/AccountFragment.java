@@ -36,14 +36,14 @@ public class AccountFragment extends Fragment {
         btnAgragarNuevoProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tools.startView(getActivity(), CrearUsuarioActivity.class);
+                Tools.startView(getActivity(), CrearUsuarioActivity.class, false);
             }
         });
 
         btnVerProduc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tools.startView(getActivity(), VisualizarUsuariosActivity.class);
+                Tools.startView(getActivity(), VisualizarUsuariosActivity.class, false);
             }
         });
         return view;
