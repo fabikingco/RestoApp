@@ -1,6 +1,7 @@
 package com.wposs.buc.restpapp.activitys;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.activitys.helper.BottomNavigationBehavior;
 import com.wposs.buc.restpapp.fragment.AccountFragment;
 import com.wposs.buc.restpapp.fragment.MesasFragment;
@@ -23,11 +26,14 @@ public class MainActivity2 extends AppCompatActivity {
 
     private ActionBar toolbar;
     private BottomNavigationView bottomNavigationView;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        mAuth = FirebaseAuth.getInstance();
 
         toolbar = getSupportActionBar();
 
@@ -90,5 +96,29 @@ public class MainActivity2 extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.item_CerrarSesion){
+            cerrarSesion();
+
+            Tools.startView(this, LoginActivity.class, false);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void cerrarSesion(){
+        mAuth.signOut();
     }
 }

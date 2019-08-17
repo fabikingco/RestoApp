@@ -45,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         findViewObjetos();
-        et_pw = findViewById(R.id.editText_Clave);
+        et_pw = findViewById(R.id.et_pw);
     }
 
     private void findViewObjetos() {
-        et_user = findViewById(R.id.editText_usuario);
+        et_user = findViewById(R.id.et_user);
     }
 
     public void ingresar(View view) {
