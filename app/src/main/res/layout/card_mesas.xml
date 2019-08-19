@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         android:padding="5dp"
         android:background="@drawable/button_verde"
+        android:focusable="true"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
@@ -41,7 +43,6 @@
                 android:layout_marginStart="30dp"
                 android:src="@drawable/ic_check_circle_black_24dp"/>
         </LinearLayout>
-
 
     </RelativeLayout>
 

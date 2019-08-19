@@ -76,45 +76,6 @@ public class ListMesasAdapter extends RecyclerView.Adapter<ListMesasAdapter.Mesa
         return mesas.size();
     }
 
-    /*public ListMesasAdapter(Activity activity, ArrayList<Mesas> objects) {
-        super(activity, 0, objects);
-    }
-
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        View listItemView = convertView;
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_mesas, parent, false);
-        }
-
-        Mesas mesas = getItem(position);
-
-        TextView tvTitle = listItemView.findViewById(R.id.tvTitle);
-        TextView tvStatus = listItemView.findViewById(R.id.tvStatus);
-        ImageView imgStatus = listItemView.findViewById(R.id.imgStatus);
-
-        tvTitle.setText(mesas.getName());
-
-        tvStatus.setText(mesas.getStatus());
-
-        switch (mesas.getStatus()){
-            case "disponible":
-                imgStatus.setImageResource(R.drawable.ic_check_circle_black_24dp);
-                break;
-            case "ocupada":
-                imgStatus.setImageResource(R.drawable.ic_info_black_24dp);
-                break;
-            case "cerrada":
-                imgStatus.setImageResource(R.drawable.ic_block_black_24dp);
-                break;
-        }
-
-        return listItemView;
-    }*/
-
     public static class MesasViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvTitle;

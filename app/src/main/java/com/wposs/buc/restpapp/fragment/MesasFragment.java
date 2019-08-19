@@ -121,7 +121,6 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
 
         ListMesasAdapter adapter = new ListMesasAdapter(mesas, getContext());
         recyclerView.setAdapter(adapter);
-
         adapter.setOnItemClickListener(this);
 
         /*lpAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,11 +153,5 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
                 Toast.makeText(getActivity(), "La mesa esta ocupada ", Toast.LENGTH_SHORT).show();
                 break;
         }
-        /*if (mMesas.getStatus().equals("cerrada")){
-            Toast.makeText(getActivity(), "Mesa no disponible", Toast.LENGTH_SHORT).show();
-        } else {
-            Tools.startView(getActivity(), CrearProductoPedidoActivity.class);
-        }*/
-
     }
 }
