@@ -51,18 +51,16 @@
             android:text="$435.00"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <TextView
-        android:id="@+id/tvProductosAgregados"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        android:text="Agregar productos" />
+    <ListView
+        android:id="@+id/listProductosAgregados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 
     <Button
         android:id="@+id/btnCrearPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
         android:background="#000"
         android:foreground="?attr/selectableItemBackground"
         android:text="CREAR PEDIDO"

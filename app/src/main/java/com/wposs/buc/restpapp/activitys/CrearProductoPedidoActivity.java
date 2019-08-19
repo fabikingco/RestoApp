@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,29 +23,33 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.wposs.buc.restpapp.adapters.ListProductosAgregadosAdapter;
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.model.Productos;
+import com.wposs.buc.restpapp.model.ProductosAgregadosPedido;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener{
 
-    ClsConexion db;
     RecyclerView recyclerView;
     BottomSheetBehavior sheetBehavior;
     LinearLayoutCompat layoutBottomSheet;
     ArrayList<Productos> productos = null;
-    TextView tvNumeros , tvTotal, tvProductosAgregados;
+    TextView tvNumeros , tvTotal;
     int numeros = 0;
     int total = 0;
     StringBuilder mProductosAgregados;
-    ArrayList<String> productoAgregado;
+    ArrayList<ProductosAgregadosPedido> productoAgregado;
 
     FirebaseFirestore firestore;
     SwipeRefreshLayout refreshLayout;
     Button btnCrearPedido;
+
+    ListView listProductosAgregados;
 
 
     @Override
@@ -53,10 +59,10 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         refreshLayout = findViewById(R.id.refreshLayout);
 
         productoAgregado = new ArrayList<>();
-
-        tvProductosAgregados = findViewById(R.id.tvProductosAgregados);
         btnCrearPedido = findViewById(R.id.btnCrearPedido);
         btnCrearPedido.setOnClickListener(onClickCrearPedido);
+
+        listProductosAgregados = findViewById(R.id.listProductosAgregados);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -80,14 +86,10 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
                 switch (newState) {
                     case BottomSheetBehavior.STATE_HIDDEN:
                         break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        Toast.makeText(CrearProductoPedidoActivity.this, "Abierta", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        Toast.makeText(CrearProductoPedidoActivity.this, "Cerrada", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         break;
                     case BottomSheetBehavior.STATE_SETTLING:
@@ -100,7 +102,6 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
 
         firestore = FirebaseFirestore.getInstance();
 
-        db = new ClsConexion(this);
         productos = new ArrayList<>();
 
         recyclerView = findViewById(R.id.rvItemsProductos);
@@ -163,16 +164,36 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         mProductosAgregados = new StringBuilder();
         if(id == R.id.btnAgregar){
             Toast.makeText(this, "Agregando producto: " + productos.getNombre(), Toast.LENGTH_SHORT).show();
+            int cantidad = 1;
+
+            Iterator itr = productoAgregado.iterator();
+            if (productoAgregado.size() != 0){
+                while (itr.hasNext()){
+                    ProductosAgregadosPedido j = (ProductosAgregadosPedido) itr.next();
+                    if (productos.getNombre().equals(j.getName())){
+                        cantidad = j.getCantidad() + 1;
+                        itr.remove();
+                        break;
+                    }
+                }
+            }
+
             numeros ++;
             tvNumeros.setText("" + numeros);
             total += productos.getValor();
             tvTotal.setText("$" + total);
-            productoAgregado.add(productos.getNombre());
-            for (String x : productoAgregado){
-                mProductosAgregados.append("1. " + x);
-                mProductosAgregados.append("\n");
-            }
-            tvProductosAgregados.setText(mProductosAgregados.toString());
+            ProductosAgregadosPedido pedido = new ProductosAgregadosPedido(productos.getId(), productos.getNombre(), productos.getValor(), cantidad);
+            productoAgregado.add(pedido);
+
+            ListProductosAgregadosAdapter adapter = new ListProductosAgregadosAdapter(CrearProductoPedidoActivity.this, productoAgregado);
+            listProductosAgregados.setAdapter(adapter);
+            listProductosAgregados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ProductosAgregadosPedido agregado = productoAgregado.get(position);
+                    Toast.makeText(CrearProductoPedidoActivity.this, "" + agregado.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
