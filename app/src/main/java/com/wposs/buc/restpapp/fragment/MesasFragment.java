@@ -24,6 +24,7 @@ import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.activitys.CrearProductoPedidoActivity;
 import com.wposs.buc.restpapp.activitys.MainActivity;
+import com.wposs.buc.restpapp.activitys.PedidoActivoActivity;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.model.Mesas;
@@ -122,25 +123,11 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
         ListMesasAdapter adapter = new ListMesasAdapter(mesas, getContext());
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
-
-        /*lpAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Mesas mMesas = mesas.get(position);
-                //Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
-                if (mMesas.getStatus().equals("cerrada")){
-                    Snackbar.make(view, "Mesa no disponible", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Tools.startView(getActivity(), CrearProductoPedidoActivity.class);
-                }
-            }
-        });*/
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder item, int position, int id) {
         Mesas mMesas = mesas.get(position);
-        //Toast.makeText(CrearPedidoActivity.this, "" + mMesas.getName(), Toast.LENGTH_SHORT).show();
         switch (mMesas.getStatus()){
             case "cerrada":
                 Toast.makeText(getActivity(), "La mesa esta cerrada", Toast.LENGTH_SHORT).show();
@@ -151,6 +138,7 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
                 break;
             case "ocupada":
                 Toast.makeText(getActivity(), "La mesa esta ocupada ", Toast.LENGTH_SHORT).show();
+                Tools.startView(getActivity(), PedidoActivoActivity.class, false);
                 break;
         }
     }

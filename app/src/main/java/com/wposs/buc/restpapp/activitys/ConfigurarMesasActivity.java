@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.adapters.ListMesasAdapter;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.model.Mesas;

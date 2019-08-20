@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".RestoApp"
@@ -17,6 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activitys.PedidoActivoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activitys.LoginActivity"
             android:theme="@style/SplashTheme">
@@ -26,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.CrearProductoPedidoActivity"/>
+        <activity android:name=".activitys.CrearProductoPedidoActivity" />
         <activity android:name=".activitys.MainActivity" />
         <activity android:name=".activitys.MainActivity2" />
         <activity
@@ -62,16 +64,11 @@
         <activity
             android:name=".activitys.VisualizarUsuariosActivity"
             android:parentActivityName=".activitys.ConfiguracionUsuariosActivity" />
-
-        <activity android:name=".activitys.tools.ImagePickerActivity" />
-
-        <!-- uCrop cropping activity -->
+        <activity android:name=".activitys.tools.ImagePickerActivity" /> <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <!-- cache directory file provider paths -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- cache directory file provider paths -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
