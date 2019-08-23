@@ -85,6 +85,8 @@ public class ListProductosAgregadosAdapter extends RecyclerView.Adapter<ListProd
             tvTitle = itemView.findViewById(R.id.tvTitle);
             linearEliminar = itemView.findViewById(R.id.linearEliminar);
             imgStatus = itemView.findViewById(R.id.imgStatus);
+            linearEliminar.setOnClickListener(this);
+            imgStatus.setOnClickListener(this);
 
         }
 

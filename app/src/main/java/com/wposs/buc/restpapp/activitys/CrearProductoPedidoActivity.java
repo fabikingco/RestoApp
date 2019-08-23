@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -64,6 +65,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         btnCrearPedido.setOnClickListener(onClickCrearPedido);
 
         rvProductosAgregados = findViewById(R.id.rvProductosAgregados);
+        rvProductosAgregados.setLayoutManager(new LinearLayoutManager(this));
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -190,6 +192,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             productoAgregado.add(activo);
             ListProductosAgregadosAdapter adapter = new ListProductosAgregadosAdapter(productoAgregado, getApplicationContext());
             rvProductosAgregados.setAdapter(adapter);
+            adapter.setOnItemClickListener(CrearProductoPedidoActivity.this);
             /*rvProductosAgregados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
