@@ -34,7 +34,7 @@ import com.wposs.buc.restpapp.model.ProductosPedidoActivo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener{
+public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener, ListProductosAgregadosAdapter.OnItemClickListener{
 
     RecyclerView recyclerView;
     BottomSheetBehavior sheetBehavior;
@@ -50,7 +50,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     SwipeRefreshLayout refreshLayout;
     Button btnCrearPedido;
 
-    ListView listProductosAgregados;
+    RecyclerView rvProductosAgregados;
 
 
     @Override
@@ -63,7 +63,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         btnCrearPedido = findViewById(R.id.btnCrearPedido);
         btnCrearPedido.setOnClickListener(onClickCrearPedido);
 
-        listProductosAgregados = findViewById(R.id.listProductosAgregados);
+        rvProductosAgregados = findViewById(R.id.rvProductosAgregados);
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
@@ -171,7 +171,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             Iterator itr = productoAgregado.iterator();
             if (productoAgregado.size() != 0){
                 while (itr.hasNext()){
-                    ProductosAgregadosPedido j = (ProductosAgregadosPedido) itr.next();
+                    ProductosPedidoActivo j = (ProductosPedidoActivo) itr.next();
                     if (productos.getNombre().equals(j.getName())){
                         cantidad = j.getCantidad() + 1;
                         itr.remove();
@@ -184,20 +184,25 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             tvNumeros.setText("" + numeros);
             total += productos.getValor();
             tvTotal.setText("$" + total);
-            ProductosAgregadosPedido pedido = new ProductosAgregadosPedido(productos.getId(), productos.getNombre(), productos.getValor(), cantidad);
-            productoAgregado.add(pedido);
-
-            ListProductosAgregadosAdapter adapter = new ListProductosAgregadosAdapter(CrearProductoPedidoActivity.this, productoAgregado);
-            listProductosAgregados.setAdapter(adapter);
-            listProductosAgregados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //ProductosAgregadosPedido pedido = new ProductosAgregadosPedido(productos.getId(), productos.getNombre(), productos.getValor(), cantidad);
+            int valorTotalProducto = cantidad * productos.getValor();
+            ProductosPedidoActivo activo = new ProductosPedidoActivo(productos.getId(), productos.getNombre(), cantidad, productos.getValor(), valorTotalProducto, productos.getPhotoUrl());
+            productoAgregado.add(activo);
+            ListProductosAgregadosAdapter adapter = new ListProductosAgregadosAdapter(productoAgregado, getApplicationContext());
+            rvProductosAgregados.setAdapter(adapter);
+            /*rvProductosAgregados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ProductosAgregadosPedido agregado = productoAgregado.get(position);
                     Toast.makeText(CrearProductoPedidoActivity.this, "" + agregado.getName(), Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
     }
 
 
+    @Override
+    public void onItemClickAgregados(RecyclerView.ViewHolder item, int position, int id) {
+        Toast.makeText(this, "Hizo Clic en el elemento", Toast.LENGTH_SHORT).show();
+    }
 }
