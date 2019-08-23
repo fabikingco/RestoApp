@@ -29,6 +29,7 @@ import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.model.Productos;
 import com.wposs.buc.restpapp.model.ProductosAgregadosPedido;
+import com.wposs.buc.restpapp.model.ProductosPedidoActivo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,7 +44,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     int numeros = 0;
     int total = 0;
     StringBuilder mProductosAgregados;
-    ArrayList<ProductosAgregadosPedido> productoAgregado;
+    ArrayList<ProductosPedidoActivo> productoAgregado;
 
     FirebaseFirestore firestore;
     SwipeRefreshLayout refreshLayout;
@@ -155,6 +156,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         @Override
         public void onClick(View view) {
             Toast.makeText(CrearProductoPedidoActivity.this, "BTN Crear pedido", Toast.LENGTH_SHORT).show();
+
         }
     };
 

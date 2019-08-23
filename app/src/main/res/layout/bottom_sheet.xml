@@ -51,11 +51,11 @@
             android:text="$435.00"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listProductosAgregados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/btnCrearPedido"

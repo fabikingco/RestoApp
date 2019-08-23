@@ -57,8 +57,7 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
     public void onBindViewHolder(@NonNull PedidoViewHolder pedidoViewHolder, final int i) {
         Productos producto = this.productos.get(i);
         pedidoViewHolder.tvTitulo.setText(producto.getNombre());
-        pedidoViewHolder.tvValor.setText(String.valueOf(producto.getValor()));
-        pedidoViewHolder.tvDescripcion.setText(producto.getDescripcion());
+        pedidoViewHolder.tvValor.setText("$" + String.valueOf(producto.getValor()));
         GlideApp.with(context).load(producto.getPhotoUrl())
                 .into(pedidoViewHolder.imgPhoto);
         pedidoViewHolder.imgPhoto.setColorFilter(ContextCompat.getColor(context, android.R.color.transparent));
@@ -72,7 +71,7 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
     public static class PedidoViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
         ImageView imgPhoto;
-        TextView tvTitulo, tvValor, tvDescripcion;
+        TextView tvTitulo, tvValor;
         Button btnAgregar;
 
         ListProductosPedidoAdapter adapter = null;
@@ -87,7 +86,6 @@ public class ListProductosPedidoAdapter extends RecyclerView.Adapter<ListProduct
             imgPhoto = itemView.findViewById(R.id.imgPhoto);
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
             tvValor = itemView.findViewById(R.id.tvValor);
-            tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
             btnAgregar = itemView.findViewById(R.id.btnAgregar);
             btnAgregar.setOnClickListener(this);
 
