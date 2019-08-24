@@ -5,6 +5,7 @@ public class PedidosActivos {
     private String id;
     private String mesa;
     private String mesero;
+    private String meseroNombre
     private int subTotal;
     private int imp;
     private int total;

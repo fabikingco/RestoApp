@@ -2,7 +2,6 @@ package com.wposs.buc.restpapp.activitys;
 
 import androidx.annotation.NonNull;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,9 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,10 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.adapters.ListProductosAgregadosAdapter;
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
-import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.model.PedidosActivos;
 import com.wposs.buc.restpapp.model.Productos;
-import com.wposs.buc.restpapp.model.ProductosAgregadosPedido;
 import com.wposs.buc.restpapp.model.ProductosPedidoActivo;
 
 import java.util.ArrayList;
@@ -44,7 +40,8 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     TextView tvNumeros , tvTotal;
     int numeros = 0;
     int total = 0;
-    StringBuilder mProductosAgregados;
+    int cantidadTotal = 0;
+    int valorTotal = 0;
     ArrayList<ProductosPedidoActivo> productoAgregado;
 
     FirebaseFirestore firestore;
@@ -153,19 +150,9 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
 
     }
 
-    private Button.OnClickListener onClickCrearPedido
-            = new Button.OnClickListener(){
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(CrearProductoPedidoActivity.this, "BTN Crear pedido", Toast.LENGTH_SHORT).show();
-
-        }
-    };
-
     @Override
     public void onItemClick(RecyclerView.ViewHolder item, int position, int id) {
         Productos productos = this.productos.get(position);
-        mProductosAgregados = new StringBuilder();
         if(id == R.id.btnAgregar){
             Toast.makeText(this, "Agregando producto: " + productos.getNombre(), Toast.LENGTH_SHORT).show();
             int cantidad = 1;
@@ -182,30 +169,100 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
                 }
             }
 
-            numeros ++;
+           /* numeros ++;
             tvNumeros.setText("" + numeros);
             total += productos.getValor();
-            tvTotal.setText("$" + total);
+            tvTotal.setText("$" + total);*/
             //ProductosAgregadosPedido pedido = new ProductosAgregadosPedido(productos.getId(), productos.getNombre(), productos.getValor(), cantidad);
             int valorTotalProducto = cantidad * productos.getValor();
             ProductosPedidoActivo activo = new ProductosPedidoActivo(productos.getId(), productos.getNombre(), cantidad, productos.getValor(), valorTotalProducto, productos.getPhotoUrl());
             productoAgregado.add(activo);
-            ListProductosAgregadosAdapter adapter = new ListProductosAgregadosAdapter(productoAgregado, getApplicationContext());
-            rvProductosAgregados.setAdapter(adapter);
-            adapter.setOnItemClickListener(CrearProductoPedidoActivity.this);
-            /*rvProductosAgregados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ProductosAgregadosPedido agregado = productoAgregado.get(position);
-                    Toast.makeText(CrearProductoPedidoActivity.this, "" + agregado.getName(), Toast.LENGTH_SHORT).show();
-                }
-            });*/
+            obtenerCantidadValorTotal();
+            recargarRecyclerAgregados();
         }
     }
 
 
+    /**
+     * Aqui se realiza la eliminacion de los productos agregados.
+     *
+     * @param item
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClickAgregados(RecyclerView.ViewHolder item, int position, int id) {
-        Toast.makeText(this, "Hizo Clic en el elemento", Toast.LENGTH_SHORT).show();
+        ProductosPedidoActivo producto = productoAgregado.get(position);
+        int cantidad = producto.getCantidad();
+        Toast.makeText(this, "Cantidad = " + cantidad, Toast.LENGTH_SHORT).show();
+        if (cantidad == 1){
+            productoAgregado.remove(position);
+        } else {
+            productoAgregado.remove(position);
+            cantidad--;
+            producto.setCantidad(cantidad);
+            productoAgregado.add(producto);
+        }
+
+        obtenerCantidadValorTotal();
+        recargarRecyclerAgregados();
+
     }
+
+    private void recargarRecyclerAgregados(){
+        ListProductosAgregadosAdapter adapter = new ListProductosAgregadosAdapter(productoAgregado, getApplicationContext());
+        rvProductosAgregados.setAdapter(adapter);
+        adapter.setOnItemClickListener(CrearProductoPedidoActivity.this);
+    }
+
+    private void obtenerCantidadValorTotal(){
+        int cantidadProducto;
+        cantidadTotal = 0;
+        valorTotal = 0;
+
+        if (productoAgregado.size() != 0){
+            Iterator itr = productoAgregado.iterator();
+            while (itr.hasNext()){
+                ProductosPedidoActivo j = (ProductosPedidoActivo) itr.next();
+                cantidadProducto = j.getCantidad();
+                cantidadTotal += cantidadProducto;
+                valorTotal += (j.getValor() * cantidadProducto);
+                /*if (productos.getNombre().equals(j.getName())){
+                    cantidad = j.getCantidad() + 1;
+                    itr.remove();
+                    break;
+                }*/
+            }
+            tvNumeros.setText("" +cantidadTotal);
+            tvTotal.setText("$" + valorTotal);
+        } else {
+            tvNumeros.setText("" +cantidadTotal);
+            tvTotal.setText("$0");
+        }
+
+
+    }
+
+    /**
+     * Boton para Crear el pedido.
+     * 1. Validar que productoAgregado no este vacio
+     * 2. Obtener los datos del mesero y mesa.
+     * 3. Insertar PedidosActivos.java y  ProductosPedidoActivo.java
+     */
+    private Button.OnClickListener onClickCrearPedido
+            = new Button.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            if (productoAgregado.size() != 0){
+                Toast.makeText(CrearProductoPedidoActivity.this, "Productos = " + cantidadTotal + " valor = " + valorTotal, Toast.LENGTH_SHORT).show();
+                PedidosActivos pedido = new PedidosActivos();
+            } else {
+                Toast.makeText(CrearProductoPedidoActivity.this, "Agrega productos al carrito para crear pedidos", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+
+        }
+    };
 }
