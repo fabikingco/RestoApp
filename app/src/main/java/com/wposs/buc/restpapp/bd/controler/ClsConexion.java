@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.wposs.buc.restpapp.model.Mesas;
 import com.wposs.buc.restpapp.model.Productos;
@@ -106,15 +107,28 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_USER_ROLE + " text not null, " +
             COLUMN_USER_STATUS + " text not null);";
 
+    private final String TABLE_USER = "user_actual";
+    private final String COLUMN_USER_PHOTO = "user_photo";
+
+    private final String CREATE_USER_TABLE = "create table " + TABLE_USER + "(" +
+            COLUMN_USER_ID + " text primary key not null, " +
+            COLUMN_USER_USER + " text not null, " +
+            COLUMN_USER_PASS + " text not null, " +
+            COLUMN_USER_NAME + " text not null, " +
+            COLUMN_USER_ROLE + " text not null, " +
+            COLUMN_USER_STATUS + " text not null, " +
+            COLUMN_USER_PHOTO + " text);";
+
     private final int USUARIO_ADMIN_ID = 1234567890;
     private final String USUARIO_ADMIN_USER = "admin";
     private final String USUARIO_ADMIN_PASS = "123456";
     private final String USUARIO_ADMIN_NAME = "Administrador";
     private final String USUARIO_ADMIN_ROLE = "Admin";
     private final String USUARIO_ADMIN_STATUS = "activado";
+    private final String USUARIO_ADMIN_PHOTO = "";
 
-    private final String INSERT_USUARIO_ADMIN = ("insert into " + TABLE_USUARIOS_NEW +" values('"+USUARIO_ADMIN_ID+"'," +
-            "'"+USUARIO_ADMIN_USER+"','"+USUARIO_ADMIN_PASS+"','"+USUARIO_ADMIN_NAME+"','"+USUARIO_ADMIN_ROLE+"','"+USUARIO_ADMIN_STATUS+"');");
+    private final String INSERT_USUARIO_ADMIN = ("insert into " + TABLE_USER +" values('"+USUARIO_ADMIN_ID+"'," +
+            "'"+USUARIO_ADMIN_USER+"','"+USUARIO_ADMIN_PASS+"','"+USUARIO_ADMIN_NAME+"','"+USUARIO_ADMIN_ROLE+"','"+USUARIO_ADMIN_STATUS+"','"+USUARIO_ADMIN_PHOTO+"');");
 
     public ClsConexion(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -124,26 +138,67 @@ public class ClsConexion extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PRODUCTOS_TABLE_NEW);
-        db.execSQL(INSERT_PRODUCTO_PRUEBA_1);
-        db.execSQL(INSERT_PRODUCTO_PRUEBA_2);
-
         db.execSQL(CREATE_CATEGORIAS_TABLE_NEW);
-        db.execSQL(INSERT_CATEGORIA_PRUEBA_1);
-        db.execSQL(INSERT_CATEGORIA_PRUEBA_2);
-
         db.execSQL(CREATE_MESAS_TABLE_NEW);
-        db.execSQL(INSERT_MESAS_DEFAULT);
-        db.execSQL(INSERT_MESAS_DEFAULT_otraPrueba);
-        db.execSQL(INSERT_MESAS_DEFAULT_cerrada);
-
         db.execSQL(CREATE_USUARIOS_TABLE_NEW);
+        db.execSQL(CREATE_USER_TABLE);
         db.execSQL(INSERT_USUARIO_ADMIN);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public boolean guardarUsuarioActual(Usuarios userActual){
+        Log.d("USER_SQL", "Usuario que llego " + userActual.getUser());
+        boolean ret = false;
+        boolean cambioUser = true;
+        db = this.getWritableDatabase();
+        //Comprobar si usuario actual es el que esta en la BD
+        String consultaUser = "SELECT * FROM " + TABLE_USER;
+        Cursor cursorConsultaUser = db.rawQuery(consultaUser, null);
+        if (cursorConsultaUser.moveToFirst()) {
+            do {
+                String id = cursorConsultaUser.getString(cursorConsultaUser.getColumnIndex(COLUMN_USER_ID));
+                Log.d("USER_SQL", "Id del usuario " + userActual.getUser());
+                if (id.equals(userActual.getId())){
+                    cambioUser = false;
+                }
+            } while (cursorConsultaUser.moveToNext());
+        }
+
+        if (cambioUser){
+            Log.d("USER_SQL", "DEBE CAMBIAR USUARIO ACTUAL" + userActual.getUser());
+            String query = "DELETE FROM " + TABLE_USER + " where " + COLUMN_USER_ID + " = '" + userActual.getId() + "';";
+            try {
+                db.rawQuery(query, null);
+                Log.d("USER_SQL", "ELIMINAR CORRECTO" + userActual.getUser());
+            }catch (SQLException e){
+                e.getCause();
+            }
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_USER_ID, userActual.getId());
+            values.put(COLUMN_USER_USER, userActual.getUser());
+            values.put(COLUMN_USER_PASS, userActual.getPass());
+            values.put(COLUMN_USER_NAME, userActual.getName());
+            values.put(COLUMN_USER_ROLE, userActual.getRole());
+            values.put(COLUMN_USER_STATUS, userActual.getStatus());
+            values.put(COLUMN_USER_PHOTO, userActual.getPhotoUrl());
+            try {
+                db.insert(TABLE_USER,null,values);
+                db.close();
+                Log.d("USER_SQL", "INSERTAR CORRECTO" + userActual.getUser());
+                ret = true;
+            }catch (SQLException e){
+                e.getCause();
+                db.close();
+            }
+        }else {
+            ret = true;
+            db.close();
+        }
+        return ret;
     }
 
     public boolean crearProducto(String titulo, int valor, String categoria, String descripcion){

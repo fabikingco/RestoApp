@@ -5,7 +5,7 @@ public class PedidosActivos {
     private String id;
     private String mesa;
     private String mesero;
-    private String meseroNombre
+    private String meseroNombre;
     private int subTotal;
     private int imp;
     private int total;
@@ -13,10 +13,11 @@ public class PedidosActivos {
     public PedidosActivos() {
     }
 
-    public PedidosActivos(String id, String mesa, String mesero, int subTotal, int imp, int total) {
+    public PedidosActivos(String id, String mesa, String mesero, String meseroNombre, int subTotal, int imp, int total) {
         this.id = id;
         this.mesa = mesa;
         this.mesero = mesero;
+        this.meseroNombre = meseroNombre;
         this.subTotal = subTotal;
         this.imp = imp;
         this.total = total;
@@ -68,5 +69,13 @@ public class PedidosActivos {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public String getMeseroNombre() {
+        return meseroNombre;
+    }
+
+    public void setMeseroNombre(String meseroNombre) {
+        this.meseroNombre = meseroNombre;
     }
 }

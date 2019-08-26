@@ -1,5 +1,6 @@
 package com.wposs.buc.restpapp.activitys;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -13,15 +14,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.Tools;
+import com.wposs.buc.restpapp.firebase.Collections;
+import com.wposs.buc.restpapp.model.Productos;
 import com.wposs.buc.restpapp.model.Usuarios;
+
+import dmax.dialog.SpotsDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,24 +43,29 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
 
+    private AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme);
 
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
-
+        bd = new ClsConexion(this);
         setContentView(R.layout.activity_login);
+        dialog = new SpotsDialog.Builder().setContext(this).build();
         findViewObjetos();
-        et_pw = findViewById(R.id.et_pw);
+
     }
 
     private void findViewObjetos() {
         et_user = findViewById(R.id.et_user);
+        et_pw = findViewById(R.id.et_pw);
     }
 
     public void ingresar(View view) {
+        dialog.setMessage("Ingresando...");
+        dialog.show();
         user = et_user.getText().toString();
         pass = et_pw.getText().toString();
 
@@ -60,13 +73,34 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if (task.isSuccessful()){
                         Toast.makeText(LoginActivity.this, "Inicio de sesion exitoso", Toast.LENGTH_SHORT).show();
-                        //Obtener datos del usuario
-
-
-                        Tools.startView(LoginActivity.this, MainActivity2.class, true);
+                        mFirestore.collection(Collections.usuarios)
+                                .document(user)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        DocumentSnapshot doc = task.getResult();
+                                        Usuarios usuarioLogin = new Usuarios(doc.getString(Collections.Usuarios.user),
+                                                doc.getString(Collections.Usuarios.pass),
+                                                doc.getString(Collections.Usuarios.name),
+                                                doc.getString(Collections.Usuarios.role),
+                                                doc.getString(Collections.Usuarios.status),
+                                                doc.getString(Collections.Usuarios.photoUrl),
+                                                doc.getString(Collections.Usuarios.id));
+                                        boolean actualizarUsuario = bd.guardarUsuarioActual(usuarioLogin);
+                                        if (actualizarUsuario){
+                                            dialog.dismiss();
+                                            Tools.startView(LoginActivity.this, MainActivity2.class, true);
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "Error al guardar login en BD", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                     } else {
+                        dialog.dismiss();
                         Toast.makeText(LoginActivity.this, "Inicio de sesion fallido", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -133,18 +167,5 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Log.d("Login Stauts", "No es logueado");
         }
-    }
-
-    private void createUser( final String email, final String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Log.d("Creacion de Cuenta", "Creada exitosamente con email " + email);
-                } else {
-                    Log.d("Creacion de Cuenta", "No fue posible crear la cuenta " + task.getException().toString());
-                }
-            }
-        });
     }
 }

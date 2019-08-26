@@ -2,13 +2,13 @@ package com.wposs.buc.restpapp.model;
 
 public class Usuarios {
 
+    private String id;
     private String user;
     private String pass;
     private String name;
     private String role;
     private String status;
     private String photoUrl;
-    private String id;
 
     public Usuarios(String user, String pass, String name, String role, String status, String photoUrl, String id) {
         this.user = user;
