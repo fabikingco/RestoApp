@@ -9,8 +9,9 @@ public class Usuarios {
     private String role;
     private String status;
     private String photoUrl;
+    private String restaurante;
 
-    public Usuarios(String user, String pass, String name, String role, String status, String photoUrl, String id) {
+    public Usuarios(String user, String pass, String name, String role, String status, String photoUrl, String id, String restaurante) {
         this.user = user;
         this.pass = pass;
         this.name = name;
@@ -18,6 +19,7 @@ public class Usuarios {
         this.status = status;
         this.photoUrl = photoUrl;
         this.id = id;
+        this.restaurante = restaurante;
     }
 
     public Usuarios(String user) {
@@ -82,5 +84,13 @@ public class Usuarios {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRestaurante() {
+        return restaurante;
+    }
+
+    public void setRestaurante(String restaurante) {
+        this.restaurante = restaurante;
     }
 }

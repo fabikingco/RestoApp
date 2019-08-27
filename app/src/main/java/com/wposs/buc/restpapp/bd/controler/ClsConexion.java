@@ -109,6 +109,7 @@ public class ClsConexion extends SQLiteOpenHelper {
 
     private final String TABLE_USER = "user_actual";
     private final String COLUMN_USER_PHOTO = "user_photo";
+    private final String COLUMN_USER_RESTAURANTE = "user_restaurante";
 
     private final String CREATE_USER_TABLE = "create table " + TABLE_USER + "(" +
             COLUMN_USER_ID + " text primary key not null, " +
@@ -117,7 +118,8 @@ public class ClsConexion extends SQLiteOpenHelper {
             COLUMN_USER_NAME + " text not null, " +
             COLUMN_USER_ROLE + " text not null, " +
             COLUMN_USER_STATUS + " text not null, " +
-            COLUMN_USER_PHOTO + " text);";
+            COLUMN_USER_PHOTO + " text, " +
+            COLUMN_USER_RESTAURANTE + "text not null);";
 
     private final int USUARIO_ADMIN_ID = 1234567890;
     private final String USUARIO_ADMIN_USER = "admin";
@@ -126,9 +128,11 @@ public class ClsConexion extends SQLiteOpenHelper {
     private final String USUARIO_ADMIN_ROLE = "Admin";
     private final String USUARIO_ADMIN_STATUS = "activado";
     private final String USUARIO_ADMIN_PHOTO = "";
+    private final String USUARIO_ADMIN_RESTAURANTE = "RestoApp";
 
     private final String INSERT_USUARIO_ADMIN = ("insert into " + TABLE_USER +" values('"+USUARIO_ADMIN_ID+"'," +
-            "'"+USUARIO_ADMIN_USER+"','"+USUARIO_ADMIN_PASS+"','"+USUARIO_ADMIN_NAME+"','"+USUARIO_ADMIN_ROLE+"','"+USUARIO_ADMIN_STATUS+"','"+USUARIO_ADMIN_PHOTO+"');");
+            "'"+USUARIO_ADMIN_USER+"','"+USUARIO_ADMIN_PASS+"','"+USUARIO_ADMIN_NAME+"','"+USUARIO_ADMIN_ROLE+
+            "','"+USUARIO_ADMIN_STATUS+"','"+USUARIO_ADMIN_PHOTO+"','"+USUARIO_ADMIN_RESTAURANTE+"');");
 
     public ClsConexion(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
