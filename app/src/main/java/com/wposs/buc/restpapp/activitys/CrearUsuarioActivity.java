@@ -91,9 +91,9 @@ public class CrearUsuarioActivity extends AppCompatActivity {
     }
 
     public void aceptarCrearUsuario(View view) {
-        String sNombre = etNombre.getText().toString().trim();
-        String sApellido = etApellido.getText().toString().trim();
-        String sDocumento = etDocumento.getText().toString().trim();
+        String sNombre = etNombre.getText().toString();
+        String sApellido = etApellido.getText().toString();
+        String sDocumento = etDocumento.getText().toString();
 
         if (!sNombre.isEmpty()) {
             if (!sApellido.isEmpty()) {

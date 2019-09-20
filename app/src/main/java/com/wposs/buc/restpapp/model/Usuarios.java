@@ -11,7 +11,9 @@ public class Usuarios {
     private String photoUrl;
     private String restaurante;
 
-    public Usuarios(String user, String pass, String name, String role, String status, String photoUrl, String id, String restaurante) {
+
+
+    public Usuarios(String id, String user, String pass, String name, String role, String status, String photoUrl, String restaurante) {
         this.user = user;
         this.pass = pass;
         this.name = name;

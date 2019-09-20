@@ -350,6 +350,26 @@ public class ClsConexion extends SQLiteOpenHelper {
         return users;
     }
 
+    public Usuarios getUserLogin() {
+        Usuarios usuarios = new Usuarios();
+        db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_USUARIOS_NEW;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            usuarios.setId(cursor.getString(0));
+            usuarios.setUser(cursor.getString(1));
+            usuarios.setPass(cursor.getString(2));
+            usuarios.setName(cursor.getString(3));
+            usuarios.setRole(cursor.getString(4));
+            usuarios.setStatus(cursor.getString(5));
+            usuarios.setPhotoUrl(cursor.getString(6));
+            usuarios.setRestaurante(cursor.getString(7));
+        }
+        cursor.close();
+        db.close();
+        return usuarios;
+    }
+
     public ArrayList<String> getAllUsuariosUser() {
         ArrayList<String> users = new ArrayList<String>();
         db = this.getWritableDatabase();

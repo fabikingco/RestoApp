@@ -24,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.wposs.buc.restpapp.adapters.ListProductosAgregadosAdapter;
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.R;
+import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.model.PedidosActivos;
 import com.wposs.buc.restpapp.model.Productos;
 import com.wposs.buc.restpapp.model.ProductosPedidoActivo;
@@ -33,42 +34,47 @@ import java.util.Iterator;
 
 public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener, ListProductosAgregadosAdapter.OnItemClickListener{
 
-    RecyclerView recyclerView;
-    BottomSheetBehavior sheetBehavior;
-    LinearLayoutCompat layoutBottomSheet;
-    ArrayList<Productos> productos = null;
-    TextView tvNumeros , tvTotal;
+    //Variables
     int numeros = 0;
     int total = 0;
     int cantidadTotal = 0;
     int valorTotal = 0;
-    ArrayList<ProductosPedidoActivo> productoAgregado;
+    String mesa;
 
+
+    //BaseDeDatos
     FirebaseFirestore firestore;
-    SwipeRefreshLayout refreshLayout;
+    ArrayList<ProductosPedidoActivo> productoAgregado;
+    ArrayList<Productos> productos = null;
+    ClsConexion sqlite;
+
+    //Widgets
     Button btnCrearPedido;
-
     RecyclerView rvProductosAgregados;
-
+    TextView tvNumeros , tvTotal;
+    RecyclerView recyclerView;
+    BottomSheetBehavior sheetBehavior;
+    LinearLayoutCompat layoutBottomSheet;
+    SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_pedido_producto);
-        refreshLayout = findViewById(R.id.refreshLayout);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            mesa = bundle.getString("mesa");
+        }
+
+        findView();
 
         productoAgregado = new ArrayList<>();
-        btnCrearPedido = findViewById(R.id.btnCrearPedido);
         btnCrearPedido.setOnClickListener(onClickCrearPedido);
 
-        rvProductosAgregados = findViewById(R.id.rvProductosAgregados);
         rvProductosAgregados.setLayoutManager(new LinearLayoutManager(this));
-
-        layoutBottomSheet = findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        tvNumeros = findViewById(R.id.tvNumeros);
         tvNumeros.setText("" + numeros);
-        tvTotal = findViewById(R.id.tvTotal);
         tvTotal.setText("$" + total);
         layoutBottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,13 +107,8 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         });
 
         firestore = FirebaseFirestore.getInstance();
-
+        sqlite = new ClsConexion(this);
         productos = new ArrayList<>();
-
-        recyclerView = findViewById(R.id.rvItemsProductos);
-
-        /*LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);*/
 
         GridLayoutManager glm = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(glm);
@@ -148,6 +149,16 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
             }
         });
 
+    }
+
+    private void findView() {
+        refreshLayout = findViewById(R.id.refreshLayout);
+        btnCrearPedido = findViewById(R.id.btnCrearPedido);
+        rvProductosAgregados = findViewById(R.id.rvProductosAgregados);
+        tvNumeros = findViewById(R.id.tvNumeros);
+        tvTotal = findViewById(R.id.tvTotal);
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        recyclerView = findViewById(R.id.rvItemsProductos);
     }
 
     @Override

@@ -83,13 +83,13 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         DocumentSnapshot doc = task.getResult();
-                                        Usuarios usuarioLogin = new Usuarios(doc.getString(Collections.Usuarios.user),
+                                        Usuarios usuarioLogin = new Usuarios(doc.getString(Collections.Usuarios.id),
+                                                doc.getString(Collections.Usuarios.user),
                                                 doc.getString(Collections.Usuarios.pass),
                                                 doc.getString(Collections.Usuarios.name),
                                                 doc.getString(Collections.Usuarios.role),
                                                 doc.getString(Collections.Usuarios.status),
                                                 doc.getString(Collections.Usuarios.photoUrl),
-                                                doc.getString(Collections.Usuarios.id),
                                                 doc.getString(Collections.Usuarios.restaurante));
                                         boolean actualizarUsuario = bd.guardarUsuarioActual(usuarioLogin);
                                         if (actualizarUsuario){
