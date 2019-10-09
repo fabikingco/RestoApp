@@ -2,6 +2,7 @@ package com.wposs.buc.restpapp.activitys;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.wposs.buc.restpapp.Tools;
 import com.wposs.buc.restpapp.adapters.ListProductosAgregadosAdapter;
 import com.wposs.buc.restpapp.adapters.ListProductosPedidoAdapter;
 import com.wposs.buc.restpapp.R;
@@ -30,6 +34,7 @@ import com.wposs.buc.restpapp.model.Productos;
 import com.wposs.buc.restpapp.model.ProductosPedidoActivo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 public class CrearProductoPedidoActivity extends AppCompatActivity implements ListProductosPedidoAdapter.OnItemClickListener, ListProductosAgregadosAdapter.OnItemClickListener{
@@ -64,7 +69,13 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
-            mesa = bundle.getString("mesa");
+            mesa = bundle.getString("mesa", "MesaNoEncontrada");
+        }
+
+        ActionBar toolbar;
+        toolbar = getSupportActionBar();
+        if (toolbar != null) {
+            toolbar.setTitle("Pedido para mesa " + mesa);
         }
 
         findView();
@@ -266,14 +277,25 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         public void onClick(View view) {
             if (productoAgregado.size() != 0){
                 Toast.makeText(CrearProductoPedidoActivity.this, "Productos = " + cantidadTotal + " valor = " + valorTotal, Toast.LENGTH_SHORT).show();
+                String id = armarIdPedido();
+                Log.d("id-pedido", id);
+                String imp = "0";
+                String subTotal = "0";
+                String total = "" + valorTotal;
+                
                 PedidosActivos pedido = new PedidosActivos();
+
+
+
             } else {
                 Toast.makeText(CrearProductoPedidoActivity.this, "Agrega productos al carrito para crear pedidos", Toast.LENGTH_SHORT).show();
             }
-
-
-
-
         }
     };
+
+    private String armarIdPedido() {
+        return mesa +
+                "-" +
+                Tools.DateToStr(new Date(), "ddMMyyyyHHmmss");
+    }
 }

@@ -134,7 +134,11 @@ public class MesasFragment extends Fragment  implements ListMesasAdapter.OnItemC
                 break;
             case "disponible":
                 Toast.makeText(getActivity(), "La mesa esta disponible ", Toast.LENGTH_SHORT).show();
-                Tools.startView(getActivity(), CrearProductoPedidoActivity.class, false);
+                Intent intent = new Intent(getActivity(), CrearProductoPedidoActivity.class);
+                intent.putExtra("mesa", mMesas.getId());
+
+                getActivity().startActivity(intent);
+                //Tools.startView(getActivity(), CrearProductoPedidoActivity.class, false);
                 break;
             case "ocupada":
                 Toast.makeText(getActivity(), "La mesa esta ocupada ", Toast.LENGTH_SHORT).show();
