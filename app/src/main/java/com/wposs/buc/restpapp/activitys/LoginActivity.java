@@ -89,8 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 doc.getString(Collections.Usuarios.name),
                                                 doc.getString(Collections.Usuarios.role),
                                                 doc.getString(Collections.Usuarios.status),
-                                                doc.getString(Collections.Usuarios.photoUrl),
-                                                doc.getString(Collections.Usuarios.restaurante));
+                                                doc.getString(Collections.Usuarios.photoUrl));
                                         boolean actualizarUsuario = bd.guardarUsuarioActual(usuarioLogin);
                                         if (actualizarUsuario){
                                             dialog.dismiss();

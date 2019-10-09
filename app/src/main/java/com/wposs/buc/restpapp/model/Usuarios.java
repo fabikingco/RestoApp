@@ -13,7 +13,7 @@ public class Usuarios {
 
 
 
-    public Usuarios(String id, String user, String pass, String name, String role, String status, String photoUrl, String restaurante) {
+    public Usuarios(String id, String user, String pass, String name, String role, String status, String photoUrl) {
         this.user = user;
         this.pass = pass;
         this.name = name;
@@ -21,7 +21,6 @@ public class Usuarios {
         this.status = status;
         this.photoUrl = photoUrl;
         this.id = id;
-        this.restaurante = restaurante;
     }
 
     public Usuarios(String user) {
