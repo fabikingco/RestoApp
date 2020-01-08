@@ -35,14 +35,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText et_user, et_pw;
     private String user, pass;
-
     public static Usuarios usuario;
     private ClsConexion bd;
     private SharedPreferences sharedPreferences;
-
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
-
     private AlertDialog dialog;
 
     @Override
@@ -158,9 +155,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateStateUser(FirebaseUser currentUser) {
         if (currentUser != null) {
+
+            SharedPreferences.Editor editor = getSharedPreferences("loginActivo", MODE_PRIVATE).edit();
+            editor.putString("user", currentUser.getEmail());
+            editor.apply();
+
             Log.d("Login Status", "Logueado, " + currentUser.getEmail());
             Intent intent = new Intent();
-            intent.putExtra("currentUser", currentUser.getUid());
+            //intent.putExtra("currentUser", currentUser.getEmail());
             intent.setClass(this, MainActivity2.class);
             startActivity(intent);
             this.finish();

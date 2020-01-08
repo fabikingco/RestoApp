@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -21,6 +24,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -31,6 +36,7 @@ import com.wposs.buc.restpapp.R;
 import com.wposs.buc.restpapp.bd.controler.ClsConexion;
 import com.wposs.buc.restpapp.model.PedidosActivos;
 import com.wposs.buc.restpapp.model.Productos;
+import com.wposs.buc.restpapp.model.ProductosAgregadosPedido;
 import com.wposs.buc.restpapp.model.ProductosPedidoActivo;
 
 import java.util.ArrayList;
@@ -45,6 +51,7 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
     int cantidadTotal = 0;
     int valorTotal = 0;
     String mesa;
+    String id;
 
 
     //BaseDeDatos
@@ -191,11 +198,6 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
                 }
             }
 
-           /* numeros ++;
-            tvNumeros.setText("" + numeros);
-            total += productos.getValor();
-            tvTotal.setText("$" + total);*/
-            //ProductosAgregadosPedido pedido = new ProductosAgregadosPedido(productos.getId(), productos.getNombre(), productos.getValor(), cantidad);
             int valorTotalProducto = cantidad * productos.getValor();
             ProductosPedidoActivo activo = new ProductosPedidoActivo(productos.getId(), productos.getNombre(), cantidad, productos.getValor(), valorTotalProducto, productos.getPhotoUrl());
             productoAgregado.add(activo);
@@ -277,13 +279,34 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         public void onClick(View view) {
             if (productoAgregado.size() != 0){
                 Toast.makeText(CrearProductoPedidoActivity.this, "Productos = " + cantidadTotal + " valor = " + valorTotal, Toast.LENGTH_SHORT).show();
-                String id = armarIdPedido();
+                id = armarIdPedido();
                 Log.d("id-pedido", id);
                 String imp = "0";
                 String subTotal = "0";
                 String total = "" + valorTotal;
                 
                 PedidosActivos pedido = new PedidosActivos();
+                pedido.setId(id);
+                pedido.setMesa(mesa);
+                pedido.setMesero(getMeseroActual());
+                pedido.setImp(Integer.parseInt(imp));
+                pedido.setSubTotal(Integer.parseInt(subTotal));
+                pedido.setTotal(Integer.parseInt(total));
+
+                firestore.collection("PedidosActivos").document(id)
+                        .set(pedido).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            cargarProductos();
+                            actualizarStatus();
+                            Toast.makeText(CrearProductoPedidoActivity.this, "Creacion de pedido exitoso.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(CrearProductoPedidoActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
 
 
@@ -293,9 +316,45 @@ public class CrearProductoPedidoActivity extends AppCompatActivity implements Li
         }
     };
 
+    private void cargarProductos() {
+        for (ProductosPedidoActivo productosPedidoActivo : productoAgregado) {
+            firestore.collection("PedidosActivos")
+                    .document(id)
+                    .collection("ProductosPedidoActivo")
+                    .add(productosPedidoActivo)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("Productos Cargado", "Nombre" + productosPedidoActivo.getName() + " cantidad " + productosPedidoActivo.getCantidad());
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    private String getMeseroActual() {
+        SharedPreferences prefs = getSharedPreferences("loginActivo", MODE_PRIVATE);
+        return prefs.getString("user", null);
+    }
+
     private String armarIdPedido() {
         return mesa +
                 "-" +
                 Tools.DateToStr(new Date(), "ddMMyyyyHHmmss");
+    }
+
+    private void actualizarStatus() {
+        firestore.collection("Mesas").document(mesa).
+                update("status", "ocupada").addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                } else {
+                    Toast.makeText(CrearProductoPedidoActivity.this, "Error al actualizar mesa", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

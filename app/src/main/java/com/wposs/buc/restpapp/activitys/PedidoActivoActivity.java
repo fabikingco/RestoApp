@@ -42,7 +42,7 @@ public class PedidoActivoActivity extends AppCompatActivity {
     private void descargarProductosPedidoActivo() {
         productosPedidoActivos = new ArrayList<>();
         mFirestore.collection("PedidosActivos")
-                .document("1-190820191205")
+                .document("6-08012020203556")
                 .collection("ProductosPedidoActivo")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
